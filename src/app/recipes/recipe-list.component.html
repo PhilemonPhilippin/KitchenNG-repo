@@ -1,0 +1,28 @@
+<h1>Endpoint recipes list test</h1>
+<div>
+  <p>Testing endpoint of my API:</p>
+  <table class="table table-striped mt-4">
+    <thead class="table-primary">
+      <th>
+        Id
+      </th>
+      <th>
+        Title
+      </th>
+      <th>
+        Description
+      </th>
+      <th>
+        RecipeCategory
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let recipe of recipes">
+        <td>{{ recipe.id }}</td>
+        <td>{{ recipe.title }}</td>
+        <td>{{ recipe?.description }}</td>
+        <td>Recipe category here</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
