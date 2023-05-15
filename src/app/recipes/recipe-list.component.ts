@@ -32,7 +32,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   private getRecipes(): void {
     this.sub = this.recipeService
-      .getRecipes(this.pageNumber, this.pageSize)
+      .getRecipes(this.pageNumber, this.pageSize, this.searchString)
       .subscribe({
         next: (response) => {
           let responseBody: IRecipe[] | null = response.body;
@@ -47,6 +47,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       });
   }
 
+  search(): void {
+    this.getRecipes();
+  }
+
   changePage(page: number): void {
     this.pageNumber = page;
     this.getRecipes();
@@ -54,6 +58,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   changePageSize(size: number): void {
     this.pageSize = size;
+    this.pageNumber = 1;
     this.getRecipes();
   }
 

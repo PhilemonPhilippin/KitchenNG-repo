@@ -1,7 +1,7 @@
 <h1>Recipe list</h1>
 
 <div class="input-group mb-3">
-  <button class="input-group-text" id="search">
+  <button (click)="search()" class="input-group-text" id="search">
     <img src="/assets/images/icons/search.svg" />
   </button>
   <input
@@ -37,7 +37,12 @@
     </tbody>
   </table>
 </div>
-<kc-pagination [currentPage]="pageNumber" [totalPages]="totalPages" (pageChangeEvent)="changePage($event)" (pageSizeEvent)="changePageSize($event)"></kc-pagination>
+<kc-pagination
+  [currentPage]="pageNumber"
+  [totalPages]="totalPages"
+  (pageChangeEvent)="changePage($event)"
+  (pageSizeEvent)="changePageSize($event)"
+></kc-pagination>
 <div *ngIf="errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>
