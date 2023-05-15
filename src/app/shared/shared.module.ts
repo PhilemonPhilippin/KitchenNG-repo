@@ -5,7 +5,7 @@ import { PaginationComponent } from './pagination.component';
 
 @NgModule({
   declarations: [PaginationComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   exports: [CommonModule, FormsModule, PaginationComponent],
 })
 export class SharedModule {}

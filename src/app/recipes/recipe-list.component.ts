@@ -11,7 +11,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   currentPage: number = 1;
   pageNumber: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 5;
   totalPages: number = 1;
   totalItems: number = 1;
   sub!: Subscription;
@@ -51,7 +51,12 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     this.pageNumber = page;
     this.getRecipes();
   }
-  
+
+  changePageSize(size: number): void {
+    this.pageSize = size;
+    this.getRecipes();
+  }
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

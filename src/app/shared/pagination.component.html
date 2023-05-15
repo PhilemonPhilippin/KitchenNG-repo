@@ -8,12 +8,22 @@
       [ngClass]="{ active: currentPage === number }"
       *ngFor="let number of pageNumbers"
     >
-      <a class="page-link btn" (click)="onPageChange(number)">{{
-        number
-      }}</a>
+      <a class="page-link btn" (click)="onPageChange(number)">{{ number }}</a>
     </li>
     <li class="page-item">
       <a class="page-link btn" (click)="nextPage()">Next</a>
     </li>
   </ul>
+  <div class="pagination justify-content-center">
+    <span>Items per page: </span>
+    <select class="ms-2" [(ngModel)]="pageSize">
+      <option [ngValue]="5">Choice</option>
+      <option
+        *ngFor="let number of pageSizeOptions"
+        [ngValue]="number" (click)="onPageSizeChange()"
+      >
+        {{ number }}
+      </option>
+    </select>
+  </div>
 </nav>

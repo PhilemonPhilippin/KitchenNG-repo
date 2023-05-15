@@ -37,7 +37,7 @@
     </tbody>
   </table>
 </div>
-<kc-pagination [currentPage]="pageNumber" [totalPages]="totalPages" (pageChangeEvent)="changePage($event)"></kc-pagination>
+<kc-pagination [currentPage]="pageNumber" [totalPages]="totalPages" (pageChangeEvent)="changePage($event)" (pageSizeEvent)="changePageSize($event)"></kc-pagination>
 <div *ngIf="errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>
