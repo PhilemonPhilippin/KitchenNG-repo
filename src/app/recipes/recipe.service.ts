@@ -12,9 +12,9 @@ export class RecipeService {
     searchQuery: string
   ): Observable<HttpResponse<IRecipe[]>> {
     let recipeUrl: string = '';
-    if (searchQuery == undefined) {
+    if (searchQuery == null) {
       recipeUrl = `https://localhost:7049/api/recipes?pagenumber=${pageNumber}&pagesize=${pageSize}`;
-    } else if (searchQuery != undefined) {
+    } else if (searchQuery != null) {
       recipeUrl = `https://localhost:7049/api/recipes?pagenumber=${pageNumber}&pagesize=${pageSize}&searchquery=${searchQuery}`;
     }
     return this.http.get<IRecipe[]>(recipeUrl, { observe: 'response' });

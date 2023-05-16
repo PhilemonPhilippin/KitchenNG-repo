@@ -1,27 +1,28 @@
 <h1>Recipe list</h1>
 
-<div class="input-group mb-3">
-  <button (click)="search()" class="input-group-text" id="search">
-    <img src="/assets/images/icons/search.svg" />
-  </button>
-  <input
-    type="text"
-    [(ngModel)]="searchString"
-    class="form-control"
-    placeholder="Search"
-    aria-label="Search"
-    aria-describedby="search"
-  />
-  <span class="input-group-text" id="filter"
-    ><img src="/assets/images/icons/funnel.svg" />
-  </span>
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Filter by specific title"
-    aria-label="Filter by specific title"
-    aria-describedby="filter"
-  />
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <button
+          (click)="search()"
+          class="input-group-text"
+          id="search"
+          title="Search"
+        >
+          <img src="/assets/images/icons/search.svg" />
+        </button>
+        <input
+          type="text"
+          [(ngModel)]="searchString"
+          class="form-control"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search"
+        />
+      </div>
+    </div>
+  </div>
 </div>
 <div>
   <table class="table table-striped mt-4" *ngIf="recipes.length">
