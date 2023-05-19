@@ -3,13 +3,19 @@ import { RecipeListComponent } from './recipe-list.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { RecipeDetailComponent } from './recipe-detail.component';
+import { RecipeCategoryDetailComponent } from './recipe-category-detail.component';
 
 @NgModule({
-  declarations: [RecipeListComponent, RecipeDetailComponent],
+  declarations: [
+    RecipeListComponent,
+    RecipeDetailComponent,
+    RecipeCategoryDetailComponent,
+  ],
   imports: [
     RouterModule.forChild([
       { path: 'recipes', component: RecipeListComponent },
       { path: 'recipes/:id', component: RecipeDetailComponent },
+      { path: 'recipecategory/:id', component: RecipeCategoryDetailComponent },
     ]),
     SharedModule,
   ],

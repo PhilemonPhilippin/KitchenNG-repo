@@ -20,7 +20,11 @@
     </tr>
     <tr>
       <td>Category</td>
-      <td>{{ recipe.recipeCategory.title }}</td>
+      <td>
+        <a [routerLink]="['/recipecategory', recipe.recipeCategory.id]">{{
+          recipe.recipeCategory.title
+        }}</a>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -47,5 +51,10 @@
 <h2>Preparation steps</h2>
 <span *ngIf="preparationSteps.length == 0">No data found</span>
 <ul class="list-group" *ngIf="preparationSteps.length">
-  <li class="liste-group-item mt-1" *ngFor="let preparationStep of preparationSteps">Step {{preparationStep.stepNumber}}: {{preparationStep.step}}</li>
+  <li
+    class="list-group-item mt-1"
+    *ngFor="let preparationStep of preparationSteps"
+  >
+    Step {{ preparationStep.stepNumber }}: {{ preparationStep.step }}
+  </li>
 </ul>

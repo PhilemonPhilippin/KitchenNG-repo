@@ -1,0 +1,6 @@
+<h1>Recipe category</h1>
+<span *ngIf="recipeCategory == null">No data found</span>
+<ul class="list-group" *ngIf="recipeCategory">
+  <li class="list-group-item">{{recipeCategory.title}}</li>
+  <li class="list-group-item">{{ recipeCategory.description ?? "-" }}</li>
+</ul>
