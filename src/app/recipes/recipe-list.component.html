@@ -1,3 +1,4 @@
+a
 <h1>Recipe list</h1>
 
 <div class="container">
@@ -25,14 +26,18 @@
   </div>
 </div>
 <div>
-  <table class="table table-striped mt-4" *ngIf="recipes.length">
+  <table class="table table-hover table-striped mt-4" *ngIf="recipes.length">
     <thead class="table-primary">
-      <th>Title</th>
-      <th>Category</th>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let recipe of recipes">
-        <td>{{ recipe.title }}</td>
+        <td>
+          <a [routerLink]="['/recipes', recipe.id]">{{ recipe.title }}</a>
+        </td>
         <td>{{ recipe.recipeCategory.title }}</td>
       </tr>
     </tbody>

@@ -1,0 +1,49 @@
+<h1>Recipe detail</h1>
+
+<h2>Recipe information</h2>
+<table class="table table-striped mt-4" *ngIf="recipe">
+  <thead class="table-primary">
+    <tr>
+      <th>Type</th>
+      <th>Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Title</td>
+      <td>{{ recipe.title }}</td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>{{ recipe.description ?? "-" }}</td>
+    </tr>
+    <tr>
+      <td>Category</td>
+      <td>{{ recipe.recipeCategory.title }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Ingredients</h2>
+<table class="table table-striped mt-4" *ngIf="recipeIngredients.length">
+  <thead class="table-info">
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let recipeIngredient of recipeIngredients">
+      <td>{{ recipeIngredient.name }}</td>
+      <td>{{ recipeIngredient.ingredientQuantity }}</td>
+      <td>{{ recipeIngredient.description ?? "-" }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Preparation steps</h2>
+<ul class="list-group">
+  <li class="liste-group-item">Step StepNumber: StepDescription</li>
+  <li class="liste-group-item">Step StepNumber: StepDescription</li>
+</ul>

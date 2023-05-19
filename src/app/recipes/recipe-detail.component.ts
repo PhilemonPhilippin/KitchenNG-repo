@@ -1,0 +1,43 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { RecipeService } from './recipe.service';
+import { RecipeIngredientService } from './recipe-ingredient.service';
+import { IRecipe } from './recipe';
+import { IRecipeIngredient } from './recipe-ingredient';
+
+@Component({
+  templateUrl: './recipe-detail.component.html',
+})
+export class RecipeDetailComponent implements OnInit {
+  recipe: IRecipe | undefined;
+  recipeIngredients: IRecipeIngredient[] = [];
+  errorMessages: string[] = [];
+
+  constructor(
+    private route: ActivatedRoute,
+    private recipeService: RecipeService,
+    private recipeIngredientService: RecipeIngredientService
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.getRecipe(id);
+      this.getRecipeIngredients(id);
+    }
+  }
+
+  getRecipe(id: string): void {
+    this.recipeService.getRecipe(id).subscribe({
+      next: (recipe) => (this.recipe = recipe),
+      error: (err) => this.errorMessages.push(err),
+    });
+  }
+
+  getRecipeIngredients(recipeId: string) {
+    this.recipeIngredientService.getRecipeIngredients(recipeId).subscribe({
+      next: (recipeIngredients) => (this.recipeIngredients = recipeIngredients),
+      error: (err) => this.errorMessages.push(err),
+    });
+  }
+}
