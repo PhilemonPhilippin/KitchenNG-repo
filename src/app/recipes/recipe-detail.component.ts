@@ -4,6 +4,8 @@ import { RecipeService } from './recipe.service';
 import { RecipeIngredientService } from './recipe-ingredient.service';
 import { IRecipe } from './recipe';
 import { IRecipeIngredient } from './recipe-ingredient';
+import { PreparationStepService } from './preparation-step.service';
+import { IPreparationStep } from './preparation-step';
 
 @Component({
   templateUrl: './recipe-detail.component.html',
@@ -11,12 +13,14 @@ import { IRecipeIngredient } from './recipe-ingredient';
 export class RecipeDetailComponent implements OnInit {
   recipe: IRecipe | undefined;
   recipeIngredients: IRecipeIngredient[] = [];
+  preparationSteps: IPreparationStep[] = [];
   errorMessages: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private recipeIngredientService: RecipeIngredientService
+    private recipeIngredientService: RecipeIngredientService,
+    private preparationStepService: PreparationStepService
   ) {}
 
   ngOnInit(): void {
@@ -24,6 +28,7 @@ export class RecipeDetailComponent implements OnInit {
     if (id) {
       this.getRecipe(id);
       this.getRecipeIngredients(id);
+      this.getPreparationSteps(id);
     }
   }
 
@@ -34,9 +39,16 @@ export class RecipeDetailComponent implements OnInit {
     });
   }
 
-  getRecipeIngredients(recipeId: string) {
+  getRecipeIngredients(recipeId: string): void {
     this.recipeIngredientService.getRecipeIngredients(recipeId).subscribe({
       next: (recipeIngredients) => (this.recipeIngredients = recipeIngredients),
+      error: (err) => this.errorMessages.push(err),
+    });
+  }
+
+  getPreparationSteps(recipeId: string): void {
+    this.preparationStepService.getPreparationSteps(recipeId).subscribe({
+      next: (preparationSteps) => (this.preparationSteps = preparationSteps),
       error: (err) => this.errorMessages.push(err),
     });
   }

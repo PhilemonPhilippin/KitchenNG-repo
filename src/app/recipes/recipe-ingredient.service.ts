@@ -8,7 +8,7 @@ export class RecipeIngredientService {
   constructor(private http: HttpClient) {}
 
   getRecipeIngredients(recipeId: string): Observable<IRecipeIngredient[]> {
-    let recipeIngredientUrl = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients`;
-    return this.http.get<IRecipeIngredient[]>(recipeIngredientUrl);
+    let url = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients`;
+    return this.http.get<IRecipeIngredient[]>(url);
   }
 }

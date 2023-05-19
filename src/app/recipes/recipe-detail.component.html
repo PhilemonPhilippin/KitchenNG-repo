@@ -1,6 +1,7 @@
 <h1>Recipe detail</h1>
 
-<h2>Recipe information</h2>
+<h2>Recipe</h2>
+<span *ngIf="recipe == null">No data found</span>
 <table class="table table-striped mt-4" *ngIf="recipe">
   <thead class="table-primary">
     <tr>
@@ -25,6 +26,7 @@
 </table>
 
 <h2>Ingredients</h2>
+<span *ngIf="recipeIngredients.length == 0">No data found</span>
 <table class="table table-striped mt-4" *ngIf="recipeIngredients.length">
   <thead class="table-info">
     <tr>
@@ -43,7 +45,7 @@
 </table>
 
 <h2>Preparation steps</h2>
-<ul class="list-group">
-  <li class="liste-group-item">Step StepNumber: StepDescription</li>
-  <li class="liste-group-item">Step StepNumber: StepDescription</li>
+<span *ngIf="preparationSteps.length == 0">No data found</span>
+<ul class="list-group" *ngIf="preparationSteps.length">
+  <li class="liste-group-item mt-1" *ngFor="let preparationStep of preparationSteps">Step {{preparationStep.stepNumber}}: {{preparationStep.step}}</li>
 </ul>
