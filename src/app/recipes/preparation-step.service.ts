@@ -11,4 +11,9 @@ export class PreparationStepService {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps`;
     return this.http.get<IPreparationStep[]>(url);
   }
+
+  getPreparationStep(id: string, recipeId: string): Observable<IPreparationStep> {
+    let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/${id}`;
+    return this.http.get<IPreparationStep>(url);
+  }
 }

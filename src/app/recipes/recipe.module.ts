@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RecipeDetailComponent } from './recipe-detail.component';
 import { RecipeCategoryDetailComponent } from './recipe-category-detail.component';
 import { IngredientDetailComponent } from './ingredient-detail.component';
+import { PreparationStepDetailComponent } from './preparation-step-detail.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { IngredientDetailComponent } from './ingredient-detail.component';
     RecipeDetailComponent,
     RecipeCategoryDetailComponent,
     IngredientDetailComponent,
+    PreparationStepDetailComponent,
   ],
   imports: [
     RouterModule.forChild([
@@ -22,6 +24,10 @@ import { IngredientDetailComponent } from './ingredient-detail.component';
         component: RecipeCategoryDetailComponent,
       },
       { path: 'ingredients/:id', component: IngredientDetailComponent },
+      {
+        path: 'recipes/:recipeid/preparationsteps/:id',
+        component: PreparationStepDetailComponent,
+      },
     ]),
     SharedModule,
   ],

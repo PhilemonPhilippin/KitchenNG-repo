@@ -1,0 +1,7 @@
+<h1>Preparation step</h1>
+<span *ngIf="preparationStep == null">No data found</span>
+<ul class="list-group" *ngIf="preparationStep">
+  <li class="list-group-item">{{preparationStep.title}}</li>
+  <li class="list-group-item">{{preparationStep.stepNumber}}</li>
+  <li class="list-group-item">{{preparationStep.step}}</li>
+</ul>
