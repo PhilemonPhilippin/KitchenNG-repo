@@ -18,12 +18,12 @@
       <td>Description</td>
       <td>{{ recipe.description ?? "-" }}</td>
     </tr>
-    <tr>
+    <tr [routerLink]="['/recipecategories', recipe.recipeCategory.id]" class="cursor-pointer">
       <td>Category</td>
       <td>
-        <a [routerLink]="['/recipecategory', recipe.recipeCategory.id]">{{
+        {{
           recipe.recipeCategory.title
-        }}</a>
+        }}
       </td>
     </tr>
   </tbody>
@@ -31,7 +31,7 @@
 
 <h2>Ingredients</h2>
 <span *ngIf="recipeIngredients.length == 0">No data found</span>
-<table class="table table-striped mt-4" *ngIf="recipeIngredients.length">
+<table class="table table-hover table-striped mt-4" *ngIf="recipeIngredients.length">
   <thead class="table-info">
     <tr>
       <th>Name</th>
@@ -40,7 +40,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let recipeIngredient of recipeIngredients">
+    <tr [routerLink]="['/ingredients', recipeIngredient.id]" *ngFor="let recipeIngredient of recipeIngredients" class="cursor-pointer">
       <td>{{ recipeIngredient.name }}</td>
       <td>{{ recipeIngredient.ingredientQuantity }}</td>
       <td>{{ recipeIngredient.description ?? "-" }}</td>

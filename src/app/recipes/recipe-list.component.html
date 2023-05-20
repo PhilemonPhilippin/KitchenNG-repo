@@ -33,9 +33,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let recipe of recipes">
-        <td>
-          <a [routerLink]="['/recipes', recipe.id]">{{ recipe.title }}</a>
+      <tr *ngFor="let recipe of recipes" [routerLink]="['/recipes', recipe.id]" class="cursor-pointer">
+        <td>{{ recipe.title }}
         </td>
         <td>{{ recipe.recipeCategory.title }}</td>
       </tr>
