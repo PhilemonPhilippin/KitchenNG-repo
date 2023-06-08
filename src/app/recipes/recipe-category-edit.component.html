@@ -1,0 +1,55 @@
+<h1>Recipe category</h1>
+<p *ngIf="recipeCategory">
+  Editing the recipe category with initial title "<span class="fw-bold">{{
+    recipeCategory.title
+  }}</span
+  >"
+</p>
+<form [formGroup]="recipeCategoryForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title :</label>
+  </div>
+  <div>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+  <p
+    *ngIf="recipeCategoryForm.get('title')?.errors?.['required']"
+    class="text-danger"
+  >
+    Title is required
+  </p>
+  <p
+    *ngIf="recipeCategoryForm.get('title')?.errors?.['maxlength']"
+    class="text-danger"
+  >
+    Title must be 50 characters maximum
+  </p>
+  <div class="mt-2">
+    <label for="description">Description :</label>
+  </div>
+  <div>
+    <textarea
+      class="w-50"
+      rows="5"
+      id="description"
+      formControlName="description"
+    ></textarea>
+  </div>
+  <p
+    *ngIf="recipeCategoryForm.get('description')?.errors?.['maxlength']"
+    class="text-danger"
+  >
+    Description must be 500 characters maximum
+  </p>
+  <button class="btn btn-warning" type="submit">Save changes</button>
+  <button
+    class="btn btn-primary"
+    *ngIf="recipeCategory"
+    [routerLink]="['/recipecategories', recipeCategory.id]"
+  >
+    Back
+  </button>
+</form>
+<span class="text-success" *ngIf="statusCode == 204"
+  >Recipe edited with success!</span
+>

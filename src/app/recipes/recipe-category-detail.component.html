@@ -1,6 +1,7 @@
 <h1>Recipe category</h1>
+<button class="btn btn-warning" *ngIf="recipeCategory" [routerLink]="['/recipecategories', recipeCategory.id, 'edit']">Edit</button>
 <span *ngIf="recipeCategory == null">No data found</span>
-<ul class="list-group" *ngIf="recipeCategory">
+<ul class="list-group mt-1" *ngIf="recipeCategory">
   <li class="list-group-item">{{recipeCategory.title}}</li>
   <li class="list-group-item">{{ recipeCategory.description ?? "-" }}</li>
 </ul>
