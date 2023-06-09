@@ -1,6 +1,7 @@
 <h1>Ingredient</h1>
+<button class="btn btn-warning" *ngIf="ingredient" [routerLink]="['/ingredients', ingredient.id, 'edit']">Edit</button>
 <span *ngIf="ingredient == null">No data found</span>
-<ul class="list-group" *ngIf="ingredient">
+<ul class="list-group mt-1" *ngIf="ingredient">
   <li class="list-group-item">{{ingredient.name}}</li>
   <li class="list-group-item">{{ingredient.description ?? '-'}}</li>
 </ul>
