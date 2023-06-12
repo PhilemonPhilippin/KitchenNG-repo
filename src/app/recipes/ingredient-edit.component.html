@@ -1,6 +1,8 @@
 <h1>Ingredient</h1>
 <p *ngIf="ingredient">
-  Editing the ingredient with initial name "<span class="fw-bold">{{ingredient.name}}</span
+  Editing the ingredient with initial name "<span class="fw-bold">{{
+    ingredient.name
+  }}</span
   >"
 </p>
 <form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
