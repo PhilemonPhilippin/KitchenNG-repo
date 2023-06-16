@@ -1,0 +1,74 @@
+<h1>Preparation step</h1>
+<p *ngIf="preparationStep">Editing the preparation step with initial title "<span class="fw-bold">{{
+    preparationStep.title
+  }}</span
+  >"</p>
+<form [formGroup]="preparationStepForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title :</label>
+  </div>
+  <div>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+  <p
+    *ngIf="preparationStepForm.get('title')?.errors?.['required']"
+    class="text-danger"
+  >
+    Title is required
+  </p>
+  <p
+    *ngIf="preparationStepForm.get('title')?.errors?.['maxlength']"
+    class="text-danger"
+  >
+    Title must be 50 characters maximum
+  </p>
+  <div class="mt-2">
+    <label for="stepNumber">Step number:</label>
+  </div>
+  <div>
+    <input id="stepNumber" type="number" formControlName="stepNumber">
+  </div>
+  <p *ngIf="preparationStepForm.get('stepNumber')?.errors?.['required']" class="text-danger">
+    Step number is required
+  </p>
+   <p *ngIf="preparationStepForm.get('stepNumber')?.errors?.['min']" class="text-danger">
+    Step number must be greater than 0
+  </p>
+   <p *ngIf="preparationStepForm.get('stepNumber')?.errors?.['max']" class="text-danger">
+    Step number must be less than 2147483647
+  </p>
+  <div class="mt-2">
+    <label for="step">Step :</label>
+  </div>
+  <div>
+    <textarea
+      class="w-50"
+      rows="5"
+      id="step"
+      formControlName="step"
+    ></textarea>
+  </div>
+  <p
+    *ngIf="preparationStepForm.get('step')?.errors?.['required']"
+    class="text-danger"
+  >
+    Step is required
+  </p>
+  <p
+    *ngIf="preparationStepForm.get('step')?.errors?.['maxlength']"
+    class="text-danger"
+  >
+    Step must be 500 characters maximum
+  </p>
+  <button class="btn btn-warning mt-1" type="submit">Save changes</button>
+  <button
+    class="btn btn-primary mt-1 ms-1"
+    *ngIf="preparationStep"
+    [routerLink]="['/recipes', preparationStep.recipeId, 'preparationsteps' ,preparationStep.id]"
+  >
+    Back
+  </button>
+</form>
+<span class="text-success" *ngIf="statusCode == 204"
+  >Recipe edited with success!</span
+>

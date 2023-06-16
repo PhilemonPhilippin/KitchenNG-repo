@@ -3,4 +3,5 @@ export interface IPreparationStep {
     title: string;
     stepNumber: number;
     step: string;
+    recipeId: string;
 }

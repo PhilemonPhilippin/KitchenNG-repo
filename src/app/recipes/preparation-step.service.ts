@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IPreparationStep } from './preparation-step';
@@ -12,8 +12,18 @@ export class PreparationStepService {
     return this.http.get<IPreparationStep[]>(url);
   }
 
-  getPreparationStep(id: string, recipeId: string): Observable<IPreparationStep> {
+  getPreparationStep(
+    id: string,
+    recipeId: string
+  ): Observable<IPreparationStep> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/${id}`;
     return this.http.get<IPreparationStep>(url);
+  }
+
+  editPreparationStep(
+    preparationStep: IPreparationStep
+  ): Observable<HttpResponse<Object>> {
+    let url = `https://localhost:7049/api/recipes/${preparationStep.recipeId}/preparationsteps/${preparationStep.id}`;
+    return this.http.put(url, preparationStep, { observe: 'response' });
   }
 }

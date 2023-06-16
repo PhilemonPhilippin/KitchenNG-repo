@@ -9,7 +9,7 @@ import { ActivatedRoute } from "@angular/router";
 export class PreparationStepDetailComponent implements OnInit {
     preparationStep: IPreparationStep | undefined;
     errorMessage: string = '';
-
+    
     constructor(private route: ActivatedRoute, private preparationStepService: PreparationStepService) {}
 
     ngOnInit(): void {
