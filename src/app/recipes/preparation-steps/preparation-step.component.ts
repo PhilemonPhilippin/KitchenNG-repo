@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
-  templateUrl: './recipe-category.component.html',
+  templateUrl: './preparation-step.component.html',
 })
-export class RecipeCategoryComponent {
+export class PreparationStepComponent {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
 

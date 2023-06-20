@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PreparationStepService } from './preparation-step.service';
 import { IPreparationStep } from './preparation-step';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
+  selector: 'preparation-step-edit',
   templateUrl: './preparation-step-edit.component.html',
 })
 export class PreparationStepEditComponent implements OnInit {
+  @Output() closingEdit = new EventEmitter();
   preparationStep: IPreparationStep | undefined;
   errorMessage: string = '';
   statusCode: number = 0;
@@ -24,7 +26,7 @@ export class PreparationStepEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private preparationStepService: PreparationStepService
+    private preparationStepService: PreparationStepService,
   ) {}
 
   ngOnInit(): void {
@@ -73,4 +75,10 @@ export class PreparationStepEditComponent implements OnInit {
       });
     }
   }
+
+  closeEdit(): void {
+    this.closingEdit.emit();
+  }
+
+
 }

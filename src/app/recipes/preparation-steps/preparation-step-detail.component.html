@@ -1,5 +1,3 @@
-<h1>Preparation step</h1>
-<button class="btn btn-warning" *ngIf="preparationStep" [routerLink]="['/recipes', preparationStep.recipeId, 'preparationsteps' ,preparationStep.id, 'edit']">Edit</button>
 <span *ngIf="preparationStep == null">No data found</span>
 <ul class="list-group mt-1" *ngIf="preparationStep">
   <li class="list-group-item">{{preparationStep.title}}</li>

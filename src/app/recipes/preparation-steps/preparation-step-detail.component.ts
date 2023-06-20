@@ -4,6 +4,7 @@ import { PreparationStepService } from "./preparation-step.service";
 import { ActivatedRoute } from "@angular/router";
 
 @Component ({
+    selector: 'preparation-step-detail',
     templateUrl: './preparation-step-detail.component.html'
 })
 export class PreparationStepDetailComponent implements OnInit {

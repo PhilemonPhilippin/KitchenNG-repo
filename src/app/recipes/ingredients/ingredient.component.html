@@ -1,6 +1,10 @@
 <h1>Ingredient</h1>
+<button class="btn btn-primary me-1" (click)="backClicked()">Back</button>
 <button class="btn btn-warning" (click)="toggleEdit()" *ngIf="displayDetail">
   Edit
 </button>
 <ingredient-detail *ngIf="displayDetail"></ingredient-detail>
-<ingredient-edit *ngIf="displayEdit" (closingEdit)="toggleEdit()"></ingredient-edit>
+<ingredient-edit
+  *ngIf="displayEdit"
+  (closingEdit)="toggleEdit()"
+></ingredient-edit>
