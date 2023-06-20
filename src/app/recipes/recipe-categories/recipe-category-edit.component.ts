@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IRecipeCategory } from './recipe-category';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeCategoryService } from './recipe-category.service';
 
 @Component({
+  selector: 'recipe-category-edit',
   templateUrl: './recipe-category-edit.component.html',
 })
 export class RecipeCategoryEditComponent implements OnInit {
+  @Output() closingEdit = new EventEmitter();
   recipeCategory: IRecipeCategory | undefined;
   errorMessage: string = '';
   statusCode: number = 0;
@@ -59,5 +61,9 @@ export class RecipeCategoryEditComponent implements OnInit {
         error: (err) => (this.errorMessage = err),
       });
     }
+  }
+
+  closeEdit() {
+    this.closingEdit.emit();
   }
 }

@@ -9,11 +9,13 @@ import { PreparationStepDetailComponent } from './preparation-steps/preparation-
 import { RecipeCategoryEditComponent } from './recipe-categories/recipe-category-edit.component';
 import { IngredientEditComponent } from './ingredients/ingredient-edit.component';
 import { PreparationStepEditComponent } from './preparation-steps/preparation-step-edit.component';
+import { RecipeCategoryComponent } from './recipe-categories/recipe-category.component';
 
 @NgModule({
   declarations: [
     RecipeListComponent,
     RecipeDetailComponent,
+    RecipeCategoryComponent,
     RecipeCategoryDetailComponent,
     RecipeCategoryEditComponent,
     IngredientDetailComponent,
@@ -27,7 +29,7 @@ import { PreparationStepEditComponent } from './preparation-steps/preparation-st
       { path: 'recipes/:id', component: RecipeDetailComponent },
       {
         path: 'recipecategories/:id',
-        component: RecipeCategoryDetailComponent,
+        component: RecipeCategoryComponent,
       },
       { path: 'ingredients/:id', component: IngredientDetailComponent },
       {
@@ -37,10 +39,6 @@ import { PreparationStepEditComponent } from './preparation-steps/preparation-st
       {
         path: 'recipes/:recipeid/preparationsteps/:id/edit',
         component: PreparationStepEditComponent,
-      },
-      {
-        path: 'recipecategories/:id/edit',
-        component: RecipeCategoryEditComponent,
       },
       {
         path: 'ingredients/:id/edit',

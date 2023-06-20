@@ -4,6 +4,7 @@ import { RecipeCategoryService } from './recipe-category.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  selector: 'recipe-category-detail',
   templateUrl: './recipe-category-detail.component.html',
 })
 export class RecipeCategoryDetailComponent implements OnInit {
