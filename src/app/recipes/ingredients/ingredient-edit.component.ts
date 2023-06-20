@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { IIngredient } from './ingredient';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from './ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
+  selector: 'ingredient-edit',
   templateUrl: './ingredient-edit.component.html',
 })
 export class IngredientEditComponent implements OnInit {
+  @Output() closingEdit = new EventEmitter();
   ingredient: IIngredient | undefined;
   statusCode: number = 0;
   errorMessage: string = '';
@@ -56,5 +58,9 @@ export class IngredientEditComponent implements OnInit {
         error: (err) => (this.errorMessage = err),
       });
     }
+  }
+
+  closeEdit(): void {
+    this.closingEdit.emit();
   }
 }

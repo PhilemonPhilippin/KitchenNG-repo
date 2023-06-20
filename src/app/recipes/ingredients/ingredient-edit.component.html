@@ -1,4 +1,3 @@
-<h1>Ingredient</h1>
 <p *ngIf="ingredient">
   Editing the ingredient with initial name "<span class="fw-bold">{{
     ingredient.name
@@ -44,10 +43,9 @@
   <button class="btn btn-warning mt-1" type="submit">Save changes</button>
   <button
     class="btn btn-primary mt-1 ms-1"
-    *ngIf="ingredient"
-    [routerLink]="['/ingredients', ingredient.id]"
+    (click)="closeEdit()"
   >
-    Back
+    Cancel
   </button>
 </form>
 <span class="text-success" *ngIf="statusCode == 204"

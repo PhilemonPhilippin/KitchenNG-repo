@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  templateUrl: 'recipe-category.component.html',
+  templateUrl: './recipe-category.component.html',
 })
 export class RecipeCategoryComponent {
   displayDetail: boolean = true;
@@ -11,10 +11,5 @@ export class RecipeCategoryComponent {
   toggleEdit(): void {
     this.displayDetail = !this.displayDetail;
     this.displayEdit = !this.displayEdit;
-  }
-
-  closeEdit(): void {
-    this.displayEdit = false;
-    this.displayDetail = true;
   }
 }

@@ -10,6 +10,7 @@ import { RecipeCategoryEditComponent } from './recipe-categories/recipe-category
 import { IngredientEditComponent } from './ingredients/ingredient-edit.component';
 import { PreparationStepEditComponent } from './preparation-steps/preparation-step-edit.component';
 import { RecipeCategoryComponent } from './recipe-categories/recipe-category.component';
+import { IngredientComponent } from './ingredients/ingredient.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RecipeCategoryComponent } from './recipe-categories/recipe-category.com
     RecipeCategoryComponent,
     RecipeCategoryDetailComponent,
     RecipeCategoryEditComponent,
+    IngredientComponent,
     IngredientDetailComponent,
     IngredientEditComponent,
     PreparationStepDetailComponent,
@@ -31,7 +33,7 @@ import { RecipeCategoryComponent } from './recipe-categories/recipe-category.com
         path: 'recipecategories/:id',
         component: RecipeCategoryComponent,
       },
-      { path: 'ingredients/:id', component: IngredientDetailComponent },
+      { path: 'ingredients/:id', component: IngredientComponent },
       {
         path: 'recipes/:recipeid/preparationsteps/:id',
         component: PreparationStepDetailComponent,
@@ -39,10 +41,6 @@ import { RecipeCategoryComponent } from './recipe-categories/recipe-category.com
       {
         path: 'recipes/:recipeid/preparationsteps/:id/edit',
         component: PreparationStepEditComponent,
-      },
-      {
-        path: 'ingredients/:id/edit',
-        component: IngredientEditComponent,
       },
     ]),
     SharedModule,

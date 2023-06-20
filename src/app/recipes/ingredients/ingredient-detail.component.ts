@@ -4,6 +4,7 @@ import { IngredientService } from './ingredient.service';
 import { IIngredient } from './ingredient';
 
 @Component({
+  selector: 'ingredient-detail',
   templateUrl: './ingredient-detail.component.html',
 })
 export class IngredientDetailComponent implements OnInit {

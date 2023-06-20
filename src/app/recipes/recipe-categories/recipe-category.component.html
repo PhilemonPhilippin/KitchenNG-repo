@@ -5,6 +5,6 @@
 
 <recipe-category-detail *ngIf="displayDetail"></recipe-category-detail>
 <recipe-category-edit
-  (closingEdit)="closeEdit()"
+  (closingEdit)="toggleEdit()"
   *ngIf="displayEdit"
 ></recipe-category-edit>
