@@ -1,5 +1,10 @@
 <h1>Recipe category</h1>
-<button class="btn btn-warning" (click)="toggleEdit()" *ngIf="displayDetail">Edit</button>
+<button class="btn btn-warning" (click)="toggleEdit()" *ngIf="displayDetail">
+  Edit
+</button>
 
 <recipe-category-detail *ngIf="displayDetail"></recipe-category-detail>
-<recipe-category-edit (closingEdit)="closeEdit()" *ngIf="displayEdit"></recipe-category-edit>
+<recipe-category-edit
+  (closingEdit)="closeEdit()"
+  *ngIf="displayEdit"
+></recipe-category-edit>
