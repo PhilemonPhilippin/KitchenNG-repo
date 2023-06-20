@@ -12,9 +12,7 @@ export class IngredientService {
     return this.http.get<IIngredient>(url);
   }
 
-  editIngredient(
-    ingredient: IIngredient
-  ): Observable<HttpResponse<Object>> {
+  editIngredient(ingredient: IIngredient): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/ingredients/${ingredient.id}`;
     return this.http.put(url, ingredient, { observe: 'response' });
   }

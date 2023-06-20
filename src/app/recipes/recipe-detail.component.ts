@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from './recipe.service';
-import { RecipeIngredientService } from './recipe-ingredient.service';
+import { RecipeIngredientService } from './recipe-ingredients/recipe-ingredient.service';
 import { IRecipe } from './recipe';
-import { IRecipeIngredient } from './recipe-ingredient';
-import { PreparationStepService } from './preparation-step.service';
-import { IPreparationStep } from './preparation-step';
+import { IRecipeIngredient } from './recipe-ingredients/recipe-ingredient';
+import { PreparationStepService } from './preparation-steps/preparation-step.service';
+import { IPreparationStep } from './preparation-steps/preparation-step';
 
 @Component({
   templateUrl: './recipe-detail.component.html',

@@ -32,7 +32,9 @@ export class IngredientEditComponent implements OnInit {
             Validators.required,
             Validators.maxLength(50),
           ]),
-          description: new FormControl(this.ingredient.description ?? null, [Validators.maxLength(500)]),
+          description: new FormControl(this.ingredient.description ?? null, [
+            Validators.maxLength(500),
+          ]),
         });
       });
     }
