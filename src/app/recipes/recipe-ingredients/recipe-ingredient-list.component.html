@@ -1,0 +1,18 @@
+<h2>Ingredients</h2>
+<span *ngIf="recipeIngredients.length == 0">No data found</span>
+<table class="table table-hover table-striped mt-4" *ngIf="recipeIngredients.length">
+  <thead class="table-info">
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [routerLink]="['/ingredients', recipeIngredient.id]" *ngFor="let recipeIngredient of recipeIngredients" class="cursor-pointer">
+      <td>{{ recipeIngredient.name }}</td>
+      <td>{{ recipeIngredient.ingredientQuantity }}</td>
+      <td>{{ recipeIngredient.description ?? "-" }}</td>
+    </tr>
+  </tbody>
+</table>

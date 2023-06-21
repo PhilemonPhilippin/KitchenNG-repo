@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from './recipe.service';
-import { RecipeIngredientService } from './recipe-ingredients/recipe-ingredient.service';
+import { RecipeIngredientService } from '../recipe-ingredients/recipe-ingredient.service';
 import { IRecipe } from './recipe';
-import { IRecipeIngredient } from './recipe-ingredients/recipe-ingredient';
-import { PreparationStepService } from './preparation-steps/preparation-step.service';
-import { IPreparationStep } from './preparation-steps/preparation-step';
+import { IRecipeIngredient } from '../recipe-ingredients/recipe-ingredient';
+import { PreparationStepService } from '../preparation-steps/preparation-step.service';
+import { IPreparationStep } from '../preparation-steps/preparation-step';
 
 @Component({
-  templateUrl: './recipe-detail.component.html',
+  templateUrl: './recipe.component.html',
 })
-export class RecipeDetailComponent implements OnInit {
+export class RecipeComponent implements OnInit {
   recipe: IRecipe | undefined;
   recipeIngredients: IRecipeIngredient[] = [];
   preparationSteps: IPreparationStep[] = [];

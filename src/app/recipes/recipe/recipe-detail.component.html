@@ -1,0 +1,28 @@
+<h2>Recipe</h2>
+<span *ngIf="recipe == null">No data found</span>
+<table class="table table-striped mt-4" *ngIf="recipe">
+  <thead class="table-primary">
+    <tr>
+      <th>Type</th>
+      <th>Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Title</td>
+      <td>{{ recipe.title }}</td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>{{ recipe.description ?? "-" }}</td>
+    </tr>
+    <tr>
+      <td>Category</td>
+      <td><a [routerLink]="['/recipecategories', recipe.recipeCategory.id]">
+        {{
+          recipe.recipeCategory.title
+        }}</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

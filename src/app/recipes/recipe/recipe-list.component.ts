@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RecipeService } from './recipe.service';
-import { IRecipe } from './recipe';
+import { RecipeService } from '../recipe/recipe.service';
+import { IRecipe } from '../recipe/recipe';
 import { Subscription } from 'rxjs';
-import { IXPagination } from '../shared/xpagination';
+import { IXPagination } from '../../shared/xpagination';
 
 @Component({ templateUrl: './recipe-list.component.html' })
 export class RecipeListComponent implements OnInit, OnDestroy {
