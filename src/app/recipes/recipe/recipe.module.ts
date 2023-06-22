@@ -15,12 +15,14 @@ import { PreparationStepComponent } from '../preparation-steps/preparation-step.
 import { RecipeComponent } from './recipe.component';
 import { RecipeIngredientListComponent } from '../recipe-ingredients/recipe-ingredient-list.component';
 import { RecipePreparationStepListComponent } from '../preparation-steps/recipe-preparation-step-list.component';
+import { RecipeEditComponent } from './recipe-edit.component';
 
 @NgModule({
   declarations: [
     RecipeListComponent,
     RecipeComponent,
     RecipeDetailComponent,
+    RecipeEditComponent,
     RecipeIngredientListComponent,
     RecipePreparationStepListComponent,
     RecipeCategoryComponent,

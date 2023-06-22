@@ -7,6 +7,11 @@ import { Injectable } from '@angular/core';
 export class RecipeCategoryService {
   constructor(private http: HttpClient) {}
 
+  getRecipeCategories(): Observable<IRecipeCategory[]> {
+    let url = 'https://localhost:7049/api/recipecategories';
+    return this.http.get<IRecipeCategory[]>(url);
+  }
+
   getRecipeCategory(id: string): Observable<IRecipeCategory> {
     let url = `https://localhost:7049/api/recipecategories/${id}`;
     return this.http.get<IRecipeCategory>(url);

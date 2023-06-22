@@ -1,5 +1,10 @@
 <h1>Recipe detail</h1>
 <button class="btn btn-primary" [routerLink]="['/recipes']">Back to list</button>
-<recipe-detail></recipe-detail>
+<h2 class="mt-4">Recipe</h2>
+<button class="btn btn-warning" (click)="toggleRecipeEdit()" *ngIf="displayRecipeDetail">
+  Edit
+</button>
+<recipe-detail *ngIf="displayRecipeDetail"></recipe-detail>
+<recipe-edit *ngIf="displayRecipeEdit" (closingEdit)="toggleRecipeEdit()"></recipe-edit>
 <recipe-ingredient-list></recipe-ingredient-list>
 <recipe-preparation-step-list></recipe-preparation-step-list>
