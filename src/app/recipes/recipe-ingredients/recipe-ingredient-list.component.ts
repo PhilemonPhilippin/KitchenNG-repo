@@ -4,8 +4,6 @@ import { RecipeService } from '../recipe/recipe.service';
 import { RecipeIngredientService } from '../recipe-ingredients/recipe-ingredient.service';
 import { IRecipe } from '../recipe/recipe';
 import { IRecipeIngredient } from '../recipe-ingredients/recipe-ingredient';
-import { PreparationStepService } from '../preparation-steps/preparation-step.service';
-import { IPreparationStep } from '../preparation-steps/preparation-step';
 
 @Component({
   selector: 'recipe-ingredient-list',
@@ -15,6 +13,7 @@ export class RecipeIngredientListComponent implements OnInit {
   recipe: IRecipe | undefined;
   recipeIngredients: IRecipeIngredient[] = [];
   errorMessages: string[] = [];
+  displayAddIngredient: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,5 +41,9 @@ export class RecipeIngredientListComponent implements OnInit {
       next: (recipeIngredients) => (this.recipeIngredients = recipeIngredients),
       error: (err) => this.errorMessages.push(err),
     });
+  }
+
+  toggleAddIngredient(): void {
+    this.displayAddIngredient = !this.displayAddIngredient;
   }
 }

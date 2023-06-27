@@ -16,6 +16,7 @@ import { RecipeComponent } from './recipe.component';
 import { RecipeIngredientListComponent } from '../recipe-ingredients/recipe-ingredient-list.component';
 import { RecipePreparationStepListComponent } from '../preparation-steps/recipe-preparation-step-list.component';
 import { RecipeEditComponent } from './recipe-edit.component';
+import { RecipeIngredientAddComponent } from '../recipe-ingredients/recipe-ingredient-add.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RecipeEditComponent } from './recipe-edit.component';
     RecipeDetailComponent,
     RecipeEditComponent,
     RecipeIngredientListComponent,
+    RecipeIngredientAddComponent,
     RecipePreparationStepListComponent,
     RecipeCategoryComponent,
     RecipeCategoryDetailComponent,
