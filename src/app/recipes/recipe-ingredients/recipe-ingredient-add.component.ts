@@ -44,6 +44,8 @@ export class RecipeIngredientAddComponent implements OnInit {
   onSubmit(): void {
     this.statusCode = 0;
     this.nameExists = false;
+    this.existingIngredient = undefined;
+    
     if (this.ingredientForm.valid) {
       const ingredient: IIngredientAddRequest = {
         name: this.ingredientForm.value.name as string,
@@ -60,22 +62,7 @@ export class RecipeIngredientAddComponent implements OnInit {
           ingredientId: this.existingIngredient.id,
           ingredientQuantity: this.ingredientForm.value.quantity as string,
         };
-        this.recipeIngredientService
-          .addRecipeIngredient(this.recipeId, recipeIngredient)
-          .subscribe({
-            next: (response) => {
-              this.statusCode = response.status;
-              if (this.statusCode == 204) {
-                this.ingredientForm.setValue({
-                  name: '',
-                  description: '',
-                  quantity: '',
-                });
-              }
-            },
-            error: (err) => this.errorMessages.push(err),
-          });
-        
+        this.PostRecipeIngredient(recipeIngredient);
       } else {
         let addedIngredientId: string = '';
         this.ingredientService.addIngredient(ingredient).subscribe({
@@ -85,26 +72,32 @@ export class RecipeIngredientAddComponent implements OnInit {
               ingredientId: addedIngredientId,
               ingredientQuantity: this.ingredientForm.value.quantity as string,
             };
-            this.recipeIngredientService
-              .addRecipeIngredient(this.recipeId, recipeIngredient)
-              .subscribe({
-                next: (response) => {
-                  this.statusCode = response.status;
-                  if (this.statusCode == 204) {
-                    this.ingredientForm.setValue({
-                      name: '',
-                      description: '',
-                      quantity: '',
-                    });
-                  }
-                },
-                error: (err) => this.errorMessages.push(err),
-              });
+            this.PostRecipeIngredient(recipeIngredient);
           },
           error: (err) => this.errorMessages.push(err),
         });
       }
     }
+  }
+
+  private PostRecipeIngredient(
+    recipeIngredient: IRecipeIngredientAddRequest
+  ): void {
+    this.recipeIngredientService
+      .addRecipeIngredient(this.recipeId, recipeIngredient)
+      .subscribe({
+        next: (response) => {
+          this.statusCode = response.status;
+          if (this.statusCode == 204) {
+            this.ingredientForm.setValue({
+              name: '',
+              description: '',
+              quantity: '',
+            });
+          }
+        },
+        error: (err) => this.errorMessages.push(err),
+      });
   }
 
   closeAdd(): void {
