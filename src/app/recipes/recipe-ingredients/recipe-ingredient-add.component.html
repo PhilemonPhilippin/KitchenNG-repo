@@ -17,7 +17,6 @@
   >
     Name must be 50 characters maximum
   </p>
-  <p class="text-danger" *ngIf="nameExists">Name already exists</p>
   <div class="mt-2">
     <label for="description">Description :</label>
   </div>
@@ -61,6 +60,6 @@
     Cancel
   </button>
 </form>
-<span class="text-success" *ngIf="statusCode == 201"
+<span class="text-success" *ngIf="statusCode == 204"
   >Ingredient added with success!</span
 >

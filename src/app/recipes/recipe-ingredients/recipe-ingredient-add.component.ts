@@ -18,6 +18,7 @@ export class RecipeIngredientAddComponent implements OnInit {
   statusCode: number = 0;
   errorMessages: string[] = [];
   nameExists: boolean = false;
+  existingIngredient: IIngredientNoDesc | undefined;
 
   ingredientForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -49,8 +50,32 @@ export class RecipeIngredientAddComponent implements OnInit {
         description: this.ingredientForm.value.description ?? undefined,
       };
 
-      if (this.ingredientsNoDesc.some((i) => i.name == ingredient.name)) {
+      this.existingIngredient = this.ingredientsNoDesc.find(
+        (i) => i.name == ingredient.name
+      );
+
+      if (this.existingIngredient !== undefined) {
         this.nameExists = true;
+        const recipeIngredient: IRecipeIngredientAddRequest = {
+          ingredientId: this.existingIngredient.id,
+          ingredientQuantity: this.ingredientForm.value.quantity as string,
+        };
+        this.recipeIngredientService
+          .addRecipeIngredient(this.recipeId, recipeIngredient)
+          .subscribe({
+            next: (response) => {
+              this.statusCode = response.status;
+              if (this.statusCode == 204) {
+                this.ingredientForm.setValue({
+                  name: '',
+                  description: '',
+                  quantity: '',
+                });
+              }
+            },
+            error: (err) => this.errorMessages.push(err),
+          });
+        
       } else {
         let addedIngredientId: string = '';
         this.ingredientService.addIngredient(ingredient).subscribe({
@@ -65,6 +90,13 @@ export class RecipeIngredientAddComponent implements OnInit {
               .subscribe({
                 next: (response) => {
                   this.statusCode = response.status;
+                  if (this.statusCode == 204) {
+                    this.ingredientForm.setValue({
+                      name: '',
+                      description: '',
+                      quantity: '',
+                    });
+                  }
                 },
                 error: (err) => this.errorMessages.push(err),
               });
