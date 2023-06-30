@@ -26,7 +26,7 @@ export class PreparationStepEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private preparationStepService: PreparationStepService,
+    private preparationStepService: PreparationStepService
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +79,4 @@ export class PreparationStepEditComponent implements OnInit {
   closeEdit(): void {
     this.closingEdit.emit();
   }
-
-
 }

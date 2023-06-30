@@ -16,6 +16,7 @@ export class RecipePreparationStepListComponent implements OnInit {
   recipeIngredients: IRecipeIngredient[] = [];
   preparationSteps: IPreparationStep[] = [];
   errorMessages: string[] = [];
+  displayAddPreparationStep: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,5 +44,9 @@ export class RecipePreparationStepListComponent implements OnInit {
       next: (preparationSteps) => (this.preparationSteps = preparationSteps),
       error: (err) => this.errorMessages.push(err),
     });
+  }
+
+  toggleAddPreparationStep(): void {
+    this.displayAddPreparationStep = !this.displayAddPreparationStep;
   }
 }

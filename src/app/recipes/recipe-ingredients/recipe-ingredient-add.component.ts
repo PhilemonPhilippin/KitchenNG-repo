@@ -45,7 +45,7 @@ export class RecipeIngredientAddComponent implements OnInit {
     this.statusCode = 0;
     this.nameExists = false;
     this.existingIngredient = undefined;
-    
+
     if (this.ingredientForm.valid) {
       const ingredient: IIngredientAddRequest = {
         name: this.ingredientForm.value.name as string,

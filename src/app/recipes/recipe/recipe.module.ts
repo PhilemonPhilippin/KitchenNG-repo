@@ -17,6 +17,7 @@ import { RecipeIngredientListComponent } from '../recipe-ingredients/recipe-ingr
 import { RecipePreparationStepListComponent } from '../preparation-steps/recipe-preparation-step-list.component';
 import { RecipeEditComponent } from './recipe-edit.component';
 import { RecipeIngredientAddComponent } from '../recipe-ingredients/recipe-ingredient-add.component';
+import { PreparationStepAddComponent } from '../preparation-steps/preparation-step-add.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { RecipeIngredientAddComponent } from '../recipe-ingredients/recipe-ingre
     PreparationStepComponent,
     PreparationStepDetailComponent,
     PreparationStepEditComponent,
+    PreparationStepAddComponent,
   ],
   imports: [
     RouterModule.forChild([
@@ -49,7 +51,7 @@ import { RecipeIngredientAddComponent } from '../recipe-ingredients/recipe-ingre
       {
         path: 'recipes/:recipeid/preparationsteps/:id',
         component: PreparationStepComponent,
-      }
+      },
     ]),
     SharedModule,
   ],
