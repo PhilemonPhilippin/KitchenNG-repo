@@ -35,4 +35,9 @@ export class PreparationStepService {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/`;
     return this.http.post(url, preparationStep, { observe: 'response' });
   }
+
+  deletePreparationStep(id:string, recipeId: string): Observable<HttpResponse<Object>> {
+    let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/${id}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
 }

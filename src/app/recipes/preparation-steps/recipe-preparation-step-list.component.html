@@ -12,7 +12,7 @@
   (closingAdd)="toggleAddPreparationStep()"
   *ngIf="displayAddPreparationStep && recipe"
 ></preparation-step-add>
-<ul class="list-group mt-1" *ngIf="preparationSteps.length && recipe">
+<ul class="list-group" *ngIf="preparationSteps.length && recipe">
   <a
     class="list-group-item mt-1"
     *ngFor="let preparationStep of preparationSteps"
