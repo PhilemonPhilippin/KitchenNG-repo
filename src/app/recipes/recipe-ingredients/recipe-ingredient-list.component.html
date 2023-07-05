@@ -25,15 +25,28 @@
     </tr>
   </thead>
   <tbody>
-    <tr
-      [routerLink]="['/ingredients', recipeIngredient.id]"
-      *ngFor="let recipeIngredient of recipeIngredients"
-      class="cursor-pointer"
-    >
-      <td>{{ recipeIngredient.name }}</td>
-      <td>{{ recipeIngredient.ingredientQuantity }}</td>
+    <tr *ngFor="let recipeIngredient of recipeIngredients">
+      <td
+        [routerLink]="['/ingredients', recipeIngredient.id]"
+        class="cursor-pointer"
+      >
+        {{ recipeIngredient.name }}
+      </td>
+      <td
+        [routerLink]="['/ingredients', recipeIngredient.id]"
+        class="cursor-pointer"
+      >
+        {{ recipeIngredient.ingredientQuantity }}
+      </td>
       <td><button class="btn btn-outline-warning">Edit</button></td>
-      <td><button class="btn btn-outline-danger">Remove</button></td>
+      <td>
+        <button
+          class="btn btn-outline-danger"
+          (click)="removeClicked(recipeIngredient.id)"
+        >
+          Remove
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

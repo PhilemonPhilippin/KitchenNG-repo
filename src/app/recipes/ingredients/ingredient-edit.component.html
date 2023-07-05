@@ -11,18 +11,18 @@
   <div>
     <input id="name" type="text" formControlName="name" />
   </div>
-  <p
+  <span
     *ngIf="ingredientForm.get('name')?.errors?.['required']"
     class="text-danger"
   >
     Name is required
-  </p>
-  <p
+  </span>
+  <span
     *ngIf="ingredientForm.get('name')?.errors?.['maxlength']"
     class="text-danger"
   >
     Name must be 50 characters maximum
-  </p>
+  </span>
   <div class="mt-2">
     <label for="description">Description :</label>
   </div>
@@ -34,19 +34,18 @@
       formControlName="description"
     ></textarea>
   </div>
-  <p
+  <span
     *ngIf="ingredientForm.get('description')?.errors?.['maxlength']"
     class="text-danger"
   >
     Description must be 500 characters maximum
-  </p>
-  <button class="btn btn-warning mt-1" type="submit">Save changes</button>
-  <button
-    class="btn btn-primary mt-1 ms-1"
-    (click)="closeEdit()"
-  >
-    Cancel
-  </button>
+  </span>
+  <div>
+    <button class="btn btn-warning mt-1" type="submit">Save changes</button>
+    <button class="btn btn-primary mt-1 ms-1" (click)="closeEdit()">
+      Cancel
+    </button>
+  </div>
 </form>
 <span class="text-success" *ngIf="statusCode == 204"
   >Ingredient edited with success!</span

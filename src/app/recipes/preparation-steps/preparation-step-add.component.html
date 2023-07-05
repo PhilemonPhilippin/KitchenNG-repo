@@ -5,62 +5,66 @@
   <div>
     <input id="title" type="text" formControlName="title" />
   </div>
-  <p
+  <span
     *ngIf="preparationStepForm.get('title')?.errors?.['required']"
     class="text-danger"
   >
     Title is required
-  </p>
-  <p
+  </span>
+  <span
     *ngIf="preparationStepForm.get('title')?.errors?.['maxlength']"
     class="text-danger"
   >
     Title must be 50 characters maximum
-  </p>
+  </span>
   <div class="mt-2">
     <label for="stepNumber">Step number:</label>
   </div>
   <div>
     <input id="stepNumber" type="number" formControlName="stepNumber" />
   </div>
-  <p
+  <span
     *ngIf="preparationStepForm.get('stepNumber')?.errors?.['required']"
     class="text-danger"
   >
     Step number is required
-  </p>
-  <p
+  </span>
+  <span
     *ngIf="preparationStepForm.get('stepNumber')?.errors?.['min']"
     class="text-danger"
   >
     Step number must be greater than 0
-  </p>
-  <p
+  </span>
+  <span
     *ngIf="preparationStepForm.get('stepNumber')?.errors?.['max']"
     class="text-danger"
   >
     Step number must be less than 2147483647
-  </p>
+  </span>
   <div class="mt-2">
     <label for="step">Step :</label>
   </div>
   <div>
     <textarea class="w-50" rows="5" id="step" formControlName="step"></textarea>
   </div>
-  <p
+  <span
     *ngIf="preparationStepForm.get('step')?.errors?.['required']"
     class="text-danger"
   >
     Step is required
-  </p>
-  <p
+  </span>
+  <span
     *ngIf="preparationStepForm.get('step')?.errors?.['maxlength']"
     class="text-danger"
   >
     Step must be 500 characters maximum
-  </p>
-  <button class="btn btn-warning mt-1" type="submit">Add</button>
-  <button class="btn btn-primary mt-1 ms-1" (click)="closeAdd()">Cancel</button>
+  </span>
+  <div>
+    <button class="btn btn-warning mt-1" type="submit">Add</button>
+    <button class="btn btn-primary mt-1 ms-1" (click)="closeAdd()">
+      Cancel
+    </button>
+  </div>
 </form>
 <span class="text-success" *ngIf="statusCode == 201"
   >Preparation step added with success!</span

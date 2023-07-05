@@ -20,4 +20,12 @@ export class RecipeIngredientService {
     let url = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients`;
     return this.http.post(url, recipeIngredient, { observe: 'response' });
   }
+
+  removeRecipeIngredient(
+    recipeId: string,
+    ingredientId: string
+  ): Observable<HttpResponse<Object>> {
+    let url = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients/${ingredientId}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
 }

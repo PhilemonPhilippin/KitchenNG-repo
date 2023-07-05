@@ -14,6 +14,7 @@ export class RecipeIngredientListComponent implements OnInit {
   recipeIngredients: IRecipeIngredient[] = [];
   errorMessages: string[] = [];
   displayAddIngredient: boolean = false;
+  statusCode: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,5 +46,21 @@ export class RecipeIngredientListComponent implements OnInit {
 
   toggleAddIngredient(): void {
     this.displayAddIngredient = !this.displayAddIngredient;
+  }
+
+  removeClicked(ingredientId: string): void {
+    if (this.recipe?.id) {
+      this.recipeIngredientService
+        .removeRecipeIngredient(this.recipe.id, ingredientId)
+        .subscribe({
+          next: (response) => {
+            this.statusCode = response.status;
+            if (response.status === 204) {
+              this.ngOnInit();
+            }
+          },
+          error: (err) => this.errorMessages.push(err),
+        });
+    }
   }
 }
