@@ -10,6 +10,7 @@ import { IPreparationStepAddRequest } from './preparation-step-add-request';
 export class PreparationStepAddComponent {
   statusCode: number = 0;
   @Output() closingAdd = new EventEmitter();
+  @Output() addSuccessful = new EventEmitter();
   @Input() recipeId: string = '';
   errorMessages: string[] = [];
 
@@ -42,6 +43,8 @@ export class PreparationStepAddComponent {
               stepNumber: 0,
               step: '',
             });
+            this.addSuccessful.emit();
+            this.closeAdd();
           }
         },
         error: (err) => this.errorMessages.push(err),

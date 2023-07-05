@@ -10,6 +10,7 @@
 <preparation-step-add
   [recipeId]="recipe.id"
   (closingAdd)="toggleAddPreparationStep()"
+  (addSuccessful)="refresh()"
   *ngIf="displayAddPreparationStep && recipe"
 ></preparation-step-add>
 <ul class="list-group" *ngIf="preparationSteps.length && recipe">

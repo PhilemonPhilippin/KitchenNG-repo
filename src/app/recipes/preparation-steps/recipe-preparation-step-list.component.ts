@@ -49,4 +49,7 @@ export class RecipePreparationStepListComponent implements OnInit {
   toggleAddPreparationStep(): void {
     this.displayAddPreparationStep = !this.displayAddPreparationStep;
   }
+  refresh(): void {
+    this.ngOnInit();
+  }
 }
