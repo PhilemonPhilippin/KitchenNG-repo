@@ -73,6 +73,9 @@ export class RecipeEditComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.statusCode = response.status;
+            if (response.status === 204) {
+              this.closeEdit();
+            }
           },
           error: (err) => this.errorMessages.push(err),
         });

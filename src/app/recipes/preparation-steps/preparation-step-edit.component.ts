@@ -70,6 +70,9 @@ export class PreparationStepEditComponent implements OnInit {
       this.preparationStepService.editPreparationStep(step).subscribe({
         next: (response) => {
           this.statusCode = response.status;
+          if (response.status === 204) {
+            this.closeEdit();
+          }
         },
         error: (err) => (this.errorMessage = err),
       });
