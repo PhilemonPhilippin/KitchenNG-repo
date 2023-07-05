@@ -10,6 +10,7 @@
 <recipe-ingredient-add
   [recipeId]="recipe.id"
   (closingAdd)="toggleAddIngredient()"
+  (addSucccessful)="refresh()"
   *ngIf="displayAddIngredient && recipe"
 ></recipe-ingredient-add>
 <table

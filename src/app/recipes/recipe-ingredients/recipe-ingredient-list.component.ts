@@ -63,4 +63,8 @@ export class RecipeIngredientListComponent implements OnInit {
         });
     }
   }
+
+  refresh(): void {
+    this.ngOnInit();
+  }
 }

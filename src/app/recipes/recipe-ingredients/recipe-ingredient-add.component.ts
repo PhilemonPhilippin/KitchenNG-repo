@@ -12,6 +12,7 @@ import { IRecipeIngredientAddRequest } from './recipe-ingredient-add-request';
 })
 export class RecipeIngredientAddComponent implements OnInit {
   @Output() closingAdd = new EventEmitter();
+  @Output() addSucccessful = new EventEmitter();
   @Input() recipeId: string = '';
 
   ingredientsNoDesc: IIngredientNoDesc[] = [];
@@ -94,6 +95,8 @@ export class RecipeIngredientAddComponent implements OnInit {
               description: '',
               quantity: '',
             });
+            this.addSucccessful.emit();
+            this.closeAdd();
           }
         },
         error: (err) => this.errorMessages.push(err),
