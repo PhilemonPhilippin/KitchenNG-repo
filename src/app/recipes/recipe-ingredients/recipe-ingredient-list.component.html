@@ -1,4 +1,4 @@
-<h2>Ingredients</h2>
+<h2 id="ingredients">Ingredients</h2>
 <span *ngIf="recipeIngredients.length == 0">No data found</span>
 <button
   class="btn btn-outline-primary mt-2"
@@ -39,7 +39,14 @@
       >
         {{ recipeIngredient.ingredientQuantity }}
       </td>
-      <td><button class="btn btn-outline-warning">Edit</button></td>
+      <td>
+        <button
+          class="btn btn-outline-warning"
+          (click)="toggleEditIngredient(recipeIngredient)"
+        >
+          Edit
+        </button>
+      </td>
       <td>
         <button
           class="btn btn-outline-danger"
@@ -51,3 +58,14 @@
     </tr>
   </tbody>
 </table>
+<span id="editcompo">
+  Editing quantity of:
+  <span *ngIf="recipeIngredientEdited">{{ recipeIngredientEdited.name }}</span>
+</span>
+<recipe-ingredient-edit
+  (editSuccessful)="refresh()"
+  (closingEdit)="closeEdit()"
+  [recipeId]="recipe.id"
+  [recipeIngredient]="recipeIngredientEdited"
+  *ngIf="displayEditIngredient && recipe"
+></recipe-ingredient-edit>

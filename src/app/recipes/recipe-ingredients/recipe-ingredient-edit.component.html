@@ -1,0 +1,29 @@
+<form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="quantity">Quantity :</label>
+  </div>
+  <div>
+    <input id="quantity" type="text" formControlName="quantity" />
+  </div>
+  <span
+    *ngIf="ingredientForm.get('quantity')?.errors?.['required']"
+    class="text-danger"
+  >
+    Quantity is required
+  </span>
+  <span
+    *ngIf="ingredientForm.get('quantity')?.errors?.['maxlength']"
+    class="text-danger"
+  >
+    Quantity must be 50 characters maximum
+  </span>
+  <div>
+    <button class="btn btn-warning mt-1" type="submit">Edit</button>
+    <button class="btn btn-primary mt-1 ms-1" (click)="closeEdit()">
+      Cancel
+    </button>
+  </div>
+</form>
+<span class="text-success" *ngIf="statusCode == 204"
+  >Ingredient edited with success!</span
+>

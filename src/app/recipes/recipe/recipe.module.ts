@@ -18,6 +18,7 @@ import { RecipePreparationStepListComponent } from '../preparation-steps/recipe-
 import { RecipeEditComponent } from './recipe-edit.component';
 import { RecipeIngredientAddComponent } from '../recipe-ingredients/recipe-ingredient-add.component';
 import { PreparationStepAddComponent } from '../preparation-steps/preparation-step-add.component';
+import { RecipeIngredientEditComponent } from '../recipe-ingredients/recipe-ingredient-edit.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PreparationStepAddComponent } from '../preparation-steps/preparation-st
     RecipeEditComponent,
     RecipeIngredientListComponent,
     RecipeIngredientAddComponent,
+    RecipeIngredientEditComponent,
     RecipePreparationStepListComponent,
     RecipeCategoryComponent,
     RecipeCategoryDetailComponent,

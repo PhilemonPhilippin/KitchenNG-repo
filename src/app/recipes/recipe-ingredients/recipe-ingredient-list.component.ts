@@ -14,6 +14,8 @@ export class RecipeIngredientListComponent implements OnInit {
   recipeIngredients: IRecipeIngredient[] = [];
   errorMessages: string[] = [];
   displayAddIngredient: boolean = false;
+  displayEditIngredient: boolean = false;
+  recipeIngredientEdited: IRecipeIngredient | undefined;
   statusCode: number = 0;
 
   constructor(
@@ -46,6 +48,23 @@ export class RecipeIngredientListComponent implements OnInit {
 
   toggleAddIngredient(): void {
     this.displayAddIngredient = !this.displayAddIngredient;
+  }
+
+  toggleEditIngredient(recipeIngredient: IRecipeIngredient): void {
+    this.recipeIngredientEdited = recipeIngredient;
+    this.displayEditIngredient = !this.displayEditIngredient;
+    if (this.displayEditIngredient) {
+      document
+        .getElementById('editcompo')
+        ?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  closeEdit(): void {
+    this.displayEditIngredient = false;
+    document
+      .getElementById('ingredients')
+      ?.scrollIntoView({ behavior: 'smooth' });
   }
 
   removeClicked(ingredientId: string): void {
