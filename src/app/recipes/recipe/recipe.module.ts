@@ -19,6 +19,7 @@ import { RecipeEditComponent } from './recipe-edit.component';
 import { RecipeIngredientAddComponent } from '../recipe-ingredients/recipe-ingredient-add.component';
 import { PreparationStepAddComponent } from '../preparation-steps/preparation-step-add.component';
 import { RecipeIngredientEditComponent } from '../recipe-ingredients/recipe-ingredient-edit.component';
+import { IngredientListComponent } from '../ingredients/ingredient-list.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RecipeIngredientEditComponent } from '../recipe-ingredients/recipe-ingr
     RecipeCategoryComponent,
     RecipeCategoryDetailComponent,
     RecipeCategoryEditComponent,
+    IngredientListComponent,
     IngredientComponent,
     IngredientDetailComponent,
     IngredientEditComponent,
@@ -54,6 +56,7 @@ import { RecipeIngredientEditComponent } from '../recipe-ingredients/recipe-ingr
         path: 'recipes/:recipeid/preparationsteps/:id',
         component: PreparationStepComponent,
       },
+      { path: 'ingredients', component: IngredientListComponent },
     ]),
     SharedModule,
   ],

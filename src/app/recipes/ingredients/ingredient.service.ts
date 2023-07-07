@@ -9,6 +9,14 @@ import { IIngredientNoDesc } from './ingredient-no-desc';
 export class IngredientService {
   constructor(private http: HttpClient) {}
 
+  getRecipes(
+    pageNumber: number,
+    pageSize: number
+  ): Observable<HttpResponse<IIngredient[]>> {
+    let url: string = `https://localhost:7049/api/ingredients?pagenumber=${pageNumber}&pagesize=${pageSize}`;
+    return this.http.get<IIngredient[]>(url, { observe: 'response' });
+  }
+
   getIngredient(id: string): Observable<IIngredient> {
     let url = `https://localhost:7049/api/ingredients/${id}`;
     return this.http.get<IIngredient>(url);
@@ -27,5 +35,10 @@ export class IngredientService {
   addIngredient(ingredient: IIngredientAddRequest): Observable<IIngredient> {
     let url = 'https://localhost:7049/api/ingredients';
     return this.http.post<IIngredient>(url, ingredient);
+  }
+
+  deleteIngredient(id: string): Observable<HttpResponse<Object>> {
+    let url = `https://localhost:7049/api/ingredients/${id}`;
+    return this.http.delete(url, {observe: 'response'});
   }
 }

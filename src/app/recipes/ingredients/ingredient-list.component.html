@@ -1,0 +1,12 @@
+<h1>Ingredient list</h1>
+<div>
+  <ul class="list-group" *ngIf="ingredients.length">
+    <li class="list-group-item mt-1 cursor-pointer" [routerLink]="['/ingredients', ingredient.id]" *ngFor="let ingredient of ingredients">{{ingredient.name}}</li>
+  </ul>
+</div>
+<kc-pagination
+  [currentPage]="pageNumber"
+  [totalPages]="totalPages"
+  (pageChangeEvent)="changePage($event)"
+  (pageSizeEvent)="changePageSize($event)"
+></kc-pagination>
