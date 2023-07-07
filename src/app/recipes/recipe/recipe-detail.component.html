@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <td>Description</td>
-      <td>{{ recipe.description ?? "-" }}</td>
+      <td [ngClass]="{'fst-italic': recipe.description == null}">{{ recipe.description ?? "No description found" }}</td>
     </tr>
     <tr>
       <td>Category</td>

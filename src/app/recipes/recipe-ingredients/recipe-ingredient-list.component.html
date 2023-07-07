@@ -58,9 +58,9 @@
     </tr>
   </tbody>
 </table>
-<span id="editcompo">
+<span id="editcompo" class="fw-light" [ngClass]="{'text-decoration-line-through': !displayEditIngredient}">
   Editing quantity of:
-  <span *ngIf="recipeIngredientEdited">{{ recipeIngredientEdited.name }}</span>
+  <span class="fw-normal" *ngIf="recipeIngredientEdited && displayEditIngredient">{{ recipeIngredientEdited.name }}</span>
 </span>
 <recipe-ingredient-edit
   (editSuccessful)="refresh()"

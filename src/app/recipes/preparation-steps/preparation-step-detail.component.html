@@ -1,6 +1,12 @@
 <span *ngIf="preparationStep == null">No data found</span>
-<ul class="list-group mt-1" *ngIf="preparationStep">
-  <li class="list-group-item">{{preparationStep.title}}</li>
-  <li class="list-group-item">{{preparationStep.stepNumber}}</li>
-  <li class="list-group-item">{{preparationStep.step}}</li>
-</ul>
+<div class="card mt-2" *ngIf="preparationStep">
+  <div class="card-header">Step #{{ preparationStep.stepNumber }}</div>
+  <div class="card-body">
+    <h5 class="card-title">
+      {{ preparationStep.title }}
+    </h5>
+    <div class="card-text">
+      {{ preparationStep.step }}
+    </div>
+  </div>
+</div>
