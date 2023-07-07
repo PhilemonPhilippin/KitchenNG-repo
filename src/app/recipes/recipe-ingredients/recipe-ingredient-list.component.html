@@ -1,12 +1,14 @@
 <h2 id="ingredients">Ingredients</h2>
-<span *ngIf="recipeIngredients.length == 0">No data found</span>
-<button
-  class="btn btn-outline-primary mt-2"
-  (click)="toggleAddIngredient()"
-  *ngIf="!displayAddIngredient"
->
-  Add
-</button>
+<p *ngIf="recipeIngredients.length == 0">No data found</p>
+<div>
+  <button
+    class="btn btn-outline-primary"
+    (click)="toggleAddIngredient()"
+    *ngIf="!displayAddIngredient"
+  >
+    Add
+  </button>
+</div>
 <recipe-ingredient-add
   [recipeId]="recipe.id"
   (closingAdd)="toggleAddIngredient()"
@@ -58,9 +60,17 @@
     </tr>
   </tbody>
 </table>
-<span id="editcompo" class="fw-light" [ngClass]="{'text-decoration-line-through': !displayEditIngredient}">
+<span
+  id="editcompo"
+  class="fw-light"
+  [ngClass]="{ 'text-decoration-line-through': !displayEditIngredient }"
+>
   Editing quantity of:
-  <span class="fw-normal" *ngIf="recipeIngredientEdited && displayEditIngredient">{{ recipeIngredientEdited.name }}</span>
+  <span
+    class="fw-normal"
+    *ngIf="recipeIngredientEdited && displayEditIngredient"
+    >{{ recipeIngredientEdited.name }}</span
+  >
 </span>
 <recipe-ingredient-edit
   (editSuccessful)="refresh()"

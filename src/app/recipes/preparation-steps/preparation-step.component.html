@@ -1,13 +1,15 @@
 <h1>Preparation step</h1>
-<button class="btn btn-primary" (click)="backClicked()">Back</button>
-<button
-  class="btn btn-warning ms-1"
-  (click)="toggleEdit()"
-  *ngIf="displayDetail"
->
-  Edit
-</button>
-<button class="btn btn-danger ms-1" (click)="deleteClicked()">Delete</button>
+<div>
+  <button class="btn btn-primary" (click)="backClicked()">Back</button>
+  <button
+    class="btn btn-warning ms-1"
+    (click)="toggleEdit()"
+    *ngIf="displayDetail"
+  >
+    Edit
+  </button>
+  <button class="btn btn-danger ms-1" (click)="deleteClicked()">Delete</button>
+</div>
 <preparation-step-detail *ngIf="displayDetail"></preparation-step-detail>
 <preparation-step-edit
   *ngIf="displayEdit"

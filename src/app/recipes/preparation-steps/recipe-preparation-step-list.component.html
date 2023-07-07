@@ -1,12 +1,14 @@
 <h2>Preparation steps</h2>
-<span *ngIf="preparationSteps.length == 0">No data found</span>
-<button
-  class="btn btn-outline-primary mt-2"
-  (click)="toggleAddPreparationStep()"
-  *ngIf="!displayAddPreparationStep"
->
-  Add
-</button>
+<p *ngIf="preparationSteps.length == 0">No data found</p>
+<div>
+  <button
+    class="btn btn-outline-primary"
+    (click)="toggleAddPreparationStep()"
+    *ngIf="!displayAddPreparationStep"
+  >
+    Add
+  </button>
+</div>
 <preparation-step-add
   [recipeId]="recipe.id"
   (closingAdd)="toggleAddPreparationStep()"
