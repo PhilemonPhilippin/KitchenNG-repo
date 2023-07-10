@@ -1,7 +1,25 @@
-<h1>Ingredient list</h1>
-<div>
+<h1>Ingredients</h1>
+<button
+  class="btn btn-outline-primary"
+  (click)="toggleAdd()"
+  *ngIf="!displayAdd"
+>
+  Add
+</button>
+<ingredient-add
+  (closingAdd)="toggleAdd()"
+  *ngIf="displayAdd"
+  (addSucccessful)="refresh()"
+></ingredient-add>
+<div class="mb-3">
   <ul class="list-group" *ngIf="ingredients.length">
-    <li class="list-group-item mt-1 cursor-pointer" [routerLink]="['/ingredients', ingredient.id]" *ngFor="let ingredient of ingredients">{{ingredient.name}}</li>
+    <li
+      class="list-group-item mt-1 cursor-pointer"
+      [routerLink]="['/ingredients', ingredient.id]"
+      *ngFor="let ingredient of ingredients"
+    >
+      {{ ingredient.name }}
+    </li>
   </ul>
 </div>
 <kc-pagination

@@ -20,6 +20,8 @@ import { RecipeIngredientAddComponent } from '../recipe-ingredients/recipe-ingre
 import { PreparationStepAddComponent } from '../preparation-steps/preparation-step-add.component';
 import { RecipeIngredientEditComponent } from '../recipe-ingredients/recipe-ingredient-edit.component';
 import { IngredientListComponent } from '../ingredients/ingredient-list.component';
+import { RecipeCategoryListComponent } from '../recipe-categories/recipe-category-list.component';
+import { IngredientAddComponent } from '../ingredients/ingredient-add.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +33,14 @@ import { IngredientListComponent } from '../ingredients/ingredient-list.componen
     RecipeIngredientAddComponent,
     RecipeIngredientEditComponent,
     RecipePreparationStepListComponent,
+    RecipeCategoryListComponent,
     RecipeCategoryComponent,
     RecipeCategoryDetailComponent,
     RecipeCategoryEditComponent,
     IngredientListComponent,
     IngredientComponent,
     IngredientDetailComponent,
+    IngredientAddComponent,
     IngredientEditComponent,
     PreparationStepComponent,
     PreparationStepDetailComponent,
@@ -47,16 +51,17 @@ import { IngredientListComponent } from '../ingredients/ingredient-list.componen
     RouterModule.forChild([
       { path: 'recipes', component: RecipeListComponent },
       { path: 'recipes/:id', component: RecipeComponent },
+      { path: 'recipecategories', component: RecipeCategoryListComponent },
       {
         path: 'recipecategories/:id',
         component: RecipeCategoryComponent,
       },
       { path: 'ingredients/:id', component: IngredientComponent },
+      { path: 'ingredients', component: IngredientListComponent },
       {
         path: 'recipes/:recipeid/preparationsteps/:id',
         component: PreparationStepComponent,
       },
-      { path: 'ingredients', component: IngredientListComponent },
     ]),
     SharedModule,
   ],

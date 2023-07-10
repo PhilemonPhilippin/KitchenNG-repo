@@ -1,0 +1,12 @@
+<h1>Recipe categories</h1>
+<div>
+  <ul class="list-group">
+    <li
+      class="list-group-item mt-1 cursor-pointer"
+      [routerLink]="['/recipecategories', recipeCategory.id]"
+      *ngFor="let recipeCategory of recipeCategories"
+    >
+      {{ recipeCategory.title }}
+    </li>
+  </ul>
+</div>

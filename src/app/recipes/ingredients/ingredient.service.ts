@@ -9,7 +9,7 @@ import { IIngredientNoDesc } from './ingredient-no-desc';
 export class IngredientService {
   constructor(private http: HttpClient) {}
 
-  getRecipes(
+  getIngredients(
     pageNumber: number,
     pageSize: number
   ): Observable<HttpResponse<IIngredient[]>> {
@@ -25,6 +25,11 @@ export class IngredientService {
   getIngredientsNoDesc(): Observable<IIngredientNoDesc[]> {
     let url = 'https://localhost:7049/api/ingredients/nodesc';
     return this.http.get<IIngredientNoDesc[]>(url);
+  }
+
+  nameExist(name: string): Observable<boolean> {
+    let url = `https://localhost:7049/api/ingredients/exist/${name}`;
+    return this.http.get<boolean>(url);
   }
 
   editIngredient(ingredient: IIngredient): Observable<HttpResponse<Object>> {

@@ -7,7 +7,7 @@ import { IXPagination } from 'src/app/shared/xpagination';
 @Component({
   templateUrl: 'ingredient-list.component.html',
 })
-export class IngredientListComponent implements OnInit, OnDestroy{
+export class IngredientListComponent implements OnInit, OnDestroy {
   ingredients: IIngredient[] = [];
   errorMessage: string = '';
   currentPage: number = 1;
@@ -16,11 +16,12 @@ export class IngredientListComponent implements OnInit, OnDestroy{
   totalPages: number = 1;
   totalItems: number = 1;
   sub!: Subscription;
+  displayAdd: boolean = false;
 
   constructor(private ingredientService: IngredientService) {}
 
   ngOnInit(): void {
-      this.getIngredients();
+    this.getIngredients();
   }
 
   private extractPaginationHeader(paginationHeader: string | null): void {
@@ -34,7 +35,7 @@ export class IngredientListComponent implements OnInit, OnDestroy{
 
   private getIngredients(): void {
     this.sub = this.ingredientService
-      .getRecipes(this.pageNumber, this.pageSize)
+      .getIngredients(this.pageNumber, this.pageSize)
       .subscribe({
         next: (response) => {
           let responseBody: IIngredient[] | null = response.body;
@@ -60,7 +61,16 @@ export class IngredientListComponent implements OnInit, OnDestroy{
     this.getIngredients();
   }
 
+  toggleAdd(): void {
+    this.displayAdd = !this.displayAdd;
+  }
+  
+  refresh(): void {
+    this.ngOnInit();
+  }
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 }
+
