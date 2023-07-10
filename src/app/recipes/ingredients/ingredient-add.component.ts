@@ -28,7 +28,7 @@ export class IngredientAddComponent implements OnDestroy {
     this.nameExists = true;
     if (this.ingredientForm.valid) {
       const name: string = this.ingredientForm.value.name as string;
-      this.ingredientService.nameExist(name).subscribe({
+      this.sub = this.ingredientService.nameExist(name).subscribe({
         next: (exist) => {
           this.nameExists = exist;
           if (exist === false) {
