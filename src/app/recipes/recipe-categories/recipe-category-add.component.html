@@ -1,0 +1,43 @@
+<form [formGroup]="recipeCategoryForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title :</label>
+  </div>
+  <div>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+  <span
+    *ngIf="recipeCategoryForm.get('title')?.errors?.['required']"
+    class="text-danger"
+  >
+    Title is required
+  </span>
+  <span
+    *ngIf="recipeCategoryForm.get('title')?.errors?.['maxlength']"
+    class="text-danger"
+  >
+    Title must be 50 characters maximum
+  </span>
+  <div class="mt-2">
+    <label for="description">Description :</label>
+  </div>
+  <div>
+    <textarea
+      class="w-50"
+      rows="5"
+      id="description"
+      formControlName="description"
+    ></textarea>
+  </div>
+  <span
+    *ngIf="recipeCategoryForm.get('description')?.errors?.['maxlength']"
+    class="text-danger"
+  >
+    Description must be 500 characters maximum
+  </span>
+  <div>
+    <button class="btn btn-warning mt-1" type="submit">Save changes</button>
+    <button class="btn btn-primary mt-1 ms-1" (click)="closeEdit()">
+      Cancel
+    </button>
+  </div>
+</form>

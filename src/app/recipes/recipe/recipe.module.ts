@@ -22,6 +22,7 @@ import { RecipeIngredientEditComponent } from '../recipe-ingredients/recipe-ingr
 import { IngredientListComponent } from '../ingredients/ingredient-list.component';
 import { RecipeCategoryListComponent } from '../recipe-categories/recipe-category-list.component';
 import { IngredientAddComponent } from '../ingredients/ingredient-add.component';
+import { RecipeCategoryAddComponent } from '../recipe-categories/recipe-category-add.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { IngredientAddComponent } from '../ingredients/ingredient-add.component'
     RecipeCategoryComponent,
     RecipeCategoryDetailComponent,
     RecipeCategoryEditComponent,
+    RecipeCategoryAddComponent,
     IngredientListComponent,
     IngredientComponent,
     IngredientDetailComponent,

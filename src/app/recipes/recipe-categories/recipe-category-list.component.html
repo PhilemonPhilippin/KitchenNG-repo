@@ -1,5 +1,15 @@
 <h1>Recipe categories</h1>
 <div>
+  <button
+    (click)="toggleAdd()"
+    class="btn btn-outline-primary"
+    *ngIf="!displayAdd"
+  >
+    Add
+  </button>
+</div>
+<recipe-category-add (addSuccessful)="refresh()" (closingEdit)="toggleAdd()" *ngIf="displayAdd"></recipe-category-add>
+<div>
   <ul class="list-group">
     <li
       class="list-group-item mt-1 cursor-pointer"
