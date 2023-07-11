@@ -1,9 +1,14 @@
 <h1>Recipe category</h1>
 <div>
   <button class="btn btn-primary me-1" (click)="backClicked()">Back</button>
-  <button class="btn btn-warning" (click)="toggleEdit()" *ngIf="displayDetail">
+  <button
+    class="btn btn-warning me-1"
+    (click)="toggleEdit()"
+    *ngIf="displayDetail"
+  >
     Edit
   </button>
+  <button class="btn btn-danger" (click)="deleteClicked()">Delete</button>
 </div>
 
 <recipe-category-detail *ngIf="displayDetail"></recipe-category-detail>

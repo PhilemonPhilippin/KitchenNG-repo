@@ -31,4 +31,9 @@ export class RecipeCategoryService {
     let url = `https://localhost:7049/api/recipecategories`;
     return this.http.post(url, recipeCategory, { observe: 'response' });
   }
+
+  deleteRecipeCategory(id: string): Observable<HttpResponse<Object>> {
+    let url = `https://localhost:7049/api/recipecategories/${id}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
 }
