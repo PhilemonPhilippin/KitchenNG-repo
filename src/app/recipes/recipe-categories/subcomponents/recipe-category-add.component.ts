@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RecipeCategoryService } from './recipe-category.service';
+import { RecipeCategoryService } from '../recipe-category.service';
 import { Subscription } from 'rxjs';
-import { IRecipeCategoryAddRequest } from './recipe-category-add-request';
+import { IRecipeCategoryAddRequest } from '../models/recipe-category-add-request';
 
 @Component({
   selector: 'recipe-category-add',

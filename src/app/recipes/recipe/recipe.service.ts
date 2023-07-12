@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IRecipe } from './recipe';
-import { IRecipeUpdateRequest } from './recipe-update-request';
+import { IRecipe } from './models/recipe';
+import { IRecipeUpdateRequest } from './models/recipe-update-request';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
@@ -27,7 +27,10 @@ export class RecipeService {
     return this.http.get<IRecipe>(recipeUrl);
   }
 
-  editRecipe(id: string, recipe: IRecipeUpdateRequest): Observable<HttpResponse<Object>> {
+  editRecipe(
+    id: string,
+    recipe: IRecipeUpdateRequest
+  ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${id}`;
     return this.http.put(url, recipe, { observe: 'response' });
   }

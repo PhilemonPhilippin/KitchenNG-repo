@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { IngredientService } from './ingredient.service';
-import { IIngredientAddRequest } from './ingredient-add-request';
+import { IngredientService } from '../ingredient.service';
+import { IIngredientAddRequest } from '../models/ingredient-add-request';
 
 @Component({
   selector: 'ingredient-add',

@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IngredientService } from '../ingredients/ingredient.service';
+import { IngredientService } from '../../ingredients/ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IIngredientAddRequest } from '../ingredients/ingredient-add-request';
-import { IIngredientNoDesc } from '../ingredients/ingredient-no-desc';
-import { RecipeIngredientService } from './recipe-ingredient.service';
-import { IRecipeIngredientAddRequest } from './recipe-ingredient-add-request';
+import { IIngredientAddRequest } from '../../ingredients/models/ingredient-add-request';
+import { IIngredientNoDesc } from '../../ingredients/models/ingredient-no-desc';
+import { RecipeIngredientService } from '../recipe-ingredient.service';
+import { IRecipeIngredientAddRequest } from '../models/recipe-ingredient-add-request';
 
 @Component({
   selector: 'recipe-ingredient-add',

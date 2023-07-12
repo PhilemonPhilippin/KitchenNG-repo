@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeService } from './recipe.service';
-import { IRecipe } from './recipe';
+import { RecipeService } from '../recipe.service';
+import { IRecipe } from '../models/recipe';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IRecipeUpdateRequest } from './recipe-update-request';
-import { RecipeCategoryService } from '../recipe-categories/recipe-category.service';
-import { IRecipeCategory } from '../recipe-categories/recipe-category';
+import { IRecipeUpdateRequest } from '../models/recipe-update-request';
+import { RecipeCategoryService } from '../../recipe-categories/recipe-category.service';
+import { IRecipeCategory } from '../../recipe-categories/models/recipe-category';
 
 @Component({
   selector: 'recipe-edit',

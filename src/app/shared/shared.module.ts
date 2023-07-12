@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaginationComponent } from './pagination.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [PaginationComponent],

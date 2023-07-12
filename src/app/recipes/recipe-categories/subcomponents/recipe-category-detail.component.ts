@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IRecipeCategory } from './recipe-category';
-import { RecipeCategoryService } from './recipe-category.service';
+import { IRecipeCategory } from '../models/recipe-category';
+import { RecipeCategoryService } from '../recipe-category.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IRecipeIngredient } from './recipe-ingredient';
+import { IRecipeIngredient } from '../models/recipe-ingredient';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RecipeIngredientService } from './recipe-ingredient.service';
-import { IRecipeIngredientEditRequest } from './recipe-ingredient-edit-request';
+import { RecipeIngredientService } from '../recipe-ingredient.service';
+import { IRecipeIngredientEditRequest } from '../models/recipe-ingredient-edit-request';
 
 @Component({
   selector: 'recipe-ingredient-edit',

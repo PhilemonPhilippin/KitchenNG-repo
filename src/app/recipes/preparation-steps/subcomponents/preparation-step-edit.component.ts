@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PreparationStepService } from './preparation-step.service';
-import { IPreparationStep } from './preparation-step';
+import { PreparationStepService } from '../preparation-step.service';
+import { IPreparationStep } from '../models/preparation-step';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({

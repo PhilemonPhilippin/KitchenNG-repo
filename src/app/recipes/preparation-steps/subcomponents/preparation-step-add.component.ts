@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PreparationStepService } from './preparation-step.service';
-import { IPreparationStepAddRequest } from './preparation-step-add-request';
+import { PreparationStepService } from '../preparation-step.service';
+import { IPreparationStepAddRequest } from '../models/preparation-step-add-request';
 
 @Component({
   selector: 'preparation-step-add',

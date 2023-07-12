@@ -1,9 +1,9 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IIngredient } from './ingredient';
-import { IIngredientAddRequest } from './ingredient-add-request';
-import { IIngredientNoDesc } from './ingredient-no-desc';
+import { IIngredient } from './models/ingredient';
+import { IIngredientAddRequest } from './models/ingredient-add-request';
+import { IIngredientNoDesc } from './models/ingredient-no-desc';
 
 @Injectable({ providedIn: 'root' })
 export class IngredientService {
@@ -44,6 +44,6 @@ export class IngredientService {
 
   deleteIngredient(id: string): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/ingredients/${id}`;
-    return this.http.delete(url, {observe: 'response'});
+    return this.http.delete(url, { observe: 'response' });
   }
 }

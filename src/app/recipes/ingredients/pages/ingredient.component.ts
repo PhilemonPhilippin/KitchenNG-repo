@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { IngredientService } from './ingredient.service';
+import { IngredientService } from '../ingredient.service';
 
 @Component({
   templateUrl: './ingredient.component.html',

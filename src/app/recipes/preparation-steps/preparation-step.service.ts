@@ -1,8 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPreparationStep } from './preparation-step';
-import { IPreparationStepAddRequest } from './preparation-step-add-request';
+import { IPreparationStep } from './models/preparation-step';
+import { IPreparationStepAddRequest } from './models/preparation-step-add-request';
 
 @Injectable({ providedIn: 'root' })
 export class PreparationStepService {
@@ -36,7 +36,10 @@ export class PreparationStepService {
     return this.http.post(url, preparationStep, { observe: 'response' });
   }
 
-  deletePreparationStep(id:string, recipeId: string): Observable<HttpResponse<Object>> {
+  deletePreparationStep(
+    id: string,
+    recipeId: string
+  ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/${id}`;
     return this.http.delete(url, { observe: 'response' });
   }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeService } from '../recipe/recipe.service';
-import { RecipeIngredientService } from '../recipe-ingredients/recipe-ingredient.service';
-import { IRecipe } from '../recipe/recipe';
-import { IRecipeIngredient } from '../recipe-ingredients/recipe-ingredient';
+import { RecipeService } from '../../recipe/recipe.service';
+import { RecipeIngredientService } from '../../recipe-ingredients/recipe-ingredient.service';
+import { IRecipe } from '../../recipe/models/recipe';
+import { IRecipeIngredient } from '../../recipe-ingredients/models/recipe-ingredient';
 
 @Component({
   selector: 'recipe-ingredient-list',

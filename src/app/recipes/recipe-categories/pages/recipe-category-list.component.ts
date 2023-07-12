@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IRecipeCategory } from './recipe-category';
-import { RecipeCategoryService } from './recipe-category.service';
+import { IRecipeCategory } from '../models/recipe-category';
+import { RecipeCategoryService } from '../recipe-category.service';
 
 @Component({
   templateUrl: './recipe-category-list.component.html',

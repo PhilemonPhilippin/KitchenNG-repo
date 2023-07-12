@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IRecipeCategory } from './recipe-category';
+import { IRecipeCategory } from '../models/recipe-category';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeCategoryService } from './recipe-category.service';
+import { RecipeCategoryService } from '../recipe-category.service';
 
 @Component({
   selector: 'recipe-category-edit',

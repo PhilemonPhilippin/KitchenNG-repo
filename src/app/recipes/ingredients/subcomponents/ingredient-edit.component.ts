@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { IIngredient } from './ingredient';
+import { IIngredient } from '../models/ingredient';
 import { ActivatedRoute } from '@angular/router';
-import { IngredientService } from './ingredient.service';
+import { IngredientService } from '../ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({

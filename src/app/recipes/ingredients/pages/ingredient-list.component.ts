@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RecipeService } from '../recipe/recipe.service';
-import { IRecipe } from '../recipe/recipe';
+import { IIngredient } from '../models/ingredient';
 import { Subscription } from 'rxjs';
-import { IXPagination } from '../../shared/xpagination';
+import { IngredientService } from '../ingredient.service';
+import { IXPagination } from 'src/app/shared/pagination/xpagination';
 
-@Component({ templateUrl: './recipe-list.component.html' })
-export class RecipeListComponent implements OnInit, OnDestroy {
-  recipes: IRecipe[] = [];
-  searchString: string = '';
+@Component({
+  templateUrl: 'ingredient-list.component.html',
+})
+export class IngredientListComponent implements OnInit, OnDestroy {
+  ingredients: IIngredient[] = [];
   errorMessage: string = '';
   currentPage: number = 1;
   pageNumber: number = 1;
@@ -15,10 +16,12 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   totalPages: number = 1;
   totalItems: number = 1;
   sub!: Subscription;
-  constructor(private recipeService: RecipeService) {}
+  displayAdd: boolean = false;
+
+  constructor(private ingredientService: IngredientService) {}
 
   ngOnInit(): void {
-    this.getRecipes();
+    this.getIngredients();
   }
 
   private extractPaginationHeader(paginationHeader: string | null): void {
@@ -30,14 +33,14 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getRecipes(): void {
-    this.sub = this.recipeService
-      .getRecipes(this.pageNumber, this.pageSize, this.searchString)
+  private getIngredients(): void {
+    this.sub = this.ingredientService
+      .getIngredients(this.pageNumber, this.pageSize)
       .subscribe({
         next: (response) => {
-          let responseBody: IRecipe[] | null = response.body;
+          let responseBody: IIngredient[] | null = response.body;
           if (responseBody !== null) {
-            this.recipes = responseBody;
+            this.ingredients = responseBody;
           }
           let paginationHeader: string | null =
             response.headers.get('X-Pagination');
@@ -47,19 +50,23 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       });
   }
 
-  search(): void {
-    this.getRecipes();
-  }
-
   changePage(page: number): void {
     this.pageNumber = page;
-    this.getRecipes();
+    this.getIngredients();
   }
 
   changePageSize(size: number): void {
     this.pageSize = size;
     this.pageNumber = 1;
-    this.getRecipes();
+    this.getIngredients();
+  }
+
+  toggleAdd(): void {
+    this.displayAdd = !this.displayAdd;
+  }
+
+  refresh(): void {
+    this.ngOnInit();
   }
 
   ngOnDestroy(): void {
