@@ -23,11 +23,13 @@ import { IngredientListComponent } from '../ingredients/pages/ingredient-list.co
 import { RecipeCategoryListComponent } from '../recipe-categories/pages/recipe-category-list.component';
 import { IngredientAddComponent } from '../ingredients/subcomponents/ingredient-add.component';
 import { RecipeCategoryAddComponent } from '../recipe-categories/subcomponents/recipe-category-add.component';
+import { RecipeAddComponent } from './subcomponents/recipe-add.component';
 
 @NgModule({
   declarations: [
     RecipeListComponent,
     RecipeComponent,
+    RecipeAddComponent,
     RecipeDetailComponent,
     RecipeEditComponent,
     RecipeIngredientListComponent,

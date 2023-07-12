@@ -14,6 +14,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   pageSize: number = 5;
   totalPages: number = 1;
   totalItems: number = 1;
+  displayAdd: boolean = false;
   sub!: Subscription;
   constructor(private recipeService: RecipeService) {}
 
@@ -60,6 +61,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     this.pageSize = size;
     this.pageNumber = 1;
     this.getRecipes();
+  }
+
+  toggleAdd() {
+    this.displayAdd = !this.displayAdd;
   }
 
   ngOnDestroy(): void {

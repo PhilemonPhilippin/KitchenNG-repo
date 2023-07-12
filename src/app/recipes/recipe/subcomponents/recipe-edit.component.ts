@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { IRecipe } from '../models/recipe';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IRecipeUpdateRequest } from '../models/recipe-update-request';
+import { IRecipeRequest } from '../models/recipe-request';
 import { RecipeCategoryService } from '../../recipe-categories/recipe-category.service';
 import { IRecipeCategory } from '../../recipe-categories/models/recipe-category';
 
@@ -62,7 +62,7 @@ export class RecipeEditComponent implements OnInit {
   onSubmit(): void {
     this.statusCode = 0;
     if (this.recipe && this.recipeForm.valid) {
-      const recipeUpdateRequest: IRecipeUpdateRequest = {
+      const recipeUpdateRequest: IRecipeRequest = {
         title: this.recipeForm.value.title as string,
         description: this.recipeForm.value.description ?? '',
         recipeCategoryId: this.recipeForm.value.recipeCategory as string,

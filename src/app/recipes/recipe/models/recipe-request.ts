@@ -1,4 +1,4 @@
-export interface IRecipeUpdateRequest {
+export interface IRecipeRequest {
   title: string;
   description: string | undefined;
   recipeCategoryId: string;
