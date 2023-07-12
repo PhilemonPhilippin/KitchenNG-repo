@@ -1,18 +1,27 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PreparationStepService } from '../preparation-step.service';
 import { IPreparationStep } from '../models/preparation-step';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'preparation-step-edit',
   templateUrl: './preparation-step-edit.component.html',
 })
-export class PreparationStepEditComponent implements OnInit {
+export class PreparationStepEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
   preparationStep: IPreparationStep | undefined;
   errorMessage: string = '';
   statusCode: number = 0;
+  subOne!: Subscription;
+  subTwo!: Subscription;
 
   preparationStepForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -33,7 +42,7 @@ export class PreparationStepEditComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     const recipeId = this.route.snapshot.paramMap.get('recipeid');
     if (id && recipeId) {
-      this.preparationStepService
+      this.subOne = this.preparationStepService
         .getPreparationStep(id, recipeId)
         .subscribe((preparationStep) => {
           this.preparationStep = preparationStep;
@@ -67,19 +76,28 @@ export class PreparationStepEditComponent implements OnInit {
         recipeId: this.preparationStep.recipeId,
       };
 
-      this.preparationStepService.editPreparationStep(step).subscribe({
-        next: (response) => {
-          this.statusCode = response.status;
-          if (response.status === 204) {
-            this.closeEdit();
-          }
-        },
-        error: (err) => (this.errorMessage = err),
-      });
+      this.subTwo = this.preparationStepService
+        .editPreparationStep(step)
+        .subscribe({
+          next: (response) => {
+            this.statusCode = response.status;
+            if (response.status === 204) {
+              this.closeEdit();
+            }
+          },
+          error: (err) => (this.errorMessage = err),
+        });
     }
   }
 
   closeEdit(): void {
     this.closingEdit.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.subOne.unsubscribe();
+    if (this.subTwo) {
+      this.subTwo.unsubscribe();
+    }
   }
 }

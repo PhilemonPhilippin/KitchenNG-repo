@@ -70,9 +70,7 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subOne) {
-      this.subOne.unsubscribe();
-    }
+    this.subOne.unsubscribe();
     if (this.subTwo) {
       this.subTwo.unsubscribe();
     }

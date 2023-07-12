@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../recipe/recipe.service';
 import { RecipeIngredientService } from '../../recipe-ingredients/recipe-ingredient.service';
 import { IRecipe } from '../../recipe/models/recipe';
 import { IRecipeIngredient } from '../../recipe-ingredients/models/recipe-ingredient';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'recipe-ingredient-list',
   templateUrl: './recipe-ingredient-list.component.html',
 })
-export class RecipeIngredientListComponent implements OnInit {
+export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   recipe: IRecipe | undefined;
   recipeIngredients: IRecipeIngredient[] = [];
   errorMessages: string[] = [];
@@ -17,6 +18,9 @@ export class RecipeIngredientListComponent implements OnInit {
   displayEditIngredient: boolean = false;
   recipeIngredientEdited: IRecipeIngredient | undefined;
   statusCode: number = 0;
+  subOne!: Subscription;
+  subTwo!: Subscription;
+  subThree!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,17 +37,20 @@ export class RecipeIngredientListComponent implements OnInit {
   }
 
   getRecipe(id: string): void {
-    this.recipeService.getRecipe(id).subscribe({
+    this.subOne = this.recipeService.getRecipe(id).subscribe({
       next: (recipe) => (this.recipe = recipe),
       error: (err) => this.errorMessages.push(err),
     });
   }
 
   getRecipeIngredients(recipeId: string): void {
-    this.recipeIngredientService.getRecipeIngredients(recipeId).subscribe({
-      next: (recipeIngredients) => (this.recipeIngredients = recipeIngredients),
-      error: (err) => this.errorMessages.push(err),
-    });
+    this.subTwo = this.recipeIngredientService
+      .getRecipeIngredients(recipeId)
+      .subscribe({
+        next: (recipeIngredients) =>
+          (this.recipeIngredients = recipeIngredients),
+        error: (err) => this.errorMessages.push(err),
+      });
   }
 
   toggleAddIngredient(): void {
@@ -69,7 +76,7 @@ export class RecipeIngredientListComponent implements OnInit {
 
   removeClicked(ingredientId: string): void {
     if (this.recipe?.id) {
-      this.recipeIngredientService
+      this.subThree = this.recipeIngredientService
         .removeRecipeIngredient(this.recipe.id, ingredientId)
         .subscribe({
           next: (response) => {
@@ -85,5 +92,11 @@ export class RecipeIngredientListComponent implements OnInit {
 
   refresh(): void {
     this.ngOnInit();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subThree) {
+      this.subThree.unsubscribe();
+    }
   }
 }

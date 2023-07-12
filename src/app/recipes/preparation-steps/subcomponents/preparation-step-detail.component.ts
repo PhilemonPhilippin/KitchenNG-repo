@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IPreparationStep } from '../models/preparation-step';
 import { PreparationStepService } from '../preparation-step.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'preparation-step-detail',
   templateUrl: './preparation-step-detail.component.html',
 })
-export class PreparationStepDetailComponent implements OnInit {
+export class PreparationStepDetailComponent implements OnInit, OnDestroy {
   preparationStep: IPreparationStep | undefined;
   errorMessage: string = '';
+sub!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,9 +27,13 @@ export class PreparationStepDetailComponent implements OnInit {
   }
 
   getPreparationStep(id: string, recipeId: string): void {
-    this.preparationStepService.getPreparationStep(id, recipeId).subscribe({
+    this.sub = this.preparationStepService.getPreparationStep(id, recipeId).subscribe({
       next: (preparationStep) => (this.preparationStep = preparationStep),
       error: (err) => (this.errorMessage = err),
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

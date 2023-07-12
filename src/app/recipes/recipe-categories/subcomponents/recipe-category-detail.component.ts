@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IRecipeCategory } from '../models/recipe-category';
 import { RecipeCategoryService } from '../recipe-category.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'recipe-category-detail',
   templateUrl: './recipe-category-detail.component.html',
 })
-export class RecipeCategoryDetailComponent implements OnInit {
+export class RecipeCategoryDetailComponent implements OnInit, OnDestroy {
   recipeCategory: IRecipeCategory | undefined;
   errorMessage: string = '';
+sub!: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private recipeCategoryService: RecipeCategoryService
@@ -23,9 +26,13 @@ export class RecipeCategoryDetailComponent implements OnInit {
   }
 
   getRecipeCategory(id: string): void {
-    this.recipeCategoryService.getRecipeCategory(id).subscribe({
+    this.sub = this.recipeCategoryService.getRecipeCategory(id).subscribe({
       next: (recipeCategory) => (this.recipeCategory = recipeCategory),
       error: (err) => (this.errorMessage = err),
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

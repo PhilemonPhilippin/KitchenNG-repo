@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
 import { IIngredient } from '../models/ingredient';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ingredient-detail',
   templateUrl: './ingredient-detail.component.html',
 })
-export class IngredientDetailComponent implements OnInit {
+export class IngredientDetailComponent implements OnInit, OnDestroy {
   ingredient: IIngredient | undefined;
   errorMessage: string = '';
+  sub!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,9 +26,13 @@ export class IngredientDetailComponent implements OnInit {
   }
 
   private getIngredient(id: string): void {
-    this.ingredientService.getIngredient(id).subscribe({
+    this.sub = this.ingredientService.getIngredient(id).subscribe({
       next: (ingredient) => (this.ingredient = ingredient),
       error: (err) => (this.errorMessage = err),
     });
+  }
+  
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

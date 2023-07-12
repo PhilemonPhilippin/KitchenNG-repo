@@ -1,20 +1,29 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IRecipeIngredient } from '../models/recipe-ingredient';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeIngredientService } from '../recipe-ingredient.service';
 import { IRecipeIngredientEditRequest } from '../models/recipe-ingredient-edit-request';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'recipe-ingredient-edit',
   templateUrl: './recipe-ingredient-edit.component.html',
 })
-export class RecipeIngredientEditComponent implements OnInit {
+export class RecipeIngredientEditComponent implements OnInit, OnDestroy {
   @Input() recipeId: string = '';
   @Input() recipeIngredient: IRecipeIngredient | undefined;
   @Output() closingEdit = new EventEmitter();
   @Output() editSuccessful = new EventEmitter();
   statusCode: number = 0;
   errorMessages: string[] = [];
+  sub!: Subscription;
   ingredientForm = new FormGroup({
     quantity: new FormControl('', [
       Validators.required,
@@ -36,7 +45,7 @@ export class RecipeIngredientEditComponent implements OnInit {
     const recipeIngredientRequest: IRecipeIngredientEditRequest = {
       ingredientQuantity: this.ingredientForm.value.quantity as string,
     };
-    this.recipeIngredientService
+    this.sub = this.recipeIngredientService
       .editRecipeIngredient(
         this.recipeId,
         this.recipeIngredient?.id as string,
@@ -56,5 +65,10 @@ export class RecipeIngredientEditComponent implements OnInit {
 
   closeEdit(): void {
     this.closingEdit.emit();
+  }
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

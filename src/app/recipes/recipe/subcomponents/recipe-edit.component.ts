@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { IRecipe } from '../models/recipe';
@@ -6,17 +12,21 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IRecipeRequest } from '../models/recipe-request';
 import { RecipeCategoryService } from '../../recipe-categories/recipe-category.service';
 import { IRecipeCategory } from '../../recipe-categories/models/recipe-category';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'recipe-edit',
   templateUrl: './recipe-edit.component.html',
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
   recipe: IRecipe | undefined;
   errorMessages: string[] = [];
   statusCode: number = 0;
   recipeCategories: IRecipeCategory[] = [];
+  subOne!: Subscription;
+  subTwo!: Subscription;
+  subThree!: Subscription;
 
   recipeForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -36,7 +46,7 @@ export class RecipeEditComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.recipeService.getRecipe(id).subscribe((recipe) => {
+      this.subOne = this.recipeService.getRecipe(id).subscribe((recipe) => {
         this.recipe = recipe;
         this.recipeForm = new FormGroup({
           title: new FormControl(this.recipe.title, [
@@ -53,7 +63,7 @@ export class RecipeEditComponent implements OnInit {
         });
       });
     }
-    this.recipeCategoryService.getRecipeCategories().subscribe({
+    this.subTwo = this.recipeCategoryService.getRecipeCategories().subscribe({
       next: (recipeCategories) => (this.recipeCategories = recipeCategories),
       error: (err) => this.errorMessages.push(err),
     });
@@ -68,7 +78,7 @@ export class RecipeEditComponent implements OnInit {
         recipeCategoryId: this.recipeForm.value.recipeCategory as string,
       };
 
-      this.recipeService
+      this.subThree = this.recipeService
         .editRecipe(this.recipe.id, recipeUpdateRequest)
         .subscribe({
           next: (response) => {
@@ -84,5 +94,13 @@ export class RecipeEditComponent implements OnInit {
 
   closeEdit(): void {
     this.closingEdit.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.subOne.unsubscribe();
+    this.subTwo.unsubscribe();
+    if (this.subThree) {
+      this.subThree.unsubscribe();
+    }
   }
 }

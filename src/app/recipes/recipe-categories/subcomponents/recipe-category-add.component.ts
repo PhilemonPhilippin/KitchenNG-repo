@@ -20,6 +20,7 @@ export class RecipeCategoryAddComponent implements OnDestroy {
   });
 
   constructor(private recipeCategoryService: RecipeCategoryService) {}
+  
   onSubmit(): void {
     const recipeCategory: IRecipeCategoryAddRequest = {
       title: this.recipeCategoryForm.value.title as string,

@@ -1,18 +1,21 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { IIngredient } from '../models/ingredient';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ingredient-edit',
   templateUrl: './ingredient-edit.component.html',
 })
-export class IngredientEditComponent implements OnInit {
+export class IngredientEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
   ingredient: IIngredient | undefined;
   statusCode: number = 0;
   errorMessage: string = '';
+  subOne!: Subscription;
+  subTwo!: Subscription;
 
   ingredientForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -27,7 +30,7 @@ export class IngredientEditComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.ingredientService.getIngredient(id).subscribe((ingredient) => {
+      this.subOne = this.ingredientService.getIngredient(id).subscribe((ingredient) => {
         this.ingredient = ingredient;
         this.ingredientForm = new FormGroup({
           name: new FormControl(this.ingredient.name, [
@@ -51,7 +54,7 @@ export class IngredientEditComponent implements OnInit {
         description: this.ingredientForm.value.description ?? '',
       };
 
-      this.ingredientService.editIngredient(ingredient).subscribe({
+      this.subTwo = this.ingredientService.editIngredient(ingredient).subscribe({
         next: (response) => {
           this.statusCode = response.status;
         },
@@ -62,5 +65,12 @@ export class IngredientEditComponent implements OnInit {
 
   closeEdit(): void {
     this.closingEdit.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.subOne.unsubscribe();
+    if (this.subTwo) {
+      this.subTwo.unsubscribe();
+    }
   }
 }

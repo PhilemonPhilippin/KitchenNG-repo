@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PreparationStepService } from '../preparation-step.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './preparation-step.component.html',
 })
-export class PreparationStepComponent implements OnInit {
+export class PreparationStepComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
   statusCode: number = 0;
   errorMessage: string = '';
   id: string = '';
   recipeId: string = '';
+  sub!: Subscription;
 
   constructor(
     private _location: Location,
@@ -36,7 +38,7 @@ export class PreparationStepComponent implements OnInit {
   }
 
   deleteClicked(): void {
-    this.preparationStepService
+    this.sub = this.preparationStepService
       .deletePreparationStep(this.id, this.recipeId)
       .subscribe({
         next: (response) => {
@@ -47,5 +49,11 @@ export class PreparationStepComponent implements OnInit {
         },
         error: (err) => (this.errorMessage = err),
       });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

@@ -1,18 +1,20 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PreparationStepService } from '../preparation-step.service';
 import { IPreparationStepAddRequest } from '../models/preparation-step-add-request';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'preparation-step-add',
   templateUrl: './preparation-step-add.component.html',
 })
-export class PreparationStepAddComponent {
+export class PreparationStepAddComponent implements OnDestroy {
   statusCode: number = 0;
   @Output() closingAdd = new EventEmitter();
   @Output() addSuccessful = new EventEmitter();
   @Input() recipeId: string = '';
   errorMessages: string[] = [];
+  sub!: Subscription;
 
   constructor(private preparationStepService: PreparationStepService) {}
 
@@ -32,7 +34,7 @@ export class PreparationStepAddComponent {
       stepNumber: this.preparationStepForm.value.stepNumber as number,
       step: this.preparationStepForm.value.step as string,
     };
-    this.preparationStepService
+    this.sub = this.preparationStepService
       .addPreparationStep(this.recipeId, preparationStep)
       .subscribe({
         next: (response) => {
@@ -53,5 +55,9 @@ export class PreparationStepAddComponent {
 
   closeAdd(): void {
     this.closingAdd.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './ingredient.component.html',
 })
-export class IngredientComponent implements OnInit {
+export class IngredientComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
   id: string = '';
   errorMessages: string[] = [];
+  sub!: Subscription;
 
   constructor(
     private _location: Location,
@@ -32,7 +34,7 @@ export class IngredientComponent implements OnInit {
   }
 
   deleteClicked(id: string): void {
-    this.ingredientService.deleteIngredient(id).subscribe({
+    this.sub = this.ingredientService.deleteIngredient(id).subscribe({
       next: (response) => {
         if (response.status === 204) {
           this._location.back();
@@ -40,5 +42,11 @@ export class IngredientComponent implements OnInit {
       },
       error: (err) => this.errorMessages.push(err),
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

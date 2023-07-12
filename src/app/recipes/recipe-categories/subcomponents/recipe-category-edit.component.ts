@@ -1,18 +1,27 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IRecipeCategory } from '../models/recipe-category';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeCategoryService } from '../recipe-category.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'recipe-category-edit',
   templateUrl: './recipe-category-edit.component.html',
 })
-export class RecipeCategoryEditComponent implements OnInit {
+export class RecipeCategoryEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
   recipeCategory: IRecipeCategory | undefined;
   errorMessage: string = '';
   statusCode: number = 0;
+  subOne!: Subscription;
+  subTwo!: Subscription;
 
   recipeCategoryForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -27,7 +36,7 @@ export class RecipeCategoryEditComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.recipeCategoryService
+      this.subOne = this.recipeCategoryService
         .getRecipeCategory(id)
         .subscribe((recipeCategory) => {
           this.recipeCategory = recipeCategory;
@@ -54,19 +63,28 @@ export class RecipeCategoryEditComponent implements OnInit {
         description: this.recipeCategoryForm.value.description ?? '',
       };
 
-      this.recipeCategoryService.editRecipeCategory(category).subscribe({
-        next: (response) => {
-          this.statusCode = response.status;
-          if (response.status === 204) {
-            this.closeEdit();
-          }
-        },
-        error: (err) => (this.errorMessage = err),
-      });
+      this.subTwo = this.recipeCategoryService
+        .editRecipeCategory(category)
+        .subscribe({
+          next: (response) => {
+            this.statusCode = response.status;
+            if (response.status === 204) {
+              this.closeEdit();
+            }
+          },
+          error: (err) => (this.errorMessage = err),
+        });
     }
   }
 
   closeEdit() {
     this.closingEdit.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.subOne.unsubscribe();
+    if (this.subTwo) {
+      this.subTwo.unsubscribe();
+    }
   }
 }

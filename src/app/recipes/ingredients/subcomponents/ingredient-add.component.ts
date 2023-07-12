@@ -13,8 +13,9 @@ export class IngredientAddComponent implements OnDestroy {
   @Output() addSucccessful = new EventEmitter();
   nameExists: boolean = false;
   statusCode: number = 0;
-  sub!: Subscription;
   errorMessages: string[] = [];
+  subOne!: Subscription;
+  subTwo!: Subscription;
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -28,7 +29,7 @@ export class IngredientAddComponent implements OnDestroy {
     this.nameExists = true;
     if (this.ingredientForm.valid) {
       const name: string = this.ingredientForm.value.name as string;
-      this.sub = this.ingredientService.nameExist(name).subscribe({
+      this.subOne = this.ingredientService.nameExist(name).subscribe({
         next: (exist) => {
           this.nameExists = exist;
           if (exist === false) {
@@ -47,7 +48,7 @@ export class IngredientAddComponent implements OnDestroy {
   }
 
   private postIngredient(ingredient: IIngredientAddRequest): void {
-    this.ingredientService.addIngredient(ingredient).subscribe({
+    this.subTwo = this.ingredientService.addIngredient(ingredient).subscribe({
       next: (response) => {
         if (response.id) {
           this.addSucccessful.emit();
@@ -63,6 +64,11 @@ export class IngredientAddComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    if (this.subOne) {
+      this.subOne.unsubscribe();
+    }
+    if (this.subTwo) {
+      this.subTwo.unsubscribe();
+    }
   }
 }
