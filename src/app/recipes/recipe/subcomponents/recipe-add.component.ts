@@ -47,20 +47,22 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const recipe: IRecipeRequest = {
-      title: this.recipeForm.value.title as string,
-      description: this.recipeForm.value.description ?? undefined,
-      recipeCategoryId: this.recipeForm.value.recipeCategory as string,
-    };
-    this.subTwo = this.recipeService.addRecipe(recipe).subscribe({
-      next: (recipe) => {
-        if (recipe) {
-          this.closeAdd();
+    if (this.recipeForm.valid) {
+      const recipe: IRecipeRequest = {
+        title: this.recipeForm.value.title as string,
+        description: this.recipeForm.value.description ?? undefined,
+        recipeCategoryId: this.recipeForm.value.recipeCategory as string,
+      };
+      this.subTwo = this.recipeService.addRecipe(recipe).subscribe({
+        next: (recipe) => {
+          if (recipe) {
+            this.closeAdd();
             this.router.navigate(['/recipes', recipe.id]);
-        }
-      },
-      error: (err) => this.errorMessages.push(err),
-    });
+          }
+        },
+        error: (err) => this.errorMessages.push(err),
+      });
+    }
   }
 
   closeAdd() {
@@ -70,6 +72,9 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subOne) {
       this.subOne.unsubscribe();
+    }
+    if (this.subTwo) {
+      this.subTwo.unsubscribe();
     }
   }
 }
