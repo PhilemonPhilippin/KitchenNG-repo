@@ -22,13 +22,13 @@ export class RecipeService {
     return this.http.get<IRecipe[]>(recipeUrl, { observe: 'response' });
   }
 
-  getRecipe(id: string): Observable<IRecipe> {
+  getRecipe(id: number): Observable<IRecipe> {
     let recipeUrl: string = `https://localhost:7049/api/recipes/${id}`;
     return this.http.get<IRecipe>(recipeUrl);
   }
 
   editRecipe(
-    id: string,
+    id: number,
     recipe: IRecipeRequest
   ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${id}`;

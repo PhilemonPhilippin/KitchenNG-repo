@@ -12,8 +12,8 @@ export class PreparationStepComponent implements OnInit, OnDestroy {
   displayEdit: boolean = false;
   statusCode: number = 0;
   errorMessage: string = '';
-  id: string = '';
-  recipeId: string = '';
+  id: number = 0;
+  recipeId: number = 0;
   sub!: Subscription;
 
   constructor(
@@ -24,8 +24,8 @@ export class PreparationStepComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id') as string;
-    this.recipeId = this.route.snapshot.paramMap.get('recipeid') as string;
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.recipeId = Number(this.route.snapshot.paramMap.get('recipeid'));
   }
 
   toggleEdit(): void {

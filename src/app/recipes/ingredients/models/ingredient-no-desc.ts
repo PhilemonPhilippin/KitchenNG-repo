@@ -1,4 +1,4 @@
 export interface IIngredientNoDesc {
-  id: string;
+  id: number;
   name: string;
 }

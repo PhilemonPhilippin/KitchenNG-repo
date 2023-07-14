@@ -31,10 +31,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   recipeForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     description: new FormControl('', [Validators.maxLength(500)]),
-    recipeCategory: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(36),
-    ]),
+    recipeCategory: new FormControl<number>(0, [Validators.required]),
   });
 
   constructor(
@@ -44,7 +41,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.subOne = this.recipeService.getRecipe(id).subscribe((recipe) => {
         this.recipe = recipe;
@@ -56,10 +53,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           description: new FormControl(this.recipe.description ?? null, [
             Validators.maxLength(500),
           ]),
-          recipeCategory: new FormControl(this.recipe.recipeCategory.id, [
-            Validators.required,
-            Validators.maxLength(36),
-          ]),
+          recipeCategory: new FormControl<number>(
+            this.recipe.recipeCategory.id,
+            [Validators.required]
+          ),
         });
       });
     }
@@ -74,8 +71,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     if (this.recipe && this.recipeForm.valid) {
       const recipeUpdateRequest: IRecipeRequest = {
         title: this.recipeForm.value.title as string,
-        description: this.recipeForm.value.description ?? '',
-        recipeCategoryId: this.recipeForm.value.recipeCategory as string,
+        description: this.recipeForm.value.description ?? undefined,
+        recipeCategoryId: Number(this.recipeForm.value.recipeCategory),
       };
 
       this.subThree = this.recipeService

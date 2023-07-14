@@ -27,10 +27,7 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
   recipeForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     description: new FormControl('', [Validators.maxLength(500)]),
-    recipeCategory: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(36),
-    ]),
+    recipeCategory: new FormControl<number>(0, [Validators.required]),
   });
 
   constructor(
@@ -51,7 +48,7 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
       const recipe: IRecipeRequest = {
         title: this.recipeForm.value.title as string,
         description: this.recipeForm.value.description ?? undefined,
-        recipeCategoryId: this.recipeForm.value.recipeCategory as string,
+        recipeCategoryId: Number(this.recipeForm.value.recipeCategory),
       };
       this.subTwo = this.recipeService.addRecipe(recipe).subscribe({
         next: (recipe) => {

@@ -12,7 +12,7 @@ export class PreparationStepAddComponent implements OnDestroy {
   statusCode: number = 0;
   @Output() closingAdd = new EventEmitter();
   @Output() addSuccessful = new EventEmitter();
-  @Input() recipeId: string = '';
+  @Input() recipeId: number = 0;
   errorMessages: string[] = [];
   sub!: Subscription;
 

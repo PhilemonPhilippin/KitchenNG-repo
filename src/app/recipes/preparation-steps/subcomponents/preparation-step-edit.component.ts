@@ -39,8 +39,8 @@ export class PreparationStepEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    const recipeId = this.route.snapshot.paramMap.get('recipeid');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const recipeId = Number(this.route.snapshot.paramMap.get('recipeid'));
     if (id && recipeId) {
       this.subOne = this.preparationStepService
         .getPreparationStep(id, recipeId)

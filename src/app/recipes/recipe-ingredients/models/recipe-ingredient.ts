@@ -1,5 +1,5 @@
 export interface IRecipeIngredient {
-  id: string;
+  id: number;
   name: string;
   description: string | undefined;
   ingredientQuantity: string;

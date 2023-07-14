@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { IIngredientRequest } from '../models/ingredient-request';
 
 @Component({
   selector: 'ingredient-edit',
@@ -16,6 +17,7 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   subOne!: Subscription;
   subTwo!: Subscription;
+  id: number = 0;
 
   ingredientForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -28,9 +30,9 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.subOne = this.ingredientService.getIngredient(id).subscribe((ingredient) => {
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.id !== 0) {
+      this.subOne = this.ingredientService.getIngredient(this.id).subscribe((ingredient) => {
         this.ingredient = ingredient;
         this.ingredientForm = new FormGroup({
           name: new FormControl(this.ingredient.name, [
@@ -47,16 +49,18 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.statusCode = 0;
-    if (this.ingredient && this.ingredientForm.valid) {
-      const ingredient: IIngredient = {
-        id: this.ingredient.id,
+    if (this.ingredient && this.ingredientForm.valid && this.id !== 0) {
+      const ingredient: IIngredientRequest = {
         name: this.ingredientForm.value.name as string,
         description: this.ingredientForm.value.description ?? '',
       };
 
-      this.subTwo = this.ingredientService.editIngredient(ingredient).subscribe({
+      this.subTwo = this.ingredientService.editIngredient(this.id, ingredient).subscribe({
         next: (response) => {
           this.statusCode = response.status;
+          if (response.status === 204) {
+            this.closeEdit();
+          }
         },
         error: (err) => (this.errorMessage = err),
       });

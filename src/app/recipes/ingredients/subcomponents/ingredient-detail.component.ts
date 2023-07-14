@@ -19,13 +19,13 @@ export class IngredientDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.getIngredient(id);
     }
   }
 
-  private getIngredient(id: string): void {
+  private getIngredient(id: number): void {
     this.sub = this.ingredientService.getIngredient(id).subscribe({
       next: (ingredient) => (this.ingredient = ingredient),
       error: (err) => (this.errorMessage = err),

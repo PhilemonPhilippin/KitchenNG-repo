@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IngredientService } from '../ingredient.service';
-import { IIngredientAddRequest } from '../models/ingredient-add-request';
+import { IIngredientRequest } from '../models/ingredient-request';
 
 @Component({
   selector: 'ingredient-add',
@@ -35,7 +35,7 @@ export class IngredientAddComponent implements OnDestroy {
           if (exist === false) {
             const description: string | undefined =
               this.ingredientForm.value.description ?? undefined;
-            const ingredient: IIngredientAddRequest = {
+            const ingredient: IIngredientRequest = {
               name: name,
               description: description,
             };
@@ -47,7 +47,7 @@ export class IngredientAddComponent implements OnDestroy {
     }
   }
 
-  private postIngredient(ingredient: IIngredientAddRequest): void {
+  private postIngredient(ingredient: IIngredientRequest): void {
     this.subTwo = this.ingredientService.addIngredient(ingredient).subscribe({
       next: (response) => {
         if (response.id) {

@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { IngredientService } from '../../ingredients/ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IIngredientAddRequest } from '../../ingredients/models/ingredient-add-request';
 import { IIngredientNoDesc } from '../../ingredients/models/ingredient-no-desc';
 import { RecipeIngredientService } from '../recipe-ingredient.service';
 import { IRecipeIngredientAddRequest } from '../models/recipe-ingredient-add-request';
 import { Subscription } from 'rxjs';
+import { IIngredientRequest } from '../../ingredients/models/ingredient-request';
 
 @Component({
   selector: 'recipe-ingredient-add',
@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
 export class RecipeIngredientAddComponent implements OnInit, OnDestroy {
   @Output() closingAdd = new EventEmitter();
   @Output() addSucccessful = new EventEmitter();
-  @Input() recipeId: string = '';
+  @Input() recipeId: number = 0;
 
   ingredientsNoDesc: IIngredientNoDesc[] = [];
   statusCode: number = 0;
@@ -58,7 +58,7 @@ export class RecipeIngredientAddComponent implements OnInit, OnDestroy {
     this.existingIngredient = undefined;
 
     if (this.ingredientForm.valid) {
-      const ingredient: IIngredientAddRequest = {
+      const ingredient: IIngredientRequest = {
         name: this.ingredientForm.value.name as string,
         description: this.ingredientForm.value.description ?? undefined,
       };
@@ -75,7 +75,7 @@ export class RecipeIngredientAddComponent implements OnInit, OnDestroy {
         };
         this.PostRecipeIngredient(recipeIngredient);
       } else {
-        let addedIngredientId: string = '';
+        let addedIngredientId: number = 0;
         this.subTwo = this.ingredientService
           .addIngredient(ingredient)
           .subscribe({

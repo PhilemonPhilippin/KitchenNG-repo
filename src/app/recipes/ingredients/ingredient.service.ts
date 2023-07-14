@@ -2,8 +2,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IIngredient } from './models/ingredient';
-import { IIngredientAddRequest } from './models/ingredient-add-request';
 import { IIngredientNoDesc } from './models/ingredient-no-desc';
+import { IIngredientRequest } from './models/ingredient-request';
 
 @Injectable({ providedIn: 'root' })
 export class IngredientService {
@@ -17,7 +17,7 @@ export class IngredientService {
     return this.http.get<IIngredient[]>(url, { observe: 'response' });
   }
 
-  getIngredient(id: string): Observable<IIngredient> {
+  getIngredient(id: number): Observable<IIngredient> {
     let url = `https://localhost:7049/api/ingredients/${id}`;
     return this.http.get<IIngredient>(url);
   }
@@ -32,17 +32,20 @@ export class IngredientService {
     return this.http.get<boolean>(url);
   }
 
-  editIngredient(ingredient: IIngredient): Observable<HttpResponse<Object>> {
-    let url = `https://localhost:7049/api/ingredients/${ingredient.id}`;
+  editIngredient(
+    id: number,
+    ingredient: IIngredientRequest
+  ): Observable<HttpResponse<Object>> {
+    let url = `https://localhost:7049/api/ingredients/${id}`;
     return this.http.put(url, ingredient, { observe: 'response' });
   }
 
-  addIngredient(ingredient: IIngredientAddRequest): Observable<IIngredient> {
+  addIngredient(ingredient: IIngredientRequest): Observable<IIngredient> {
     let url = 'https://localhost:7049/api/ingredients';
     return this.http.post<IIngredient>(url, ingredient);
   }
 
-  deleteIngredient(id: string): Observable<HttpResponse<Object>> {
+  deleteIngredient(id: number): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/ingredients/${id}`;
     return this.http.delete(url, { observe: 'response' });
   }

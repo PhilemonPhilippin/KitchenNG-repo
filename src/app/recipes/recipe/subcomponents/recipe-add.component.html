@@ -49,6 +49,11 @@
       </option>
     </select>
   </div>
+  <span
+    *ngIf="recipeForm.get('recipeCategory')?.errors?.['required']"
+    class="text-danger"
+    >Category is required</span
+  >
   <div>
     <button class="btn btn-warning mt-1" type="submit">Add</button>
     <button class="btn btn-primary mt-1 ms-1" (click)="closeAdd()">

@@ -1,7 +1,7 @@
 import { IRecipeCategory } from '../../recipe-categories/models/recipe-category';
 
 export interface IRecipe {
-  id: string;
+  id: number;
   title: string;
   description: string | undefined;
   recipeCategory: IRecipeCategory;

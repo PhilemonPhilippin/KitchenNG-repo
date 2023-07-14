@@ -13,7 +13,7 @@ export class RecipeCategoryService {
     return this.http.get<IRecipeCategory[]>(url);
   }
 
-  getRecipeCategory(id: string): Observable<IRecipeCategory> {
+  getRecipeCategory(id: number): Observable<IRecipeCategory> {
     let url = `https://localhost:7049/api/recipecategories/${id}`;
     return this.http.get<IRecipeCategory>(url);
   }
@@ -32,7 +32,7 @@ export class RecipeCategoryService {
     return this.http.post(url, recipeCategory, { observe: 'response' });
   }
 
-  deleteRecipeCategory(id: string): Observable<HttpResponse<Object>> {
+  deleteRecipeCategory(id: number): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipecategories/${id}`;
     return this.http.delete(url, { observe: 'response' });
   }

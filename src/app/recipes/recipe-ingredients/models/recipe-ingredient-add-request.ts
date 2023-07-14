@@ -1,4 +1,4 @@
 export interface IRecipeIngredientAddRequest {
-  ingredientId: string;
+  ingredientId: number;
   ingredientQuantity: string;
 }

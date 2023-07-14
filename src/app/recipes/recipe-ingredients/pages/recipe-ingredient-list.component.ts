@@ -29,21 +29,21 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.getRecipe(id);
       this.getRecipeIngredients(id);
     }
   }
 
-  getRecipe(id: string): void {
+  getRecipe(id: number): void {
     this.subOne = this.recipeService.getRecipe(id).subscribe({
       next: (recipe) => (this.recipe = recipe),
       error: (err) => this.errorMessages.push(err),
     });
   }
 
-  getRecipeIngredients(recipeId: string): void {
+  getRecipeIngredients(recipeId: number): void {
     this.subTwo = this.recipeIngredientService
       .getRecipeIngredients(recipeId)
       .subscribe({
@@ -74,7 +74,7 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
       ?.scrollIntoView({ behavior: 'smooth' });
   }
 
-  removeClicked(ingredientId: string): void {
+  removeClicked(ingredientId: number): void {
     if (this.recipe?.id) {
       this.subThree = this.recipeIngredientService
         .removeRecipeIngredient(this.recipe.id, ingredientId)

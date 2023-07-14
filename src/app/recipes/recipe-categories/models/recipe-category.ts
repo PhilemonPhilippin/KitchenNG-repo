@@ -1,5 +1,5 @@
 export interface IRecipeCategory {
-  id: string;
+  id: number;
   title: string;
   description: string | undefined;
 }

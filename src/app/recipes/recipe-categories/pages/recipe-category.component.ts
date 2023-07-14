@@ -11,7 +11,7 @@ export class RecipeCategoryComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
   sub!: Subscription;
-  id: string | null = '';
+  id: number = 0;
   errorMessages: string[] = [];
 
   constructor(
@@ -21,7 +21,7 @@ export class RecipeCategoryComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   toggleEdit(): void {

@@ -8,14 +8,14 @@ import { IPreparationStepAddRequest } from './models/preparation-step-add-reques
 export class PreparationStepService {
   constructor(private http: HttpClient) {}
 
-  getPreparationSteps(recipeId: string): Observable<IPreparationStep[]> {
+  getPreparationSteps(recipeId: number): Observable<IPreparationStep[]> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps`;
     return this.http.get<IPreparationStep[]>(url);
   }
 
   getPreparationStep(
-    id: string,
-    recipeId: string
+    id: number,
+    recipeId: number
   ): Observable<IPreparationStep> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/${id}`;
     return this.http.get<IPreparationStep>(url);
@@ -29,7 +29,7 @@ export class PreparationStepService {
   }
 
   addPreparationStep(
-    recipeId: string,
+    recipeId: number,
     preparationStep: IPreparationStepAddRequest
   ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/`;
@@ -37,8 +37,8 @@ export class PreparationStepService {
   }
 
   deletePreparationStep(
-    id: string,
-    recipeId: string
+    id: number,
+    recipeId: number
   ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/preparationsteps/${id}`;
     return this.http.delete(url, { observe: 'response' });

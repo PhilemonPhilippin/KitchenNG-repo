@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class IngredientComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
-  id: string = '';
+  id: number = 0;
   errorMessages: string[] = [];
   sub!: Subscription;
 
@@ -21,7 +21,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id') as string;
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   toggleEdit(): void {
@@ -33,7 +33,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
     this._location.back();
   }
 
-  deleteClicked(id: string): void {
+  deleteClicked(id: number): void {
     this.sub = this.ingredientService.deleteIngredient(id).subscribe({
       next: (response) => {
         if (response.status === 204) {

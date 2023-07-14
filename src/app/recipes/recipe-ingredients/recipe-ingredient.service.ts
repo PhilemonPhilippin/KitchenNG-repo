@@ -9,13 +9,13 @@ import { IRecipeIngredientEditRequest } from './models/recipe-ingredient-edit-re
 export class RecipeIngredientService {
   constructor(private http: HttpClient) {}
 
-  getRecipeIngredients(recipeId: string): Observable<IRecipeIngredient[]> {
+  getRecipeIngredients(recipeId: number): Observable<IRecipeIngredient[]> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients`;
     return this.http.get<IRecipeIngredient[]>(url);
   }
 
   addRecipeIngredient(
-    recipeId: string,
+    recipeId: number,
     recipeIngredient: IRecipeIngredientAddRequest
   ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients`;
@@ -23,8 +23,8 @@ export class RecipeIngredientService {
   }
 
   editRecipeIngredient(
-    recipeId: string,
-    ingredientId: string,
+    recipeId: number,
+    ingredientId: number,
     recipeIngredient: IRecipeIngredientEditRequest
   ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients/${ingredientId}`;
@@ -32,8 +32,8 @@ export class RecipeIngredientService {
   }
 
   removeRecipeIngredient(
-    recipeId: string,
-    ingredientId: string
+    recipeId: number,
+    ingredientId: number
   ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipes/${recipeId}/recipeingredients/${ingredientId}`;
     return this.http.delete(url, { observe: 'response' });

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class RecipeCategoryDetailComponent implements OnInit, OnDestroy {
   recipeCategory: IRecipeCategory | undefined;
   errorMessage: string = '';
-sub!: Subscription;
+  sub!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,13 +19,13 @@ sub!: Subscription;
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.getRecipeCategory(id);
     }
   }
 
-  getRecipeCategory(id: string): void {
+  getRecipeCategory(id: number): void {
     this.sub = this.recipeCategoryService.getRecipeCategory(id).subscribe({
       next: (recipeCategory) => (this.recipeCategory = recipeCategory),
       error: (err) => (this.errorMessage = err),

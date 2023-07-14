@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './recipe-ingredient-edit.component.html',
 })
 export class RecipeIngredientEditComponent implements OnInit, OnDestroy {
-  @Input() recipeId: string = '';
+  @Input() recipeId: number = 0;
   @Input() recipeIngredient: IRecipeIngredient | undefined;
   @Output() closingEdit = new EventEmitter();
   @Output() editSuccessful = new EventEmitter();
@@ -48,7 +48,7 @@ export class RecipeIngredientEditComponent implements OnInit, OnDestroy {
     this.sub = this.recipeIngredientService
       .editRecipeIngredient(
         this.recipeId,
-        this.recipeIngredient?.id as string,
+        Number(this.recipeIngredient?.id),
         recipeIngredientRequest
       )
       .subscribe({

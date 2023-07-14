@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class PreparationStepDetailComponent implements OnInit, OnDestroy {
   preparationStep: IPreparationStep | undefined;
   errorMessage: string = '';
-sub!: Subscription;
+  sub!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,14 +19,14 @@ sub!: Subscription;
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    const recipeId = this.route.snapshot.paramMap.get('recipeid');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const recipeId = Number(this.route.snapshot.paramMap.get('recipeid'));
     if (id && recipeId) {
       this.getPreparationStep(id, recipeId);
     }
   }
 
-  getPreparationStep(id: string, recipeId: string): void {
+  getPreparationStep(id: number, recipeId: number): void {
     this.sub = this.preparationStepService.getPreparationStep(id, recipeId).subscribe({
       next: (preparationStep) => (this.preparationStep = preparationStep),
       error: (err) => (this.errorMessage = err),

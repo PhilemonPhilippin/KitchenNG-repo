@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../recipe/recipe.service';
-import { RecipeIngredientService } from '../../recipe-ingredients/recipe-ingredient.service';
 import { IRecipe } from '../../recipe/models/recipe';
 import { IRecipeIngredient } from '../../recipe-ingredients/models/recipe-ingredient';
 import { PreparationStepService } from '../../preparation-steps/preparation-step.service';
@@ -24,25 +23,24 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private recipeIngredientService: RecipeIngredientService,
     private preparationStepService: PreparationStepService
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.getRecipe(id);
       this.getPreparationSteps(id);
     }
   }
 
-  getRecipe(id: string): void {
+  getRecipe(id: number): void {
     this.subOne = this.recipeService.getRecipe(id).subscribe({
       next: (recipe) => (this.recipe = recipe),
       error: (err) => this.errorMessages.push(err),
     });
   }
-  getPreparationSteps(recipeId: string): void {
+  getPreparationSteps(recipeId: number): void {
     this.subTwo = this.preparationStepService.getPreparationSteps(recipeId).subscribe({
       next: (preparationSteps) => (this.preparationSteps = preparationSteps),
       error: (err) => this.errorMessages.push(err),
