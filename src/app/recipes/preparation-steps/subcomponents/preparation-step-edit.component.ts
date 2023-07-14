@@ -10,6 +10,7 @@ import { PreparationStepService } from '../preparation-step.service';
 import { IPreparationStep } from '../models/preparation-step';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { IPreparationStepRequest } from '../models/preparation-step-request';
 
 @Component({
   selector: 'preparation-step-edit',
@@ -20,6 +21,8 @@ export class PreparationStepEditComponent implements OnInit, OnDestroy {
   preparationStep: IPreparationStep | undefined;
   errorMessage: string = '';
   statusCode: number = 0;
+  recipeId: number = 0;
+  id: number = 0;
   subOne!: Subscription;
   subTwo!: Subscription;
 
@@ -39,11 +42,11 @@ export class PreparationStepEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    const recipeId = Number(this.route.snapshot.paramMap.get('recipeid'));
-    if (id && recipeId) {
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.recipeId = Number(this.route.snapshot.paramMap.get('recipeid'));
+    if (this.id && this.recipeId) {
       this.subOne = this.preparationStepService
-        .getPreparationStep(id, recipeId)
+        .getPreparationStep(this.id, this.recipeId)
         .subscribe((preparationStep) => {
           this.preparationStep = preparationStep;
           this.preparationStepForm = new FormGroup({
@@ -68,16 +71,14 @@ export class PreparationStepEditComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.statusCode = 0;
     if (this.preparationStep && this.preparationStepForm.valid) {
-      const step: IPreparationStep = {
-        id: this.preparationStep.id,
+      const step: IPreparationStepRequest = {
         title: this.preparationStepForm.value.title as string,
         stepNumber: this.preparationStepForm.value.stepNumber as number,
-        step: this.preparationStepForm.value.step as string,
-        recipeId: this.preparationStep.recipeId,
+        step: this.preparationStepForm.value.step as string
       };
 
       this.subTwo = this.preparationStepService
-        .editPreparationStep(step)
+        .editPreparationStep(this.id, this.recipeId, step)
         .subscribe({
           next: (response) => {
             this.statusCode = response.status;

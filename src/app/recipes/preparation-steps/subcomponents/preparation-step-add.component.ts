@@ -1,7 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PreparationStepService } from '../preparation-step.service';
-import { IPreparationStepAddRequest } from '../models/preparation-step-add-request';
+import { IPreparationStepRequest } from '../models/preparation-step-request';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -29,7 +35,7 @@ export class PreparationStepAddComponent implements OnDestroy {
   });
 
   onSubmit(): void {
-    const preparationStep: IPreparationStepAddRequest = {
+    const preparationStep: IPreparationStepRequest = {
       title: this.preparationStepForm.value.title as string,
       stepNumber: this.preparationStepForm.value.stepNumber as number,
       step: this.preparationStepForm.value.step as string,
