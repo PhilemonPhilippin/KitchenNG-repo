@@ -39,4 +39,9 @@ export class RecipeService {
     let url = `https://localhost:7049/api/recipes`;
     return this.http.post<IRecipe>(url, recipe);
   }
+
+  deleteRecipe(id: number): Observable<HttpResponse<Object>> {
+    let url = `https://localhost:7049/api/recipes/${id}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
 }
