@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeCategoryService } from '../recipe-category.service';
 import { Subscription } from 'rxjs';
-import { IRecipeCategoryAddRequest } from '../models/recipe-category-add-request';
+import { IRecipeCategoryRequest } from '../models/recipe-category-request';
 
 @Component({
   selector: 'recipe-category-add',
@@ -20,9 +20,9 @@ export class RecipeCategoryAddComponent implements OnDestroy {
   });
 
   constructor(private recipeCategoryService: RecipeCategoryService) {}
-  
+
   onSubmit(): void {
-    const recipeCategory: IRecipeCategoryAddRequest = {
+    const recipeCategory: IRecipeCategoryRequest = {
       title: this.recipeCategoryForm.value.title as string,
       description: this.recipeCategoryForm.value.description as string,
     };

@@ -10,6 +10,7 @@ import { IRecipeCategory } from '../models/recipe-category';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeCategoryService } from '../recipe-category.service';
 import { Subscription } from 'rxjs';
+import { IRecipeCategoryRequest } from '../models/recipe-category-request';
 
 @Component({
   selector: 'recipe-category-edit',
@@ -20,6 +21,7 @@ export class RecipeCategoryEditComponent implements OnInit, OnDestroy {
   recipeCategory: IRecipeCategory | undefined;
   errorMessage: string = '';
   statusCode: number = 0;
+  id: number = 0;
   subOne!: Subscription;
   subTwo!: Subscription;
 
@@ -34,10 +36,10 @@ export class RecipeCategoryEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.id) {
       this.subOne = this.recipeCategoryService
-        .getRecipeCategory(id)
+        .getRecipeCategory(this.id)
         .subscribe((recipeCategory) => {
           this.recipeCategory = recipeCategory;
           this.recipeCategoryForm = new FormGroup({
@@ -57,14 +59,13 @@ export class RecipeCategoryEditComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.statusCode = 0;
     if (this.recipeCategory && this.recipeCategoryForm.valid) {
-      const category: IRecipeCategory = {
-        id: this.recipeCategory.id,
+      const category: IRecipeCategoryRequest = {
         title: this.recipeCategoryForm.value.title as string,
         description: this.recipeCategoryForm.value.description ?? '',
       };
 
       this.subTwo = this.recipeCategoryService
-        .editRecipeCategory(category)
+        .editRecipeCategory(this.id, category)
         .subscribe({
           next: (response) => {
             this.statusCode = response.status;

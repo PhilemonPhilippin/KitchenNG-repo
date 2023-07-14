@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IRecipeCategory } from './models/recipe-category';
 import { Injectable } from '@angular/core';
-import { IRecipeCategoryAddRequest } from './models/recipe-category-add-request';
+import { IRecipeCategoryRequest } from './models/recipe-category-request';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeCategoryService {
@@ -19,14 +19,15 @@ export class RecipeCategoryService {
   }
 
   editRecipeCategory(
-    recipeCategory: IRecipeCategory
+    id: number,
+    recipeCategory: IRecipeCategoryRequest
   ): Observable<HttpResponse<Object>> {
-    let url = `https://localhost:7049/api/recipecategories/${recipeCategory.id}`;
+    let url = `https://localhost:7049/api/recipecategories/${id}`;
     return this.http.put(url, recipeCategory, { observe: 'response' });
   }
 
   addRecipeCategory(
-    recipeCategory: IRecipeCategoryAddRequest
+    recipeCategory: IRecipeCategoryRequest
   ): Observable<HttpResponse<Object>> {
     let url = `https://localhost:7049/api/recipecategories`;
     return this.http.post(url, recipeCategory, { observe: 'response' });
