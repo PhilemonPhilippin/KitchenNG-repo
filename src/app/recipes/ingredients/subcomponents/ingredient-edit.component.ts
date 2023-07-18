@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IIngredient } from '../models/ingredient';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
@@ -13,10 +19,12 @@ import { IIngredientRequest } from '../models/ingredient-request';
 export class IngredientEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
   ingredient: IIngredient | undefined;
-  statusCode: number = 0;
-  errorMessage: string = '';
+  nameExists = false;
+  statusCode = 0;
+  errorMessage = '';
   subOne!: Subscription;
   subTwo!: Subscription;
+  subThree!: Subscription;
   id: number = 0;
 
   ingredientForm = new FormGroup({
@@ -32,30 +40,48 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     if (this.id !== 0) {
-      this.subOne = this.ingredientService.getIngredient(this.id).subscribe((ingredient) => {
-        this.ingredient = ingredient;
-        this.ingredientForm = new FormGroup({
-          name: new FormControl(this.ingredient.name, [
-            Validators.required,
-            Validators.maxLength(50),
-          ]),
-          description: new FormControl(this.ingredient.description ?? null, [
-            Validators.maxLength(500),
-          ]),
+      this.subOne = this.ingredientService
+        .getIngredient(this.id)
+        .subscribe((ingredient) => {
+          this.ingredient = ingredient;
+          this.ingredientForm = new FormGroup({
+            name: new FormControl(this.ingredient.name, [
+              Validators.required,
+              Validators.maxLength(50),
+            ]),
+            description: new FormControl(this.ingredient.description ?? null, [
+              Validators.maxLength(500),
+            ]),
+          });
         });
-      });
     }
   }
 
-  onSubmit(): void {
+  onSubmit() {
     this.statusCode = 0;
+    this.nameExists = true;
     if (this.ingredient && this.ingredientForm.valid && this.id !== 0) {
-      const ingredient: IIngredientRequest = {
-        name: this.ingredientForm.value.name as string,
-        description: this.ingredientForm.value.description ?? '',
-      };
-
-      this.subTwo = this.ingredientService.editIngredient(this.id, ingredient).subscribe({
+      const name = this.ingredientForm.value.name as string;
+      this.subTwo = this.ingredientService.nameExist(name).subscribe({
+        next: (exist) => {
+          this.nameExists = exist;
+          if (exist === false) {
+            const description =
+              this.ingredientForm.value.description ?? undefined;
+            const ingredient: IIngredientRequest = {
+              name: name,
+              description: description,
+            };
+            this.editIngredient(ingredient);
+          }
+        },
+      });
+    }
+  }
+  editIngredient(ingredient: IIngredientRequest) {
+    this.subThree = this.ingredientService
+      .editIngredient(this.id, ingredient)
+      .subscribe({
         next: (response) => {
           this.statusCode = response.status;
           if (response.status === 204) {
@@ -64,17 +90,19 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
         },
         error: (err) => (this.errorMessage = err),
       });
-    }
   }
 
-  closeEdit(): void {
+  closeEdit() {
     this.closingEdit.emit();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.subOne.unsubscribe();
     if (this.subTwo) {
       this.subTwo.unsubscribe();
+    }
+    if (this.subThree) {
+      this.subThree.unsubscribe();
     }
   }
 }

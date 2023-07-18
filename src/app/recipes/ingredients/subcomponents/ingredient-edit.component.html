@@ -23,6 +23,7 @@
   >
     Name must be 50 characters maximum
   </span>
+  <span class="text-danger" *ngIf="nameExists">Name already exists</span>
   <div class="mt-2">
     <label for="description">Description :</label>
   </div>
