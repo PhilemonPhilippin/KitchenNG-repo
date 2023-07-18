@@ -9,8 +9,9 @@ import { IIngredient } from '../models/ingredient';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { IIngredientRequest } from '../models/ingredient-request';
+import { IIngredientNoDesc } from '../models/ingredient-no-desc';
 
 @Component({
   selector: 'ingredient-edit',
@@ -18,14 +19,14 @@ import { IIngredientRequest } from '../models/ingredient-request';
 })
 export class IngredientEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
+
+  ingredientsNoDesc: IIngredientNoDesc[] = [];
   ingredient: IIngredient | undefined;
   nameExists = false;
   statusCode = 0;
   errorMessage = '';
-  subOne!: Subscription;
-  subTwo!: Subscription;
-  subThree!: Subscription;
   id: number = 0;
+  private destroy$: Subject<void> = new Subject<void>();
 
   ingredientForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -37,59 +38,67 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
     private ingredientService: IngredientService
   ) {}
 
+  private initializeFormControls(): void {
+    this.ingredientForm.setValue({
+      name: this.ingredient?.name || '',
+      description: this.ingredient?.description || '',
+    });
+  }
+
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     if (this.id !== 0) {
-      this.subOne = this.ingredientService
+      this.ingredientService
         .getIngredient(this.id)
+        .pipe(takeUntil(this.destroy$))
         .subscribe((ingredient) => {
           this.ingredient = ingredient;
-          this.ingredientForm = new FormGroup({
-            name: new FormControl(this.ingredient.name, [
-              Validators.required,
-              Validators.maxLength(50),
-            ]),
-            description: new FormControl(this.ingredient.description ?? null, [
-              Validators.maxLength(500),
-            ]),
-          });
+          this.initializeFormControls();
         });
     }
+    this.ingredientService
+      .getIngredientsNoDesc()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((ingredients) => {
+        this.ingredientsNoDesc = ingredients;
+      });
   }
 
   onSubmit() {
     this.statusCode = 0;
-    this.nameExists = true;
+    this.errorMessage = '';
+    this.nameExists = false;
     if (this.ingredient && this.ingredientForm.valid && this.id !== 0) {
-      const name = this.ingredientForm.value.name as string;
-      this.subTwo = this.ingredientService.nameExist(name).subscribe({
-        next: (exist) => {
-          this.nameExists = exist;
-          if (exist === false) {
-            const description =
-              this.ingredientForm.value.description ?? undefined;
-            const ingredient: IIngredientRequest = {
-              name: name,
-              description: description,
-            };
-            this.editIngredient(ingredient);
-          }
-        },
-      });
+      const name = this.ingredientForm.value.name || '';
+      const description = this.ingredientForm.value.description || undefined;
+      const ingredient: IIngredientRequest = {
+        name: name,
+        description: description,
+      };
+
+      this.nameExists = this.ingredientsNoDesc.some(
+        (i) => i.name == ingredient.name && i.id != this.id
+      );
+
+      if (this.nameExists === false) {
+        this.ingredientService
+          .editIngredient(this.id, ingredient)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (response) => {
+              this.statusCode = response.status;
+              if (response.status === 204) {
+                this.closeEdit();
+              }
+            },
+            error: (err) => {
+              console.log('Error editing the ingredient: ' + err);
+              this.errorMessage =
+                'An error occurred while editing the ingredient.';
+            },
+          });
+      }
     }
-  }
-  editIngredient(ingredient: IIngredientRequest) {
-    this.subThree = this.ingredientService
-      .editIngredient(this.id, ingredient)
-      .subscribe({
-        next: (response) => {
-          this.statusCode = response.status;
-          if (response.status === 204) {
-            this.closeEdit();
-          }
-        },
-        error: (err) => (this.errorMessage = err),
-      });
   }
 
   closeEdit() {
@@ -97,12 +106,7 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subOne.unsubscribe();
-    if (this.subTwo) {
-      this.subTwo.unsubscribe();
-    }
-    if (this.subThree) {
-      this.subThree.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

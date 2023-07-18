@@ -11,8 +11,10 @@ import { IIngredientRequest } from '../models/ingredient-request';
 export class IngredientAddComponent implements OnDestroy {
   @Output() closingAdd = new EventEmitter();
   @Output() addSucccessful = new EventEmitter();
+
   nameExists: boolean = false;
   errorMessage: string = '';
+  statusCode: number = 0;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private ingredientService: IngredientService) {}
@@ -23,9 +25,11 @@ export class IngredientAddComponent implements OnDestroy {
   });
 
   onSubmit(): void {
+    this.errorMessage = '';
+    this.statusCode = 0;
     this.nameExists = true;
     if (this.ingredientForm.valid) {
-      const name: string = this.ingredientForm.value.name as string;
+      const name: string = this.ingredientForm.value.name || '';
       this.ingredientService
         .nameExist(name)
         .pipe(
@@ -33,7 +37,7 @@ export class IngredientAddComponent implements OnDestroy {
             this.nameExists = exist;
             if (exist === false) {
               const description: string | undefined =
-                this.ingredientForm.value.description ?? undefined;
+                this.ingredientForm.value.description || undefined;
               const ingredient: IIngredientRequest = {
                 name: name,
                 description: description,
