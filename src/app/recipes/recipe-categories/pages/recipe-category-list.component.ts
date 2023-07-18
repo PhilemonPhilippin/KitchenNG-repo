@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, catchError, takeUntil } from 'rxjs';
 import { IRecipeCategory } from '../models/recipe-category';
 import { RecipeCategoryService } from '../recipe-category.service';
 
@@ -7,10 +7,10 @@ import { RecipeCategoryService } from '../recipe-category.service';
   templateUrl: './recipe-category-list.component.html',
 })
 export class RecipeCategoryListComponent implements OnInit, OnDestroy {
-  sub!: Subscription;
   errorMessage: string = '';
   recipeCategories: IRecipeCategory[] = [];
   displayAdd: boolean = false;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private recipeCategoryService: RecipeCategoryService) {}
 
@@ -18,11 +18,24 @@ export class RecipeCategoryListComponent implements OnInit, OnDestroy {
     this.getRecipeCategories();
   }
 
-  getRecipeCategories(): void {
-    this.sub = this.recipeCategoryService.getRecipeCategories().subscribe({
-      next: (recipeCategories) => (this.recipeCategories = recipeCategories),
-      error: (err) => (this.errorMessage = err),
-    });
+  private getRecipeCategories(): void {
+    this.errorMessage = '';
+    this.recipeCategoryService
+      .getRecipeCategories()
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error fetching category list: ' + err);
+          this.errorMessage =
+            'An error occurred while fetching the category list.';
+          return [];
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.recipeCategories = response;
+        },
+      });
   }
 
   toggleAdd(): void {
@@ -30,10 +43,11 @@ export class RecipeCategoryListComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
-    this.ngOnInit();
+    this.getRecipeCategories();
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
