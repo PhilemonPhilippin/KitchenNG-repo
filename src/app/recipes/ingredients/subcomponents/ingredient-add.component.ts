@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, switchMap, takeUntil } from 'rxjs';
 import { IngredientService } from '../ingredient.service';
 import { IIngredientRequest } from '../models/ingredient-request';
 
@@ -12,10 +12,8 @@ export class IngredientAddComponent implements OnDestroy {
   @Output() closingAdd = new EventEmitter();
   @Output() addSucccessful = new EventEmitter();
   nameExists: boolean = false;
-  statusCode: number = 0;
-  errorMessages: string[] = [];
-  subOne!: Subscription;
-  subTwo!: Subscription;
+  errorMessage: string = '';
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -25,38 +23,41 @@ export class IngredientAddComponent implements OnDestroy {
   });
 
   onSubmit(): void {
-    this.statusCode = 0;
     this.nameExists = true;
     if (this.ingredientForm.valid) {
       const name: string = this.ingredientForm.value.name as string;
-      this.subOne = this.ingredientService.nameExist(name).subscribe({
-        next: (exist) => {
-          this.nameExists = exist;
-          if (exist === false) {
-            const description: string | undefined =
-              this.ingredientForm.value.description ?? undefined;
-            const ingredient: IIngredientRequest = {
-              name: name,
-              description: description,
-            };
-            this.postIngredient(ingredient);
+      this.ingredientService
+        .nameExist(name)
+        .pipe(
+          switchMap((exist) => {
+            this.nameExists = exist;
+            if (exist === false) {
+              const description: string | undefined =
+                this.ingredientForm.value.description ?? undefined;
+              const ingredient: IIngredientRequest = {
+                name: name,
+                description: description,
+              };
+              return this.ingredientService.addIngredient(ingredient);
+            } else {
+              return EMPTY;
+            }
+          }),
+          catchError((err) => {
+            console.log('Error adding the ingredient: ' + err);
+            this.errorMessage =
+              'An error occurred while adding the ingredient.';
+            return EMPTY;
+          }),
+          takeUntil(this.destroy$)
+        )
+        .subscribe((response) => {
+          if (response && response.id) {
+            this.addSucccessful.emit();
+            this.closeAdd();
           }
-        },
-        error: (err) => this.errorMessages.push(err),
-      });
+        });
     }
-  }
-
-  private postIngredient(ingredient: IIngredientRequest): void {
-    this.subTwo = this.ingredientService.addIngredient(ingredient).subscribe({
-      next: (response) => {
-        if (response.id) {
-          this.addSucccessful.emit();
-          this.closeAdd();
-        }
-      },
-      error: (err) => this.errorMessages.push(err),
-    });
   }
 
   closeAdd(): void {
@@ -64,11 +65,7 @@ export class IngredientAddComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subOne) {
-      this.subOne.unsubscribe();
-    }
-    if (this.subTwo) {
-      this.subTwo.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,5 +1,11 @@
 <p *ngIf="ingredient == null">No data found</p>
 <ul class="list-group mt-1" *ngIf="ingredient">
-  <li class="list-group-item">{{ingredient.name}}</li>
-  <li class="list-group-item" [ngClass]="{'fst-italic': ingredient.description == null}">{{ingredient.description ?? 'No description found'}}</li>
+  <li class="list-group-item">{{ ingredient.name }}</li>
+  <li
+    class="list-group-item"
+    [ngClass]="{ 'fst-italic': ingredient.description == null }"
+  >
+    {{ ingredient.description ?? "No description found" }}
+  </li>
 </ul>
+<span class="text-danger">{{ errorMessage }}</span>

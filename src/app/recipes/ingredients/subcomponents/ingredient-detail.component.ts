@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
 import { IIngredient } from '../models/ingredient';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'ingredient-detail',
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class IngredientDetailComponent implements OnInit, OnDestroy {
   ingredient: IIngredient | undefined;
   errorMessage: string = '';
-  sub!: Subscription;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -26,13 +26,21 @@ export class IngredientDetailComponent implements OnInit, OnDestroy {
   }
 
   private getIngredient(id: number): void {
-    this.sub = this.ingredientService.getIngredient(id).subscribe({
-      next: (ingredient) => (this.ingredient = ingredient),
-      error: (err) => (this.errorMessage = err),
-    });
+    this.ingredientService
+      .getIngredient(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (ingredient) => (this.ingredient = ingredient),
+        error: (err) => {
+          console.log('Error fetching the ingredient: ' + err);
+          this.errorMessage =
+            'An error occurred while fetching the ingredient.';
+        },
+      });
   }
-  
+
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
