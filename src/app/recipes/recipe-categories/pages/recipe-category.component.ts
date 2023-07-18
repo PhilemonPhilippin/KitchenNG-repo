@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeCategoryService } from '../recipe-category.service';
 
@@ -10,9 +10,10 @@ import { RecipeCategoryService } from '../recipe-category.service';
 export class RecipeCategoryComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
-  sub!: Subscription;
   id: number = 0;
-  errorMessages: string[] = [];
+  statusCode: number = 0;
+  errorMessage: string = '';
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private _location: Location,
@@ -35,22 +36,32 @@ export class RecipeCategoryComponent implements OnInit, OnDestroy {
 
   deleteClicked() {
     if (this.id) {
-      this.sub = this.recipeCategoryService
+      this.errorMessage = '';
+      this.statusCode = 0;
+      this.recipeCategoryService
         .deleteRecipeCategory(this.id)
+        .pipe(
+          catchError((err) => {
+            console.log('Error deleting the category: ' + err);
+            this.errorMessage =
+              'An error occurred while deleting the category.';
+            return EMPTY;
+          }),
+          takeUntil(this.destroy$)
+        )
         .subscribe({
           next: (response) => {
+            this.statusCode = response.status;
             if (response.status === 204) {
               this.backClicked();
             }
           },
-          error: (err) => this.errorMessages.push(err),
         });
     }
   }
 
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

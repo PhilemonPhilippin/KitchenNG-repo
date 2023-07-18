@@ -60,8 +60,8 @@ export class RecipeCategoryEditComponent implements OnInit, OnDestroy {
     this.statusCode = 0;
     if (this.recipeCategory && this.recipeCategoryForm.valid) {
       const category: IRecipeCategoryRequest = {
-        title: this.recipeCategoryForm.value.title as string,
-        description: this.recipeCategoryForm.value.description ?? '',
+        title: this.recipeCategoryForm.value.title || '',
+        description: this.recipeCategoryForm.value.description || undefined,
       };
 
       this.subTwo = this.recipeCategoryService

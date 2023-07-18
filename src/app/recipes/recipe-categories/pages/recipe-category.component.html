@@ -10,9 +10,12 @@
   </button>
   <button class="btn btn-danger" (click)="deleteClicked()">Delete</button>
 </div>
-
 <recipe-category-detail *ngIf="displayDetail"></recipe-category-detail>
 <recipe-category-edit
   (closingEdit)="toggleEdit()"
   *ngIf="displayEdit"
 ></recipe-category-edit>
+<span class="text-danger">{{ errorMessage }}</span>
+<span class="text-success" *ngIf="statusCode == 204"
+  >Category deleted with success!</span
+>
