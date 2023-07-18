@@ -9,7 +9,7 @@ import { IIngredient } from '../models/ingredient';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 import { IIngredientRequest } from '../models/ingredient-request';
 import { IIngredientNoDesc } from '../models/ingredient-no-desc';
 
@@ -83,18 +83,21 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
       if (this.nameExists === false) {
         this.ingredientService
           .editIngredient(this.id, ingredient)
-          .pipe(takeUntil(this.destroy$))
+          .pipe(
+            catchError((err) => {
+              console.log('Error editing the ingredient: ' + err);
+              this.errorMessage =
+                'An error occurred while editing the ingredient.';
+              return EMPTY;
+            }),
+            takeUntil(this.destroy$)
+          )
           .subscribe({
             next: (response) => {
               this.statusCode = response.status;
               if (response.status === 204) {
                 this.closeEdit();
               }
-            },
-            error: (err) => {
-              console.log('Error editing the ingredient: ' + err);
-              this.errorMessage =
-                'An error occurred while editing the ingredient.';
             },
           });
       }

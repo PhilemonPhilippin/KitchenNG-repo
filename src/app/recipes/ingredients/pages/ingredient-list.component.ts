@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IIngredient } from '../models/ingredient';
-import { Subscription } from 'rxjs';
+import { Subject, catchError, takeUntil } from 'rxjs';
 import { IngredientService } from '../ingredient.service';
 import { IXPagination } from 'src/app/shared/pagination/xpagination';
 
@@ -15,8 +15,8 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   pageSize: number = 5;
   totalPages: number = 1;
   totalItems: number = 1;
-  sub!: Subscription;
   displayAdd: boolean = false;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private ingredientService: IngredientService) {}
 
@@ -34,8 +34,17 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   }
 
   private getIngredients(): void {
-    this.sub = this.ingredientService
+    this.ingredientService
       .getIngredients(this.pageNumber, this.pageSize)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error fecthing ingredient list: ' + err);
+          this.errorMessage =
+            'An error occurred while fetching ingredient list.';
+          return [];
+        })
+      )
       .subscribe({
         next: (response) => {
           let responseBody: IIngredient[] | null = response.body;
@@ -46,7 +55,6 @@ export class IngredientListComponent implements OnInit, OnDestroy {
             response.headers.get('X-Pagination');
           this.extractPaginationHeader(paginationHeader);
         },
-        error: (err) => (this.errorMessage = err),
       });
   }
 
@@ -66,10 +74,11 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   }
 
   refresh(): void {
-    this.ngOnInit();
+    this.getIngredients();
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
