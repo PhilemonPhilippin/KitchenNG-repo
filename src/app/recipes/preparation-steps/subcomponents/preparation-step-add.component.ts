@@ -8,19 +8,20 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PreparationStepService } from '../preparation-step.service';
 import { IPreparationStepRequest } from '../models/preparation-step-request';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'preparation-step-add',
   templateUrl: './preparation-step-add.component.html',
 })
 export class PreparationStepAddComponent implements OnDestroy {
-  statusCode: number = 0;
   @Output() closingAdd = new EventEmitter();
   @Output() addSuccessful = new EventEmitter();
   @Input() recipeId: number = 0;
-  errorMessages: string[] = [];
-  sub!: Subscription;
+
+  statusCode: number = 0;
+  errorMessage: string = '';
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private preparationStepService: PreparationStepService) {}
 
@@ -35,13 +36,26 @@ export class PreparationStepAddComponent implements OnDestroy {
   });
 
   onSubmit(): void {
+    this.errorMessage = '';
+    this.statusCode = 0;
+
     const preparationStep: IPreparationStepRequest = {
       title: this.preparationStepForm.value.title as string,
       stepNumber: this.preparationStepForm.value.stepNumber as number,
       step: this.preparationStepForm.value.step as string,
     };
-    this.sub = this.preparationStepService
+
+    this.preparationStepService
       .addPreparationStep(this.recipeId, preparationStep)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error adding preparation step: ' + err);
+          this.errorMessage =
+            'An error occurred while adding the preparation step.';
+          return EMPTY;
+        })
+      )
       .subscribe({
         next: (response) => {
           this.statusCode = response.status;
@@ -55,7 +69,6 @@ export class PreparationStepAddComponent implements OnDestroy {
             this.closeAdd();
           }
         },
-        error: (err) => this.errorMessages.push(err),
       });
   }
 
@@ -64,6 +77,7 @@ export class PreparationStepAddComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
