@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../recipe.service';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: './recipe.component.html',
@@ -10,8 +10,9 @@ export class RecipeComponent implements OnInit, OnDestroy {
   displayRecipeDetail: boolean = true;
   displayRecipeEdit: boolean = false;
   id: number = 0;
-  errorMessages: string[] = [];
-  sub!: Subscription;
+  errorMessage: string = '';
+  statusCode: number = 0;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -29,21 +30,33 @@ export class RecipeComponent implements OnInit, OnDestroy {
   }
 
   deleteClicked() {
+    this.errorMessage = '';
+    this.statusCode = 0;
+
     if (this.id !== 0) {
-      this.sub = this.recipeService.deleteRecipe(this.id).subscribe({
-        next: (response) => {
-          if (response.status == 204) {
-            this.router.navigate(['/recipes']);
-          }
-        },
-        error: (err) => this.errorMessages.push(err)
-      });
+      this.recipeService
+        .deleteRecipe(this.id)
+        .pipe(
+          takeUntil(this.destroy$),
+          catchError((err) => {
+            console.log('Error deleting the recipe: ' + err);
+            this.errorMessage = 'An error occurred while deleting the recipe.';
+            return EMPTY;
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            this.statusCode = response.status;
+            if (response.status == 204) {
+              this.router.navigate(['/recipes']);
+            }
+          },
+        });
     }
   }
 
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

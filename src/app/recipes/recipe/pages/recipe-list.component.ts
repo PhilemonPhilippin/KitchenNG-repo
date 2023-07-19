@@ -1,21 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RecipeService } from '../../recipe/recipe.service';
 import { IRecipe } from '../../recipe/models/recipe';
-import { Subscription } from 'rxjs';
+import { Subject, catchError, takeUntil } from 'rxjs';
 import { IXPagination } from '../../../shared/pagination/xpagination';
 
 @Component({ templateUrl: './recipe-list.component.html' })
 export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: IRecipe[] = [];
   searchString: string = '';
-  errorMessage: string = '';
   currentPage: number = 1;
   pageNumber: number = 1;
   pageSize: number = 5;
   totalPages: number = 1;
   totalItems: number = 1;
   displayAdd: boolean = false;
-  sub!: Subscription;
+  errorMessage: string = '';
+  private destroy$: Subject<void> = new Subject<void>();
+
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
@@ -32,8 +33,16 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   private getRecipes(): void {
-    this.sub = this.recipeService
+    this.recipeService
       .getRecipes(this.pageNumber, this.pageSize, this.searchString)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error retrieving the recipes :' + err);
+          this.errorMessage = 'An error occurred while retrieving the recipes.';
+          return [];
+        })
+      )
       .subscribe({
         next: (response) => {
           let responseBody: IRecipe[] | null = response.body;
@@ -44,7 +53,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
             response.headers.get('X-Pagination');
           this.extractPaginationHeader(paginationHeader);
         },
-        error: (err) => (this.errorMessage = err),
       });
   }
 
@@ -68,6 +76,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -22,7 +22,9 @@
     </li>
   </ul>
 </div>
-<span class="text-danger">{{ errorMessage }}</span>
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+  {{ errorMessage }}
+</div>
 <kc-pagination
   [currentPage]="pageNumber"
   [totalPages]="totalPages"

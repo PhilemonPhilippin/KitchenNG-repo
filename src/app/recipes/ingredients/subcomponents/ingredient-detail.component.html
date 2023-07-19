@@ -8,4 +8,6 @@
     {{ ingredient.description ?? "No description found" }}
   </li>
 </ul>
-<span class="text-danger">{{ errorMessage }}</span>
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+  {{ errorMessage }}
+</div>

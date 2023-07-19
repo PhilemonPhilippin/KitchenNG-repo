@@ -11,7 +11,9 @@
   >
     Edit
   </button>
-  <button (click)="deleteClicked()" class="btn btn-outline-danger ms-1">Delete</button>
+  <button (click)="deleteClicked()" class="btn btn-outline-danger ms-1">
+    Delete
+  </button>
 </div>
 <recipe-detail *ngIf="displayRecipeDetail"></recipe-detail>
 <recipe-edit
@@ -20,3 +22,10 @@
 ></recipe-edit>
 <recipe-ingredient-list></recipe-ingredient-list>
 <recipe-preparation-step-list></recipe-preparation-step-list>
+
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+  {{ errorMessage }}
+</div>
+<div class="alert alert-success" role="alert" *ngIf="statusCode == 204">
+  Recipe deleted with success!
+</div>

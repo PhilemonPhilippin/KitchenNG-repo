@@ -41,7 +41,10 @@
     </button>
   </div>
 </form>
-<span class="text-danger">{{ errorMessage }}</span>
-<span class="text-success" *ngIf="statusCode == 201"
-  >Category added with success!</span
->
+
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+  {{ errorMessage }}
+</div>
+<div class="alert alert-success" role="alert" *ngIf="statusCode == 201">
+  Category added with success!
+</div>

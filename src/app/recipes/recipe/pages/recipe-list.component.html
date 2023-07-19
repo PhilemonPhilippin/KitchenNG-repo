@@ -33,10 +33,7 @@
     Add
   </button>
 </div>
-<recipe-add
-  (closingAdd)="toggleAdd()"
-  *ngIf="displayAdd"
-></recipe-add>
+<recipe-add (closingAdd)="toggleAdd()" *ngIf="displayAdd"></recipe-add>
 <div>
   <table class="table table-hover table-striped mt-2" *ngIf="recipes.length">
     <thead class="table-primary">
@@ -63,6 +60,6 @@
   (pageChangeEvent)="changePage($event)"
   (pageSizeEvent)="changePageSize($event)"
 ></kc-pagination>
-<div *ngIf="errorMessage" class="alert alert-danger">
-  Error: {{ errorMessage }}
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+  {{ errorMessage }}
 </div>

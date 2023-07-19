@@ -72,7 +72,10 @@
     </button>
   </div>
 </form>
-<span class="text-success" *ngIf="statusCode == 204"
-  >Recipe edited with success!</span
->
-<span class="text-danger">{{ errorMessage }}</span>
+
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+  {{ errorMessage }}
+</div>
+<div class="alert alert-success" role="alert" *ngIf="statusCode == 204">
+  Preparation step edited with success!
+</div>
