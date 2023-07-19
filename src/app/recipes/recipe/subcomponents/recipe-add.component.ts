@@ -8,7 +8,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeCategoryService } from '../../recipe-categories/recipe-category.service';
 import { IRecipeCategory } from '../../recipe-categories/models/recipe-category';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 import { RecipeService } from '../recipe.service';
 import { IRecipeRequest } from '../models/recipe-request';
 import { Router } from '@angular/router';
@@ -19,10 +19,11 @@ import { Router } from '@angular/router';
 })
 export class RecipeAddComponent implements OnInit, OnDestroy {
   @Output() closingAdd = new EventEmitter();
+
   recipeCategories: IRecipeCategory[] = [];
-  errorMessages: string[] = [];
-  subOne!: Subscription;
-  subTwo!: Subscription;
+  errorMessage: string = '';
+  statusCode: number = 0;
+  private destroy$: Subject<void> = new Subject<void>();
 
   recipeForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -37,28 +38,53 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subOne = this.recipeCategoryService.getRecipeCategories().subscribe({
-      next: (recipeCategories) => (this.recipeCategories = recipeCategories),
-      error: (err) => this.errorMessages.push(err),
-    });
+    this.errorMessage = '';
+    this.recipeCategoryService
+      .getRecipeCategories()
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error retrieving categories: ' + err);
+          this.errorMessage =
+            'An error occurred while retrieving the categories.';
+          return [];
+        })
+      )
+      .subscribe({
+        next: (recipeCategories) => (this.recipeCategories = recipeCategories),
+      });
   }
 
   onSubmit() {
+    this.errorMessage = '';
+    this.statusCode = 0;
+
     if (this.recipeForm.valid) {
       const recipe: IRecipeRequest = {
-        title: this.recipeForm.value.title as string,
+        title: this.recipeForm.value.title || '',
         description: this.recipeForm.value.description ?? undefined,
         recipeCategoryId: Number(this.recipeForm.value.recipeCategory),
       };
-      this.subTwo = this.recipeService.addRecipe(recipe).subscribe({
-        next: (recipe) => {
-          if (recipe) {
-            this.closeAdd();
-            this.router.navigate(['/recipes', recipe.id]);
-          }
-        },
-        error: (err) => this.errorMessages.push(err),
-      });
+
+      this.recipeService
+        .addRecipe(recipe)
+        .pipe(
+          takeUntil(this.destroy$),
+          catchError((err) => {
+            console.log('Error adding the recipe: ' + err);
+            this.errorMessage = 'An error occurred while adding the recipe';
+            return EMPTY;
+          })
+        )
+        .subscribe({
+          next: (recipe) => {
+            if (recipe) {
+              this.statusCode = 201;
+              this.closeAdd();
+              this.router.navigate(['/recipes', recipe.id]);
+            }
+          },
+        });
     }
   }
 
@@ -67,9 +93,7 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subOne.unsubscribe();
-    if (this.subTwo) {
-      this.subTwo.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

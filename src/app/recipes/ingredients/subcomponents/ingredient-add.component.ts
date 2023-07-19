@@ -59,6 +59,7 @@ export class IngredientAddComponent implements OnDestroy {
           if (response && response.id) {
             this.addSucccessful.emit();
             this.closeAdd();
+            this.statusCode = 201;
           }
         });
     }

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { IRecipe } from '../models/recipe';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'recipe-detail',
@@ -10,8 +10,8 @@ import { Subscription } from 'rxjs';
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: IRecipe | undefined;
-  errorMessages: string[] = [];
-  sub!: Subscription;
+  errorMessage: string = '';
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -26,13 +26,23 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   getRecipe(id: number): void {
-    this.sub = this.recipeService.getRecipe(id).subscribe({
-      next: (recipe) => (this.recipe = recipe),
-      error: (err) => this.errorMessages.push(err),
-    });
+    this.recipeService
+      .getRecipe(id)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error retrieving the recipe: ' + err);
+          this.errorMessage = 'An error occurred while retrieving the recipe.';
+          return EMPTY;
+        })
+      )
+      .subscribe({
+        next: (recipe) => (this.recipe = recipe),
+      });
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
