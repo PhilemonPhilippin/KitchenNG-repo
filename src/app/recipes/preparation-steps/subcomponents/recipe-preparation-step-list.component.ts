@@ -1,50 +1,49 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeService } from '../../recipe/recipe.service';
-import { IRecipe } from '../../recipe/models/recipe';
 import { IRecipeIngredient } from '../../recipe-ingredients/models/recipe-ingredient';
 import { PreparationStepService } from '../../preparation-steps/preparation-step.service';
 import { IPreparationStep } from '../models/preparation-step';
-import { Subscription } from 'rxjs';
+import { Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'recipe-preparation-step-list',
   templateUrl: './recipe-preparation-step-list.component.html',
 })
 export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
-  recipe: IRecipe | undefined;
+  recipeId: number = 0;
   recipeIngredients: IRecipeIngredient[] = [];
   preparationSteps: IPreparationStep[] = [];
-  errorMessages: string[] = [];
+  errorMessage: string = '';
   displayAddPreparationStep: boolean = false;
-  subOne!: Subscription;
-  subTwo!: Subscription;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService,
     private preparationStepService: PreparationStepService
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.getRecipe(id);
-      this.getPreparationSteps(id);
+    this.recipeId = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.recipeId) {
+      this.getPreparationSteps(this.recipeId);
     }
   }
 
-  getRecipe(id: number): void {
-    this.subOne = this.recipeService.getRecipe(id).subscribe({
-      next: (recipe) => (this.recipe = recipe),
-      error: (err) => this.errorMessages.push(err),
-    });
-  }
   getPreparationSteps(recipeId: number): void {
-    this.subTwo = this.preparationStepService.getPreparationSteps(recipeId).subscribe({
-      next: (preparationSteps) => (this.preparationSteps = preparationSteps),
-      error: (err) => this.errorMessages.push(err),
-    });
+    this.preparationStepService
+      .getPreparationSteps(recipeId)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error fetching the preparation steps: ' + err);
+          this.errorMessage =
+            'An error occurred while fetching the preparatio steps.';
+          return [];
+        })
+      )
+      .subscribe({
+        next: (preparationSteps) => (this.preparationSteps = preparationSteps),
+      });
   }
 
   toggleAddPreparationStep(): void {
@@ -56,7 +55,7 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subOne.unsubscribe();
-    this.subTwo.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

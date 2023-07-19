@@ -10,22 +10,23 @@
   </button>
 </div>
 <preparation-step-add
-  [recipeId]="recipe.id"
+  [recipeId]="recipeId"
   (closingAdd)="toggleAddPreparationStep()"
   (addSuccessful)="refresh()"
-  *ngIf="displayAddPreparationStep && recipe"
+  *ngIf="displayAddPreparationStep"
 ></preparation-step-add>
-<ul class="list-group" *ngIf="preparationSteps.length && recipe">
+<ul class="list-group" *ngIf="preparationSteps.length">
   <a
     class="list-group-item mt-1"
     *ngFor="let preparationStep of preparationSteps"
     [routerLink]="[
       '/recipes',
-      recipe.id,
+      recipeId,
       'preparationsteps',
       preparationStep.id
     ]"
   >
-    Step {{ preparationStep.stepNumber }}: {{ preparationStep.step }}
+    Step {{ preparationStep.stepNumber }}: {{ preparationStep.title }}
   </a>
 </ul>
+<span class="text-danger">{{ errorMessage }}</span>
