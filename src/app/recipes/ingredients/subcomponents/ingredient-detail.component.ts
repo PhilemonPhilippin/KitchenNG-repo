@@ -26,6 +26,7 @@ export class IngredientDetailComponent implements OnInit, OnDestroy {
   }
 
   private getIngredient(id: number): void {
+    this.errorMessage = '';
     this.ingredientService
       .getIngredient(id)
       .pipe(takeUntil(this.destroy$))

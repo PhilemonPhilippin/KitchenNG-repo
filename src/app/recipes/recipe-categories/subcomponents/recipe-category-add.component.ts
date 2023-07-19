@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeCategoryService } from '../recipe-category.service';
-import { EMPTY, Subject, Subscription, catchError, takeUntil } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 import { IRecipeCategoryRequest } from '../models/recipe-category-request';
 
 @Component({
@@ -14,6 +14,7 @@ export class RecipeCategoryAddComponent implements OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   errorMessage: string = '';
+  statusCode: number = 0;
 
   recipeCategoryForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -23,10 +24,14 @@ export class RecipeCategoryAddComponent implements OnDestroy {
   constructor(private recipeCategoryService: RecipeCategoryService) {}
 
   onSubmit(): void {
+    this.errorMessage = '';
+    this.statusCode = 0;
+
     const recipeCategory: IRecipeCategoryRequest = {
       title: this.recipeCategoryForm.value.title || '',
       description: this.recipeCategoryForm.value.description || undefined,
     };
+
     this.recipeCategoryService
       .addRecipeCategory(recipeCategory)
       .pipe(
@@ -40,6 +45,7 @@ export class RecipeCategoryAddComponent implements OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 201) {
+            this.statusCode = response.status;
             this.addSuccessful.emit();
             this.closeEdit();
           }

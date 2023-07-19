@@ -1,7 +1,11 @@
 <h1>Ingredient</h1>
 <div>
   <button class="btn btn-primary me-1" (click)="backClicked()">Back</button>
-  <button class="btn btn-warning me-1" (click)="toggleEdit()" *ngIf="displayDetail">
+  <button
+    class="btn btn-warning me-1"
+    (click)="toggleEdit()"
+    *ngIf="displayDetail"
+  >
     Edit
   </button>
   <button class="btn btn-danger" (click)="deleteClicked(id)">Delete</button>
@@ -11,3 +15,4 @@
   *ngIf="displayEdit"
   (closingEdit)="toggleEdit()"
 ></ingredient-edit>
+<span class="text-danger">{{ errorMessage }}</span>

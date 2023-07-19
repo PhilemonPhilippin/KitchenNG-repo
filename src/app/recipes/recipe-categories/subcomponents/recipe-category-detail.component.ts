@@ -26,6 +26,7 @@ export class RecipeCategoryDetailComponent implements OnInit, OnDestroy {
   }
 
   getRecipeCategory(id: number): void {
+    this.errorMessage = '';
     this.recipeCategoryService
       .getRecipeCategory(id)
       .pipe(

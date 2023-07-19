@@ -11,7 +11,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
   id: number = 0;
-  errorMessages: string[] = [];
+  errorMessage: string = '';
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -34,11 +34,14 @@ export class IngredientComponent implements OnInit, OnDestroy {
   }
 
   deleteClicked(id: number): void {
+    this.errorMessage = '';
     this.ingredientService
       .deleteIngredient(id)
       .pipe(
         catchError((err) => {
-          this.errorMessages.push(err);
+          console.log('Error deleting the ingredient : ' + err);
+          this.errorMessage =
+            'An error occurred while deleting the ingredient.';
           return EMPTY;
         }),
         takeUntil(this.destroy$)

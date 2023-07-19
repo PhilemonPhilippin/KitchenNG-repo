@@ -34,6 +34,7 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   }
 
   private getIngredients(): void {
+    this.errorMessage = '';
     this.ingredientService
       .getIngredients(this.pageNumber, this.pageSize)
       .pipe(
