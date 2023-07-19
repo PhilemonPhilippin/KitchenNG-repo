@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IPreparationStep } from '../models/preparation-step';
 import { PreparationStepService } from '../preparation-step.service';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'preparation-step-detail',
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class PreparationStepDetailComponent implements OnInit, OnDestroy {
   preparationStep: IPreparationStep | undefined;
   errorMessage: string = '';
-  sub!: Subscription;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -21,19 +21,29 @@ export class PreparationStepDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     const recipeId = Number(this.route.snapshot.paramMap.get('recipeid'));
-    if (id && recipeId) {
-      this.getPreparationStep(id, recipeId);
-    }
+    this.getPreparationStep(id, recipeId);
   }
 
   getPreparationStep(id: number, recipeId: number): void {
-    this.sub = this.preparationStepService.getPreparationStep(id, recipeId).subscribe({
-      next: (preparationStep) => (this.preparationStep = preparationStep),
-      error: (err) => (this.errorMessage = err),
-    });
+    this.errorMessage = '';
+    this.preparationStepService
+      .getPreparationStep(id, recipeId)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error fecthing the preparation step : ' + err);
+          this.errorMessage =
+            'An error occurred while fetching the preparation step.';
+          return EMPTY;
+        })
+      )
+      .subscribe({
+        next: (preparationStep) => (this.preparationStep = preparationStep),
+      });
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

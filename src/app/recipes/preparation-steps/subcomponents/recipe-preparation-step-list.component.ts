@@ -24,12 +24,11 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.recipeId = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.recipeId) {
-      this.getPreparationSteps(this.recipeId);
-    }
+    this.getPreparationSteps(this.recipeId);
   }
 
   getPreparationSteps(recipeId: number): void {
+    this.errorMessage = '';
     this.preparationStepService
       .getPreparationSteps(recipeId)
       .pipe(
