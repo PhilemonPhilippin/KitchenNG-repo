@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IRecipeCategory } from '../models/recipe-category';
 import { RecipeCategoryService } from '../recipe-category.service';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'recipe-category-detail',
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class RecipeCategoryDetailComponent implements OnInit, OnDestroy {
   recipeCategory: IRecipeCategory | undefined;
   errorMessage: string = '';
-  sub!: Subscription;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -26,13 +26,23 @@ export class RecipeCategoryDetailComponent implements OnInit, OnDestroy {
   }
 
   getRecipeCategory(id: number): void {
-    this.sub = this.recipeCategoryService.getRecipeCategory(id).subscribe({
-      next: (recipeCategory) => (this.recipeCategory = recipeCategory),
-      error: (err) => (this.errorMessage = err),
-    });
+    this.recipeCategoryService
+      .getRecipeCategory(id)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error fetching the category: ' + err);
+          this.errorMessage = 'An error occurred while fetching the category.';
+          return EMPTY;
+        })
+      )
+      .subscribe({
+        next: (recipeCategory) => (this.recipeCategory = recipeCategory),
+      });
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
