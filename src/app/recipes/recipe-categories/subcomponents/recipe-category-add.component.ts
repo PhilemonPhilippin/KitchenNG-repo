@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeCategoryService } from '../recipe-category.service';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, Subscription, catchError, takeUntil } from 'rxjs';
 import { IRecipeCategoryRequest } from '../models/recipe-category-request';
 
 @Component({
@@ -11,8 +11,9 @@ import { IRecipeCategoryRequest } from '../models/recipe-category-request';
 export class RecipeCategoryAddComponent implements OnDestroy {
   @Output() closingEdit = new EventEmitter();
   @Output() addSuccessful = new EventEmitter();
-  sub!: Subscription;
-  errorMessages: string[] = [];
+
+  private destroy$: Subject<void> = new Subject<void>();
+  errorMessage: string = '';
 
   recipeCategoryForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -26,8 +27,16 @@ export class RecipeCategoryAddComponent implements OnDestroy {
       title: this.recipeCategoryForm.value.title || '',
       description: this.recipeCategoryForm.value.description || undefined,
     };
-    this.sub = this.recipeCategoryService
+    this.recipeCategoryService
       .addRecipeCategory(recipeCategory)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error while adding the category: ' + err);
+          this.errorMessage = 'An error occurred while adding the category';
+          return EMPTY;
+        })
+      )
       .subscribe({
         next: (response) => {
           if (response.status === 201) {
@@ -35,7 +44,6 @@ export class RecipeCategoryAddComponent implements OnDestroy {
             this.closeEdit();
           }
         },
-        error: (err) => this.errorMessages.push(err),
       });
   }
 
@@ -44,8 +52,7 @@ export class RecipeCategoryAddComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
