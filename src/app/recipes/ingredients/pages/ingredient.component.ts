@@ -12,6 +12,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   displayEdit: boolean = false;
   id: number = 0;
   errorMessage: string = '';
+  statusCode: number = 0;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -35,6 +36,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
 
   deleteClicked(id: number): void {
     this.errorMessage = '';
+    this.statusCode = 0;
     this.ingredientService
       .deleteIngredient(id)
       .pipe(
@@ -49,6 +51,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 204) {
+            this.statusCode = response.status
             this._location.back();
           }
         },

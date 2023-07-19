@@ -16,3 +16,6 @@
   (closingEdit)="toggleEdit()"
 ></ingredient-edit>
 <span class="text-danger">{{ errorMessage }}</span>
+<span class="text-success" *ngIf="statusCode == 204"
+  >Ingredient deleted with success!</span
+>

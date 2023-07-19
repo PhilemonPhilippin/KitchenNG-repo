@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PreparationStepService } from '../preparation-step.service';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: './preparation-step.component.html',
@@ -14,7 +14,7 @@ export class PreparationStepComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   id: number = 0;
   recipeId: number = 0;
-  sub!: Subscription;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private _location: Location,
@@ -38,8 +38,20 @@ export class PreparationStepComponent implements OnInit, OnDestroy {
   }
 
   deleteClicked(): void {
-    this.sub = this.preparationStepService
+    this.statusCode = 0;
+    this.errorMessage = '';
+
+    this.preparationStepService
       .deletePreparationStep(this.id, this.recipeId)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error while deleting preparation step: ' + err);
+          this.errorMessage =
+            'An error occurred while deleting preparation step.';
+          return EMPTY;
+        })
+      )
       .subscribe({
         next: (response) => {
           this.statusCode = response.status;
@@ -47,13 +59,11 @@ export class PreparationStepComponent implements OnInit, OnDestroy {
             this.router.navigate(['/recipes', this.recipeId]);
           }
         },
-        error: (err) => (this.errorMessage = err),
       });
   }
 
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
