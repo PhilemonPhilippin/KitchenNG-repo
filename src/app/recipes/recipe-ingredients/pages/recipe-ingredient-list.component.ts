@@ -4,7 +4,7 @@ import { RecipeService } from '../../recipe/recipe.service';
 import { RecipeIngredientService } from '../../recipe-ingredients/recipe-ingredient.service';
 import { IRecipe } from '../../recipe/models/recipe';
 import { IRecipeIngredient } from '../../recipe-ingredients/models/recipe-ingredient';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'recipe-ingredient-list',
@@ -13,14 +13,12 @@ import { Subscription } from 'rxjs';
 export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   recipe: IRecipe | undefined;
   recipeIngredients: IRecipeIngredient[] = [];
-  errorMessages: string[] = [];
   displayAddIngredient: boolean = false;
   displayEditIngredient: boolean = false;
   recipeIngredientEdited: IRecipeIngredient | undefined;
   statusCode: number = 0;
-  subOne!: Subscription;
-  subTwo!: Subscription;
-  subThree!: Subscription;
+  errorMessage: string = '';
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -37,19 +35,38 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   }
 
   getRecipe(id: number): void {
-    this.subOne = this.recipeService.getRecipe(id).subscribe({
-      next: (recipe) => (this.recipe = recipe),
-      error: (err) => this.errorMessages.push(err),
-    });
+    this.errorMessage = '';
+    this.recipeService
+      .getRecipe(id)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error fetching the recipe: ' + err);
+          this.errorMessage = 'An error occurred while fetching the recipe.';
+          return EMPTY;
+        })
+      )
+      .subscribe({
+        next: (recipe) => (this.recipe = recipe),
+      });
   }
 
   getRecipeIngredients(recipeId: number): void {
-    this.subTwo = this.recipeIngredientService
+    this.errorMessage = '';
+    this.recipeIngredientService
       .getRecipeIngredients(recipeId)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((err) => {
+          console.log('Error fetching the ingredients: ' + err);
+          this.errorMessage =
+            'An error occurred while fetching the ingredients.';
+          return [];
+        })
+      )
       .subscribe({
         next: (recipeIngredients) =>
           (this.recipeIngredients = recipeIngredients),
-        error: (err) => this.errorMessages.push(err),
       });
   }
 
@@ -75,9 +92,20 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   }
 
   removeClicked(ingredientId: number): void {
+    this.statusCode = 0;
+    this.errorMessage = '';
     if (this.recipe?.id) {
-      this.subThree = this.recipeIngredientService
+      this.recipeIngredientService
         .removeRecipeIngredient(this.recipe.id, ingredientId)
+        .pipe(
+          takeUntil(this.destroy$),
+          catchError((err) => {
+            console.log('Error removing the ingredient: ' + err);
+            this.errorMessage =
+              'An error occurred while removing the ingredient.';
+            return EMPTY;
+          })
+        )
         .subscribe({
           next: (response) => {
             this.statusCode = response.status;
@@ -85,7 +113,6 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
               this.ngOnInit();
             }
           },
-          error: (err) => this.errorMessages.push(err),
         });
     }
   }
@@ -95,8 +122,7 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subThree) {
-      this.subThree.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
