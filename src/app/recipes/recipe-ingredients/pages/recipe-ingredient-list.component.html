@@ -9,10 +9,17 @@
     Add
   </button>
 </div>
+<div class="alert alert-success mt-1" role="alert" *ngIf="addSuccessful">
+  Ingredient added with success!
+</div>
+<div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
+  Ingredient edited with success!
+</div>
+
 <recipe-ingredient-add
   [recipeId]="recipe.id"
   (closingAdd)="toggleAddIngredient()"
-  (addSucccessful)="refresh()"
+  (addSucccessful)="onAddSuccess()"
   *ngIf="displayAddIngredient && recipe"
 ></recipe-ingredient-add>
 <table
@@ -69,7 +76,7 @@
   ><span *ngIf="!displayEditIngredient">not at the moment</span>
 </p>
 <recipe-ingredient-edit
-  (editSuccessful)="refresh()"
+  (editSuccessful)="onEditSuccess()"
   (closingEdit)="closeEdit()"
   [recipeId]="recipe.id"
   [recipeIngredient]="recipeIngredientEdited"

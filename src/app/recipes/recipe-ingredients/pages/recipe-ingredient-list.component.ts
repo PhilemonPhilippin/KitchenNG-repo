@@ -15,6 +15,8 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   recipeIngredients: IRecipeIngredient[] = [];
   displayAddIngredient: boolean = false;
   displayEditIngredient: boolean = false;
+  addSuccessful: boolean = false;
+  editSuccessful: boolean = false;
   recipeIngredientEdited: IRecipeIngredient | undefined;
   statusCode: number = 0;
   errorMessage: string = '';
@@ -91,6 +93,16 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
       ?.scrollIntoView({ behavior: 'smooth' });
   }
 
+  onAddSuccess(): void {
+    this.ngOnInit();
+    this.addSuccessful = true;
+  }
+
+  onEditSuccess(): void {
+    this.ngOnInit();
+    this.editSuccessful = true;
+  }
+
   removeClicked(ingredientId: number): void {
     this.statusCode = 0;
     this.errorMessage = '';
@@ -115,10 +127,6 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
           },
         });
     }
-  }
-
-  refresh(): void {
-    this.ngOnInit();
   }
 
   ngOnDestroy(): void {
