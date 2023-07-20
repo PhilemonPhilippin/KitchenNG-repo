@@ -20,6 +20,7 @@ import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
+  @Output() editSuccess = new EventEmitter();
 
   recipe: IRecipe | undefined;
   errorMessage: string = '';
@@ -106,6 +107,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.statusCode = response.status;
             if (response.status === 204) {
+              this.editSuccess.emit();
               this.closeEdit();
             }
           },

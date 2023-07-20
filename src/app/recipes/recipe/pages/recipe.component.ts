@@ -9,6 +9,7 @@ import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 export class RecipeComponent implements OnInit, OnDestroy {
   displayRecipeDetail: boolean = true;
   displayRecipeEdit: boolean = false;
+  editSuccessful: boolean = false;
   id: number = 0;
   errorMessage: string = '';
   statusCode: number = 0;
@@ -27,6 +28,10 @@ export class RecipeComponent implements OnInit, OnDestroy {
   toggleRecipeEdit() {
     this.displayRecipeDetail = !this.displayRecipeDetail;
     this.displayRecipeEdit = !this.displayRecipeEdit;
+  }
+
+  onEditSuccess(): void {
+    this.editSuccessful = true;
   }
 
   deleteClicked() {

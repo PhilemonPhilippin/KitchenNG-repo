@@ -15,9 +15,13 @@
     Delete
   </button>
 </div>
+<div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
+  Recipe edited with success!
+</div>
 <recipe-detail *ngIf="displayRecipeDetail"></recipe-detail>
 <recipe-edit
   *ngIf="displayRecipeEdit"
+  (editSuccess)="onEditSuccess()"
   (closingEdit)="toggleRecipeEdit()"
 ></recipe-edit>
 <recipe-ingredient-list></recipe-ingredient-list>
