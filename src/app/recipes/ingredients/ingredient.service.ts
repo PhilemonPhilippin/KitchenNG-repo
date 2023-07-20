@@ -23,7 +23,7 @@ export class IngredientService {
   }
 
   getIngredientsNoDesc(): Observable<IIngredientNoDesc[]> {
-    let url = 'https://localhost:7049/api/ingredients/nodesc';
+    let url = 'https://localhost:7049/api/ingredients/nodescription';
     return this.http.get<IIngredientNoDesc[]>(url);
   }
 
