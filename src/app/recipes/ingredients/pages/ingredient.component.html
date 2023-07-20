@@ -8,11 +8,17 @@
   >
     Edit
   </button>
-  <button class="btn btn-outline-danger" (click)="deleteClicked(id)">Delete</button>
+  <button class="btn btn-outline-danger" (click)="deleteClicked(id)">
+    Delete
+  </button>
+</div>
+<div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
+  Ingredient edited with success!
 </div>
 <ingredient-detail *ngIf="displayDetail"></ingredient-detail>
 <ingredient-edit
   *ngIf="displayEdit"
+  (editSuccessful)="onEditSuccess()"
   (closingEdit)="toggleEdit()"
 ></ingredient-edit>
 <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">

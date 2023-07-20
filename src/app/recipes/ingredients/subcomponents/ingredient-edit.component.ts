@@ -19,6 +19,7 @@ import { IIngredientNoDesc } from '../models/ingredient-no-desc';
 })
 export class IngredientEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
+  @Output() editSuccessful = new EventEmitter();
 
   ingredientsNoDesc: IIngredientNoDesc[] = [];
   ingredient: IIngredient | undefined;
@@ -105,6 +106,7 @@ export class IngredientEditComponent implements OnInit, OnDestroy {
             next: (response) => {
               this.statusCode = response.status;
               if (response.status === 204) {
+                this.editSuccessful.emit();
                 this.closeEdit();
               }
             },

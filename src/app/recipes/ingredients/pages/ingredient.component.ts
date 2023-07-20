@@ -8,6 +8,7 @@ import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
   templateUrl: './ingredient.component.html',
 })
 export class IngredientComponent implements OnInit, OnDestroy {
+  editSuccessful: boolean = false;
   displayDetail: boolean = true;
   displayEdit: boolean = false;
   id: number = 0;
@@ -56,6 +57,10 @@ export class IngredientComponent implements OnInit, OnDestroy {
           }
         },
       });
+  }
+
+  onEditSuccess(): void {
+    this.editSuccessful = true;
   }
 
   ngOnDestroy(): void {
