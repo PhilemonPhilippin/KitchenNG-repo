@@ -15,6 +15,7 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
   preparationSteps: IPreparationStep[] = [];
   errorMessage: string = '';
   displayAddPreparationStep: boolean = false;
+  addSuccessful: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -49,8 +50,9 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
     this.displayAddPreparationStep = !this.displayAddPreparationStep;
   }
 
-  refresh(): void {
+  onAddSuccess() {
     this.ngOnInit();
+    this.addSuccessful = true;
   }
 
   ngOnDestroy(): void {

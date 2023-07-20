@@ -18,6 +18,7 @@ import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 })
 export class PreparationStepEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
+  @Output() editSuccess = new EventEmitter();
 
   preparationStep: IPreparationStep | undefined;
   errorMessage: string = '';
@@ -98,6 +99,7 @@ export class PreparationStepEditComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.statusCode = response.status;
             if (response.status === 204) {
+              this.editSuccess.emit();
               this.closeEdit();
             }
           },

@@ -10,6 +10,7 @@ import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 export class PreparationStepComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
+  editSuccessful: boolean = false;
   statusCode: number = 0;
   errorMessage: string = '';
   id: number = 0;
@@ -35,6 +36,10 @@ export class PreparationStepComponent implements OnInit, OnDestroy {
 
   backClicked() {
     this._location.back();
+  }
+
+  onEditSuccess(): void {
+    this.editSuccessful = true;
   }
 
   deleteClicked(): void {

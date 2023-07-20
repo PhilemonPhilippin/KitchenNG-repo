@@ -8,11 +8,17 @@
   >
     Edit
   </button>
-  <button class="btn btn-outline-danger ms-1" (click)="deleteClicked()">Delete</button>
+  <button class="btn btn-outline-danger ms-1" (click)="deleteClicked()">
+    Delete
+  </button>
+</div>
+<div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
+  Preparation step edited with success!
 </div>
 <preparation-step-detail *ngIf="displayDetail"></preparation-step-detail>
 <preparation-step-edit
   *ngIf="displayEdit"
+  (editSuccess)="onEditSuccess()"
   (closingEdit)="toggleEdit()"
 ></preparation-step-edit>
 <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
