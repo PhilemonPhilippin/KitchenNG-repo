@@ -39,37 +39,39 @@ export class PreparationStepAddComponent implements OnDestroy {
     this.errorMessage = '';
     this.statusCode = 0;
 
-    const preparationStep: IPreparationStepRequest = {
-      title: this.preparationStepForm.value.title as string,
-      stepNumber: this.preparationStepForm.value.stepNumber as number,
-      step: this.preparationStepForm.value.step as string,
-    };
+    if (this.preparationStepForm.valid) {
+      const preparationStep: IPreparationStepRequest = {
+        title: this.preparationStepForm.value.title as string,
+        stepNumber: this.preparationStepForm.value.stepNumber as number,
+        step: this.preparationStepForm.value.step as string,
+      };
 
-    this.preparationStepService
-      .addPreparationStep(this.recipeId, preparationStep)
-      .pipe(
-        takeUntil(this.destroy$),
-        catchError((err) => {
-          console.log('Error adding preparation step: ' + err);
-          this.errorMessage =
-            'An error occurred while adding the preparation step.';
-          return EMPTY;
-        })
-      )
-      .subscribe({
-        next: (response) => {
-          this.statusCode = response.status;
-          if (this.statusCode == 201) {
-            this.preparationStepForm.setValue({
-              title: '',
-              stepNumber: 0,
-              step: '',
-            });
-            this.addSuccessful.emit();
-            this.closeAdd();
-          }
-        },
-      });
+      this.preparationStepService
+        .addPreparationStep(this.recipeId, preparationStep)
+        .pipe(
+          takeUntil(this.destroy$),
+          catchError((err) => {
+            console.log('Error adding preparation step: ' + err);
+            this.errorMessage =
+              'An error occurred while adding the preparation step.';
+            return EMPTY;
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            this.statusCode = response.status;
+            if (this.statusCode == 201) {
+              this.preparationStepForm.setValue({
+                title: '',
+                stepNumber: 0,
+                step: '',
+              });
+              this.addSuccessful.emit();
+              this.closeAdd();
+            }
+          },
+        });
+    }
   }
 
   closeAdd(): void {

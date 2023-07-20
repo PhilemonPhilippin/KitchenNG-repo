@@ -26,31 +26,32 @@ export class RecipeCategoryAddComponent implements OnDestroy {
   onSubmit(): void {
     this.errorMessage = '';
     this.statusCode = 0;
+    if (this.recipeCategoryForm.valid) {
+      const recipeCategory: IRecipeCategoryRequest = {
+        title: this.recipeCategoryForm.value.title || '',
+        description: this.recipeCategoryForm.value.description || undefined,
+      };
 
-    const recipeCategory: IRecipeCategoryRequest = {
-      title: this.recipeCategoryForm.value.title || '',
-      description: this.recipeCategoryForm.value.description || undefined,
-    };
-
-    this.recipeCategoryService
-      .addRecipeCategory(recipeCategory)
-      .pipe(
-        takeUntil(this.destroy$),
-        catchError((err) => {
-          console.log('Error while adding the category: ' + err);
-          this.errorMessage = 'An error occurred while adding the category';
-          return EMPTY;
-        })
-      )
-      .subscribe({
-        next: (response) => {
-          if (response.status === 201) {
-            this.statusCode = response.status;
-            this.addSuccessful.emit();
-            this.closeEdit();
-          }
-        },
-      });
+      this.recipeCategoryService
+        .addRecipeCategory(recipeCategory)
+        .pipe(
+          takeUntil(this.destroy$),
+          catchError((err) => {
+            console.log('Error while adding the category: ' + err);
+            this.errorMessage = 'An error occurred while adding the category';
+            return EMPTY;
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            if (response.status === 201) {
+              this.statusCode = response.status;
+              this.addSuccessful.emit();
+              this.closeEdit();
+            }
+          },
+        });
+    }
   }
 
   closeEdit() {
