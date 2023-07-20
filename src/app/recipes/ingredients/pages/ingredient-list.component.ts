@@ -16,6 +16,7 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   totalPages: number = 1;
   totalItems: number = 1;
   displayAdd: boolean = false;
+  addSuccessfull: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private ingredientService: IngredientService) {}
@@ -74,8 +75,9 @@ export class IngredientListComponent implements OnInit, OnDestroy {
     this.displayAdd = !this.displayAdd;
   }
 
-  refresh(): void {
+  onAddSuccessful(): void {
     this.getIngredients();
+    this.addSuccessfull = true;
   }
 
   ngOnDestroy(): void {
