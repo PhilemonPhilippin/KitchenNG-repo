@@ -32,6 +32,9 @@ export class RecipeComponent implements OnInit, OnDestroy {
 
   onEditSuccess(): void {
     this.editSuccessful = true;
+    setTimeout(() => {
+      this.editSuccessful = false;
+    }, 5000);
   }
 
   deleteClicked() {

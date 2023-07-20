@@ -78,6 +78,9 @@ export class IngredientListComponent implements OnInit, OnDestroy {
   onAddSuccessful(): void {
     this.getIngredients();
     this.addSuccessfull = true;
+    setTimeout(() => {
+      this.addSuccessfull = false;
+    }, 5000);
   }
 
   ngOnDestroy(): void {

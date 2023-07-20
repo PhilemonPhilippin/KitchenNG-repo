@@ -52,7 +52,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 204) {
-            this.statusCode = response.status
+            this.statusCode = response.status;
             this._location.back();
           }
         },
@@ -61,6 +61,9 @@ export class IngredientComponent implements OnInit, OnDestroy {
 
   onEditSuccess(): void {
     this.editSuccessful = true;
+    setTimeout(() => {
+      this.editSuccessful = false;
+    }, 5000);
   }
 
   ngOnDestroy(): void {

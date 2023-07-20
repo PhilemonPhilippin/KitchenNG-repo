@@ -96,11 +96,17 @@ export class RecipeIngredientListComponent implements OnInit, OnDestroy {
   onAddSuccess(): void {
     this.ngOnInit();
     this.addSuccessful = true;
+    setTimeout(() => {
+      this.addSuccessful = false;
+    }, 5000);
   }
 
   onEditSuccess(): void {
     this.ngOnInit();
     this.editSuccessful = true;
+    setTimeout(() => {
+      this.editSuccessful = false;
+    }, 5000);
   }
 
   removeClicked(ingredientId: number): void {

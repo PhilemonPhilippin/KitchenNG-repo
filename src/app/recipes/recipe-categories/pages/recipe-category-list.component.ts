@@ -46,6 +46,9 @@ export class RecipeCategoryListComponent implements OnInit, OnDestroy {
   onAddSuccess() {
     this.getRecipeCategories();
     this.addSuccessful = true;
+    setTimeout(() => {
+      this.addSuccessful = false;
+    }, 5000);
   }
 
   ngOnDestroy(): void {

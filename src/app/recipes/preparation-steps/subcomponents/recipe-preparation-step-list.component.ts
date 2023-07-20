@@ -53,6 +53,9 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
   onAddSuccess() {
     this.ngOnInit();
     this.addSuccessful = true;
+    setTimeout(() => {
+      this.addSuccessful = false;
+    }, 5000);
   }
 
   ngOnDestroy(): void {
