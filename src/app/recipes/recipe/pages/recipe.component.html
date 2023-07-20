@@ -27,9 +27,9 @@
 <recipe-ingredient-list></recipe-ingredient-list>
 <recipe-preparation-step-list></recipe-preparation-step-list>
 
-<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+<div class="alert alert-danger mt1" role="alert" *ngIf="errorMessage !== ''">
   {{ errorMessage }}
 </div>
-<div class="alert alert-success" role="alert" *ngIf="statusCode == 204">
+<div class="alert alert-success mt1" role="alert" *ngIf="statusCode == 204">
   Recipe deleted with success!
 </div>

@@ -21,9 +21,9 @@
   (editSuccess)="onEditSuccess()"
   (closingEdit)="toggleEdit()"
 ></preparation-step-edit>
-<div class="alert alert-danger" role="alert" *ngIf="errorMessage !== ''">
+<div class="alert alert-danger mt1" role="alert" *ngIf="errorMessage !== ''">
   {{ errorMessage }}
 </div>
-<div class="alert alert-success" role="alert" *ngIf="statusCode == 204">
+<div class="alert alert-success mt1" role="alert" *ngIf="statusCode == 204">
   Preparation step deleted with success!
 </div>
