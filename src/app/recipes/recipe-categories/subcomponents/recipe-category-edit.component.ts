@@ -18,6 +18,8 @@ import { IRecipeCategoryRequest } from '../models/recipe-category-request';
 })
 export class RecipeCategoryEditComponent implements OnInit, OnDestroy {
   @Output() closingEdit = new EventEmitter();
+  @Output() editSuccess = new EventEmitter();
+
   recipeCategory: IRecipeCategory | undefined;
   errorMessage: string = '';
   statusCode: number = 0;
@@ -86,6 +88,7 @@ export class RecipeCategoryEditComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.statusCode = response.status;
             if (response.status === 204) {
+              this.editSuccess.emit();
               this.closeEdit();
             }
           },

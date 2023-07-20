@@ -10,6 +10,7 @@ import { RecipeCategoryService } from '../recipe-category.service';
 export class RecipeCategoryComponent implements OnInit, OnDestroy {
   displayDetail: boolean = true;
   displayEdit: boolean = false;
+  editSuccessful: boolean = false;
   id: number = 0;
   statusCode: number = 0;
   errorMessage: string = '';
@@ -32,6 +33,10 @@ export class RecipeCategoryComponent implements OnInit, OnDestroy {
 
   backClicked() {
     this._location.back();
+  }
+
+  onEditSuccess(): void {
+    this.editSuccessful = true;
   }
 
   deleteClicked() {

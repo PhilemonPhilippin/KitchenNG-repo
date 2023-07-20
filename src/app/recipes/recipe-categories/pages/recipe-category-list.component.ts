@@ -10,6 +10,7 @@ export class RecipeCategoryListComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   recipeCategories: IRecipeCategory[] = [];
   displayAdd: boolean = false;
+  addSuccessful: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private recipeCategoryService: RecipeCategoryService) {}
@@ -42,8 +43,9 @@ export class RecipeCategoryListComponent implements OnInit, OnDestroy {
     this.displayAdd = !this.displayAdd;
   }
 
-  refresh() {
+  onAddSuccess() {
     this.getRecipeCategories();
+    this.addSuccessful = true;
   }
 
   ngOnDestroy(): void {

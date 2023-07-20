@@ -8,11 +8,17 @@
   >
     Edit
   </button>
-  <button class="btn btn-outline-danger" (click)="deleteClicked()">Delete</button>
+  <button class="btn btn-outline-danger" (click)="deleteClicked()">
+    Delete
+  </button>
+</div>
+<div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
+  Category edited with success!
 </div>
 <recipe-category-detail *ngIf="displayDetail"></recipe-category-detail>
 <recipe-category-edit
   (closingEdit)="toggleEdit()"
+  (editSuccess)="onEditSuccess()"
   *ngIf="displayEdit"
 ></recipe-category-edit>
 

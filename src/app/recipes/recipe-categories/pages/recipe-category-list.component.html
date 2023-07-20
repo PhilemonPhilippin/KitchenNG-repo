@@ -8,7 +8,14 @@
     Add
   </button>
 </div>
-<recipe-category-add (addSuccessful)="refresh()" (closingEdit)="toggleAdd()" *ngIf="displayAdd"></recipe-category-add>
+<div class="alert alert-success mt-1" role="alert" *ngIf="addSuccessful">
+  Category added with success!
+</div>
+<recipe-category-add
+  (addSuccessful)="onAddSuccess()"
+  (closingEdit)="toggleAdd()"
+  *ngIf="displayAdd"
+></recipe-category-add>
 <div>
   <ul class="list-group">
     <li
