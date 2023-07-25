@@ -1,72 +1,85 @@
 <div class="bg-white">
-  <nav class="py-2 border-bottom bg-dark">
-    <div class="container d-flex flex-wrap">
-      <ul class="nav me-auto">
-        <li class="nav-item">
-          <a
-            [routerLink]="['/welcome']"
-            class="nav-link link-info px-3 active text-white"
-            aria-current="page"
-          >
-            Home</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            [routerLink]="['/recipes']"
-            class="nav-link link-info px-3 text-white"
-          >
-            Recipes</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            [routerLink]="['/ingredients']"
-            class="nav-link link-info px-3 text-white"
-          >
-            Ingredients</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            [routerLink]="['/recipecategories']"
-            class="nav-link link-info px-3 text-white"
-          >
-            Categories</a
-          >
-        </li>
-        <li class="nav-item">
-          <a href="users" class="nav-link link-info px-3 text-white"> Users</a>
-        </li>
-      </ul>
-      <ul class="nav">
-        <li class="nav-item">
-          <a href="signin" class="nav-link link-info px-3 text-white">
-            Sign in</a
-          >
-        </li>
-        <li class="nav-item">
-          <a href="logout" class="nav-link link-info px-3 text-white">
-            Log out</a
-          >
-        </li>
-      </ul>
+  <nav
+    class="navbar navbar-expand-sm navbar-dark bg-dark"
+    aria-label="Navigation menu"
+  >
+    <div class="container-fluid">
+      <a class="navbar-brand" [routerLink]="['/welcome']">Kitchen</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbar"
+        aria-controls="navbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              [routerLink]="['/welcome']"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item dropdown">
+            <a
+            role="button"
+            href="#"
+              class="nav-link dropdown-toggle"
+              id="dropdown03"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              >Recipes</a
+            >
+            <ul class="dropdown-menu" aria-labelledby="dropdown03">
+              <li>
+                <a class="dropdown-item" [routerLink]="['/recipes']">Recipes</a>
+              </li>
+              <li>
+                <a class="dropdown-item" [routerLink]="['/recipecategories']"
+                  >Categories</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" [routerLink]="['/ingredients']"
+                  >Ingredients</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              >Users</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="signin" class="nav-link px-3"> Sign in</a>
+          </li>
+          <li class="nav-item">
+            <a
+              href="logout"
+              class="nav-link disabled px-3"
+              tabindex="-1"
+              aria-disabled="true"
+            >
+              Log out</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <header class="py-3 mb-4 border-bottom">
-    <div class="container d-flex justify-content-center">
-      <a
-        href="/"
-        class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
-      >
-        <span class="fs-4">Kitchen</span>
-      </a>
-    </div>
-  </header>
-
   <div class="page">
-    <div class="container bg-light">
+    <div class="container">
       <main>
         <article class="content px-4">
           <router-outlet></router-outlet>
@@ -79,17 +92,15 @@
     <footer class="py-3 my-4">
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item">
-          <a href="/" class="nav-link link-info px-2 text-muted">Home</a>
+          <a href="/" class="nav-link link-primary px-2 text-muted">Home</a>
         </li>
         <li class="nav-item">
-          <a href="logout" class="nav-link link-info px-2 text-muted"
+          <a href="logout" class="nav-link link-primary px-2 text-muted"
             >Log out</a
           >
         </li>
       </ul>
-      <p class="text-center text-muted">
-        &copy; 2023 Philemon Emile Olivier Philippin
-      </p>
+      <p class="text-center text-muted">&copy; 2023 Philémon Philippin</p>
     </footer>
   </div>
 </div>
