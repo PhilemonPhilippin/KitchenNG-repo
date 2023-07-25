@@ -62,7 +62,7 @@ export class RecipeAddComponent implements OnInit, OnDestroy {
     if (this.recipeForm.valid) {
       const recipe: IRecipeRequest = {
         title: this.recipeForm.value.title || '',
-        description: this.recipeForm.value.description ?? undefined,
+        description: this.recipeForm.value.description || undefined,
         recipeCategoryId: Number(this.recipeForm.value.recipeCategory),
       };
 

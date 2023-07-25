@@ -1,71 +1,80 @@
-<p *ngIf="recipe">
+<p class="mt-3" *ngIf="recipe">
   Editing the recipe with initial title "<span class="fw-bold">{{
     recipe.title
   }}</span
   >"
 </p>
 <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="title">Title :</label>
-  </div>
-  <div>
-    <input id="title" type="text" formControlName="title" />
-  </div>
-  <span
-    *ngIf="recipeForm.get('title')?.errors?.['required']"
-    class="text-danger"
-  >
-    Title is required
-  </span>
-  <span
-    *ngIf="recipeForm.get('title')?.errors?.['maxlength']"
-    class="text-danger"
-  >
-    Title must be 50 characters maximum
-  </span>
-  <div class="mt-2">
-    <label for="description">Description :</label>
-  </div>
-  <div>
-    <textarea
-      class="w-50"
-      rows="5"
-      id="description"
-      formControlName="description"
-    ></textarea>
-  </div>
-  <span
-    *ngIf="recipeForm.get('description')?.errors?.['maxlength']"
-    class="text-danger"
-  >
-    Description must be 500 characters maximum
-  </span>
-  <div class="mt-2">
-    <label for="recipeCategory">Category :</label>
-  </div>
-  <div>
-    <select formControlName="recipeCategory">
-      <option [ngValue]="null" disabled>Choose your category</option>
-      <option
-        *ngFor="let recipeCategory of recipeCategories"
-        [ngValue]="recipeCategory.id"
-      >
-        {{ recipeCategory.title }}
-      </option>
-    </select>
-  </div>
-  <span
-    *ngIf="recipeForm.get('recipeCategory')?.errors?.['required']"
-    class="text-danger"
-    >Category is required</span
-  >
-  <div>
-    <button class="btn btn-outline-warning mt-1" type="submit">
-      Save changes
-    </button>
-    <button class="btn btn-outline-primary mt-1 ms-1" (click)="closeEdit()">
-      <i class="bi bi-x-circle"></i> Cancel
-    </button>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <label class="form-label" for="title">Title :</label>
+        <input
+          id="title"
+          class="form-control"
+          type="text"
+          formControlName="title"
+        />
+        <span
+          *ngIf="recipeForm.get('title')?.errors?.['required']"
+          class="text-danger form-text"
+        >
+          Title is required
+        </span>
+        <span
+          *ngIf="recipeForm.get('title')?.errors?.['maxlength']"
+          class="text-danger form-text"
+        >
+          Title must be 50 characters maximum
+        </span>
+      </div>
+      <div class="col-xl-4"></div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <label class="form-label" for="description">Description :</label>
+        <textarea
+          class="w-xl-75 form-control"
+          rows="5"
+          id="description"
+          formControlName="description"
+        ></textarea>
+        <span
+          *ngIf="recipeForm.get('description')?.errors?.['maxlength']"
+          class="text-danger"
+        >
+          Description must be 500 characters maximum
+        </span>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <label class="form-label" for="recipeCategory">Category :</label>
+        <select class="form-control" formControlName="recipeCategory">
+          <option [ngValue]="null" disabled>Choose your category</option>
+          <option
+            *ngFor="let recipeCategory of recipeCategories"
+            [ngValue]="recipeCategory.id"
+          >
+            {{ recipeCategory.title }}
+          </option>
+        </select>
+        <span
+          *ngIf="recipeForm.get('recipeCategory')?.errors?.['required']"
+          class="text-danger form-text"
+          >Category is required</span
+        >
+      </div>
+      <div class="col-xl-4"></div>
+    </div>
+    <div class="mt-2">
+      <button class="btn btn-outline-warning mt-1" type="submit">
+        Save changes
+      </button>
+      <button class="btn btn-outline-primary mt-1 ms-1" (click)="closeEdit()">
+        <i class="bi bi-x-circle"></i> Cancel
+      </button>
+    </div>
   </div>
 </form>
 

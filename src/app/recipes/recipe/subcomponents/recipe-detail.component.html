@@ -1,5 +1,5 @@
 <p *ngIf="recipe == null">No data found</p>
-<table class="table table-striped mt-1" *ngIf="recipe">
+<table class="table table-striped mt-3" *ngIf="recipe">
   <thead class="table-primary">
     <tr>
       <th>Type</th>
@@ -13,8 +13,8 @@
     </tr>
     <tr>
       <td>Description</td>
-      <td [ngClass]="{ 'fst-italic': recipe.description == null }">
-        {{ recipe.description ?? "No description found" }}
+      <td [ngClass]="{ 'fst-italic': recipe.description == null}">
+        {{ recipe.description || "No description found" }}
       </td>
     </tr>
     <tr>
