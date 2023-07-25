@@ -30,7 +30,7 @@
     (click)="toggleAdd()"
     *ngIf="!displayAdd"
   >
-    Add
+    <i class="bi bi-plus-square"></i> Add
   </button>
 </div>
 <recipe-add (closingAdd)="toggleAdd()" *ngIf="displayAdd"></recipe-add>

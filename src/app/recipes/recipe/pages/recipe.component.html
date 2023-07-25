@@ -1,6 +1,6 @@
 <h1>Recipe details</h1>
 <button class="btn btn-primary" [routerLink]="['/recipes']">
-  Back to list
+  <i class="bi bi-arrow-left-square"></i>
 </button>
 <h2 class="mt-4">Recipe</h2>
 <div>
@@ -9,10 +9,10 @@
     (click)="toggleRecipeEdit()"
     *ngIf="displayRecipeDetail"
   >
-    Edit
+    <i class="bi bi-pencil"></i> Edit
   </button>
   <button (click)="deleteClicked()" class="btn btn-outline-danger ms-1">
-    Delete
+    <i class="bi bi-trash3"></i> Delete
   </button>
 </div>
 <div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
