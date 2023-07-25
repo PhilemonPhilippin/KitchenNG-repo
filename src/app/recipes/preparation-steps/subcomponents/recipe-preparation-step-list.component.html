@@ -18,6 +18,7 @@
   <i class="bi bi-check-square-fill"></i> Preparation step added with success!
 </div>
 
+<div class="mt-3">
 <ul class="list-group" *ngIf="preparationSteps.length">
   <a
     class="list-group-item mt-1"
@@ -29,9 +30,11 @@
       preparationStep.id
     ]"
   >
-    Step {{ preparationStep.stepNumber }}: {{ preparationStep.title }}
+    Step #{{ preparationStep.stepNumber }} : {{ preparationStep.title }}
   </a>
 </ul>
+</div>
+
 <div class="alert alert-danger mt1" role="alert" *ngIf="errorMessage !== ''">
   {{ errorMessage }}
 </div>
