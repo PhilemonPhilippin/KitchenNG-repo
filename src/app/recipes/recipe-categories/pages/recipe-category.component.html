@@ -14,7 +14,7 @@
   </button>
 </div>
 <div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
-  Category edited with success!
+  <i class="bi bi-check-square-fill"></i> Category edited with success!
 </div>
 <recipe-category-detail *ngIf="displayDetail"></recipe-category-detail>
 <recipe-category-edit
@@ -27,5 +27,5 @@
   {{ errorMessage }}
 </div>
 <div class="alert alert-success mt1" role="alert" *ngIf="statusCode == 204">
-  Category deleted with success!
+  <i class="bi bi-check-square-fill"></i> Category deleted with success!
 </div>

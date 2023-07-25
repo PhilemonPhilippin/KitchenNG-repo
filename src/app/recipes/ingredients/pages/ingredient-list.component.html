@@ -11,7 +11,7 @@
   (addSucccessful)="onAddSuccessful()"
 ></ingredient-add>
 <div class="alert alert-success mt-1" role="alert" *ngIf="addSuccessfull">
-  Ingredient added with success!
+  <i class="bi bi-check-square-fill"></i> Ingredient added with success!
 </div>
 <div class="mb-3">
   <ul class="list-group" *ngIf="ingredients.length">

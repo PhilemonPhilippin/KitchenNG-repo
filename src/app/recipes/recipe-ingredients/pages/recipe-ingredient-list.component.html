@@ -9,10 +9,10 @@
   </button>
 </div>
 <div class="alert alert-success mt-1" role="alert" *ngIf="addSuccessful">
-  Ingredient added with success!
+  <i class="bi bi-check-square-fill"></i> Ingredient added with success!
 </div>
 <div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
-  Ingredient edited with success!
+  <i class="bi bi-check-square-fill"></i> Ingredient edited with success!
 </div>
 
 <recipe-ingredient-add
@@ -86,5 +86,5 @@
   {{ errorMessage }}
 </div>
 <div class="alert alert-success mt1" role="alert" *ngIf="statusCode == 204">
-  Ingredient removed with success!
+  <i class="bi bi-check-square-fill"></i> Ingredient removed with success!
 </div>

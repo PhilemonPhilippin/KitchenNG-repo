@@ -14,7 +14,7 @@
   </button>
 </div>
 <div class="alert alert-success mt-1" role="alert" *ngIf="editSuccessful">
-  Ingredient edited with success!
+  <i class="bi bi-check-square-fill"></i> Ingredient edited with success!
 </div>
 <ingredient-detail *ngIf="displayDetail"></ingredient-detail>
 <ingredient-edit
@@ -26,5 +26,5 @@
   {{ errorMessage }}
 </div>
 <div class="alert alert-success mt1" role="alert" *ngIf="statusCode == 204">
-  Ingredient deleted with success!
+  <i class="bi bi-check-square-fill"></i> Ingredient deleted with success!
 </div>

@@ -1,14 +1,11 @@
 <h1>Categories</h1>
 <div>
-  <button
-    (click)="toggleAdd()"
-    class="btn btn-sm btn-outline-primary"
-  >
+  <button (click)="toggleAdd()" class="btn btn-sm btn-outline-primary">
     <i class="bi bi-plus-square"></i> Add
   </button>
 </div>
 <div class="alert alert-success mt-1" role="alert" *ngIf="addSuccessful">
-  Category added with success!
+  <i class="bi bi-check-square-fill"></i> Category added with success!
 </div>
 <recipe-category-add
   (addSuccessful)="onAddSuccess()"
