@@ -1,44 +1,52 @@
 <form [formGroup]="recipeCategoryForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="title">Title :</label>
-  </div>
-  <div>
-    <input id="title" type="text" formControlName="title" />
-  </div>
-  <span
-    *ngIf="recipeCategoryForm.get('title')?.errors?.['required']"
-    class="text-danger"
-  >
-    Title is required
-  </span>
-  <span
-    *ngIf="recipeCategoryForm.get('title')?.errors?.['maxlength']"
-    class="text-danger"
-  >
-    Title must be 50 characters maximum
-  </span>
-  <div class="mt-2">
-    <label for="description">Description :</label>
-  </div>
-  <div>
-    <textarea
-      class="w-50"
-      rows="5"
-      id="description"
-      formControlName="description"
-    ></textarea>
-  </div>
-  <span
-    *ngIf="recipeCategoryForm.get('description')?.errors?.['maxlength']"
-    class="text-danger"
-  >
-    Description must be 500 characters maximum
-  </span>
-  <div>
-    <button class="btn btn-outline-primary mt-1" type="submit">Add</button>
-    <button class="btn btn-outline-primary mt-1 ms-1" (click)="closeEdit()">
-      <i class="bi bi-x-circle"></i> Cancel
-    </button>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <label class="form-label" for="title">Title :</label>
+        <input
+          class="form-control"
+          id="title"
+          type="text"
+          formControlName="title"
+        />
+        <span
+          *ngIf="recipeCategoryForm.get('title')?.errors?.['required']"
+          class="text-danger form-text"
+        >
+          Title is required
+        </span>
+        <span
+          *ngIf="recipeCategoryForm.get('title')?.errors?.['maxlength']"
+          class="text-danger form-text"
+        >
+          Title must be 50 characters maximum
+        </span>
+      </div>
+      <div class="col-xl-4"></div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <label class="form-label" for="description">Description :</label>
+        <textarea
+          class="w-xl-75 form-control"
+          rows="5"
+          id="description"
+          formControlName="description"
+        ></textarea>
+        <span
+          *ngIf="recipeCategoryForm.get('description')?.errors?.['maxlength']"
+          class="text-danger form-text"
+        >
+          Description must be 500 characters maximum
+        </span>
+      </div>
+    </div>
+    <div class="mt-2">
+      <button class="btn btn-outline-primary mt-1" type="submit">Add</button>
+      <button class="btn btn-outline-primary mt-1 ms-1" (click)="closeEdit()">
+        <i class="bi bi-x-circle"></i> Cancel
+      </button>
+    </div>
   </div>
 </form>
 
