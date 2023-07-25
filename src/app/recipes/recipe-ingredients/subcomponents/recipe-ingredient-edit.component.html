@@ -1,31 +1,40 @@
 <form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="quantity">Quantity :</label>
-  </div>
-  <div>
-    <input id="quantity" type="text" formControlName="quantity" />
-  </div>
-  <span
-    *ngIf="ingredientForm.get('quantity')?.errors?.['required']"
-    class="text-danger"
-  >
-    Quantity is required
-  </span>
-  <span
-    *ngIf="ingredientForm.get('quantity')?.errors?.['maxlength']"
-    class="text-danger"
-  >
-    Quantity must be 50 characters maximum
-  </span>
-  <div>
-    <button class="btn btn-outline-warning mt-1" type="submit">
-      Save changes
-    </button>
-    <button class="btn btn-outline-primary mt-1 ms-1" (click)="closeEdit()">
-      <i class="bi bi-x-circle"></i> Cancel
-    </button>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <label class="form-label" for="quantity">Quantity :</label>
+        <input
+          id="quantity"
+          class="form-control"
+          type="text"
+          formControlName="quantity"
+        />
+        <span
+          *ngIf="ingredientForm.get('quantity')?.errors?.['required']"
+          class="text-danger form-text"
+        >
+          Quantity is required
+        </span>
+        <span
+          *ngIf="ingredientForm.get('quantity')?.errors?.['maxlength']"
+          class="text-danger form-text"
+        >
+          Quantity must be 50 characters maximum
+        </span>
+      </div>
+      <div class="col-xl-4"></div>
+    </div>
+    <div class="mt-2">
+      <button class="btn btn-outline-warning mt-1" type="submit">
+        Save changes
+      </button>
+      <button class="btn btn-outline-primary mt-1 ms-1" (click)="closeEdit()">
+        <i class="bi bi-x-circle"></i> Cancel
+      </button>
+    </div>
   </div>
 </form>
+
 <div class="alert alert-danger mt1" role="alert" *ngIf="errorMessage !== ''">
   {{ errorMessage }}
 </div>
