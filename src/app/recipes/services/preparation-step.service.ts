@@ -1,8 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPreparationStep } from './models/preparation-step';
-import { IPreparationStepRequest } from './models/preparation-step-request';
+import { IPreparationStep } from '../models/dtos/preparation-step';
+import { IPreparationStepRequest } from '../models/requests/preparation-step-request';
 
 @Injectable({ providedIn: 'root' })
 export class PreparationStepService {

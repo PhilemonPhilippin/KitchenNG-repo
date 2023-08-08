@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IIngredient } from '../models/ingredient';
+import { IIngredient } from '../../models/dtos/ingredient';
 import { Subject, catchError, takeUntil } from 'rxjs';
-import { IngredientService } from '../ingredient.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { IXPagination } from 'src/app/shared/pagination/xpagination';
 
 @Component({

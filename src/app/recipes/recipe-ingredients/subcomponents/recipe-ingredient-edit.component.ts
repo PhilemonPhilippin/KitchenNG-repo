@@ -6,10 +6,10 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { IRecipeIngredient } from '../models/recipe-ingredient';
+import { IRecipeIngredient } from '../../models/dtos/recipe-ingredient';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RecipeIngredientService } from '../recipe-ingredient.service';
-import { IRecipeIngredientEditRequest } from '../models/recipe-ingredient-edit-request';
+import { RecipeIngredientService } from '../../services/recipe-ingredient.service';
+import { IRecipeIngredientEditRequest } from '../../models/requests/recipe-ingredient-edit-request';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
@@ -40,7 +40,7 @@ export class RecipeIngredientEditComponent implements OnInit, OnDestroy {
       quantity: this.recipeIngredient?.ingredientQuantity || '',
     });
   }
-  
+
   onSubmit(): void {
     this.errorMessage = '';
     this.statusCode = 0;

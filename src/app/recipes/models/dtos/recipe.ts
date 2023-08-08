@@ -1,4 +1,4 @@
-import { IRecipeCategory } from '../../recipe-categories/models/recipe-category';
+import { IRecipeCategory } from './recipe-category';
 
 export interface IRecipe {
   id: number;

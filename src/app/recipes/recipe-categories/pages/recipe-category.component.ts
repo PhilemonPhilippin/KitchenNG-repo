@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeCategoryService } from '../recipe-category.service';
+import { RecipeCategoryService } from '../../services/recipe-category.service';
 
 @Component({
   templateUrl: './recipe-category.component.html',

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { IngredientService } from '../ingredient.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({

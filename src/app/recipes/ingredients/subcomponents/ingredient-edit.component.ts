@@ -5,13 +5,13 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { IIngredient } from '../models/ingredient';
+import { IIngredient } from '../../models/dtos/ingredient';
 import { ActivatedRoute } from '@angular/router';
-import { IngredientService } from '../ingredient.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
-import { IIngredientRequest } from '../models/ingredient-request';
-import { IIngredientNoDesc } from '../models/ingredient-no-desc';
+import { IIngredientRequest } from '../../models/requests/ingredient-request';
+import { IIngredientNoDesc } from '../../models/dtos/ingredient-no-desc';
 
 @Component({
   selector: 'ingredient-edit',

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IRecipeIngredient } from '../../recipe-ingredients/models/recipe-ingredient';
-import { PreparationStepService } from '../../preparation-steps/preparation-step.service';
-import { IPreparationStep } from '../models/preparation-step';
+import { IRecipeIngredient } from '../../models/dtos/recipe-ingredient';
+import { PreparationStepService } from '../../services/preparation-step.service';
+import { IPreparationStep } from '../../models/dtos/preparation-step';
 import { Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({
@@ -37,7 +37,7 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
         catchError((err) => {
           console.log('Error fetching the preparation steps: ' + err);
           this.errorMessage =
-            'An error occurred while fetching the preparatio steps.';
+            'An error occurred while fetching the preparation steps.';
           return [];
         })
       )
@@ -50,7 +50,7 @@ export class RecipePreparationStepListComponent implements OnInit, OnDestroy {
     this.displayAddPreparationStep = !this.displayAddPreparationStep;
   }
 
-  onAddSuccess() {
+  onAddSuccess(): void {
     this.ngOnInit();
     this.addSuccessful = true;
     setTimeout(() => {

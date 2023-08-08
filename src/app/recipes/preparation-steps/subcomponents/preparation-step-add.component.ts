@@ -6,8 +6,8 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PreparationStepService } from '../preparation-step.service';
-import { IPreparationStepRequest } from '../models/preparation-step-request';
+import { PreparationStepService } from '../../services/preparation-step.service';
+import { IPreparationStepRequest } from '../../models/requests/preparation-step-request';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({

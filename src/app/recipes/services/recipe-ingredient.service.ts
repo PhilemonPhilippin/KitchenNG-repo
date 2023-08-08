@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IRecipeIngredient } from './models/recipe-ingredient';
+import { IRecipeIngredient } from '../models/dtos/recipe-ingredient';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { IRecipeIngredientAddRequest } from './models/recipe-ingredient-add-request';
-import { IRecipeIngredientEditRequest } from './models/recipe-ingredient-edit-request';
+import { IRecipeIngredientAddRequest } from '../models/requests/recipe-ingredient-add-request';
+import { IRecipeIngredientEditRequest } from '../models/requests/recipe-ingredient-edit-request';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeIngredientService {

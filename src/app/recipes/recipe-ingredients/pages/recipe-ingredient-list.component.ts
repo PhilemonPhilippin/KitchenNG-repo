@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeService } from '../../recipe/recipe.service';
-import { RecipeIngredientService } from '../../recipe-ingredients/recipe-ingredient.service';
-import { IRecipe } from '../../recipe/models/recipe';
-import { IRecipeIngredient } from '../../recipe-ingredients/models/recipe-ingredient';
+import { RecipeService } from '../../services/recipe.service';
+import { RecipeIngredientService } from '../../services/recipe-ingredient.service';
+import { IRecipe } from '../../models/dtos/recipe';
+import { IRecipeIngredient } from '../../models/dtos/recipe-ingredient';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({

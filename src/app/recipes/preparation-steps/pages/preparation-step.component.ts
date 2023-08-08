@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PreparationStepService } from '../preparation-step.service';
+import { PreparationStepService } from '../../services/preparation-step.service';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({

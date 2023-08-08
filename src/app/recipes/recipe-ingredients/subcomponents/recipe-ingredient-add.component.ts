@@ -6,12 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { IngredientService } from '../../ingredients/ingredient.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IIngredientNoDesc } from '../../ingredients/models/ingredient-no-desc';
-import { RecipeIngredientService } from '../recipe-ingredient.service';
-import { IRecipeIngredientAddRequest } from '../models/recipe-ingredient-add-request';
-import { IIngredientRequest } from '../../ingredients/models/ingredient-request';
+import { IIngredientNoDesc } from '../../models/dtos/ingredient-no-desc';
+import { RecipeIngredientService } from '../../services/recipe-ingredient.service';
+import { IRecipeIngredientAddRequest } from '../../models/requests/recipe-ingredient-add-request';
+import { IIngredientRequest } from '../../models/requests/ingredient-request';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({

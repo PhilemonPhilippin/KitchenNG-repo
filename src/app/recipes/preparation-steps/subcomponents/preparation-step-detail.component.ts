@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IPreparationStep } from '../models/preparation-step';
-import { PreparationStepService } from '../preparation-step.service';
+import { IPreparationStep } from '../../models/dtos/preparation-step';
+import { PreparationStepService } from '../../services/preparation-step.service';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 

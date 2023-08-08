@@ -6,11 +6,11 @@ import {
   Output,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IRecipeCategory } from '../models/recipe-category';
+import { IRecipeCategory } from '../../models/dtos/recipe-category';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeCategoryService } from '../recipe-category.service';
+import { RecipeCategoryService } from '../../services/recipe-category.service';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
-import { IRecipeCategoryRequest } from '../models/recipe-category-request';
+import { IRecipeCategoryRequest } from '../../models/requests/recipe-category-request';
 
 @Component({
   selector: 'recipe-category-edit',

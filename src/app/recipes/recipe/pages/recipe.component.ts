@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecipeService } from '../recipe.service';
+import { RecipeService } from '../../services/recipe.service';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({

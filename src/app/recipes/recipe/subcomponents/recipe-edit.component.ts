@@ -6,12 +6,12 @@ import {
   Output,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RecipeService } from '../recipe.service';
-import { IRecipe } from '../models/recipe';
+import { RecipeService } from '../../services/recipe.service';
+import { IRecipe } from '../../models/dtos/recipe';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IRecipeRequest } from '../models/recipe-request';
-import { RecipeCategoryService } from '../../recipe-categories/recipe-category.service';
-import { IRecipeCategory } from '../../recipe-categories/models/recipe-category';
+import { IRecipeRequest } from '../../models/requests/recipe-request';
+import { RecipeCategoryService } from '../../services/recipe-category.service';
+import { IRecipeCategory } from '../../models/dtos/recipe-category';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
 
 @Component({

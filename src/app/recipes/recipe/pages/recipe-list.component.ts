@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RecipeService } from '../../recipe/recipe.service';
-import { IRecipe } from '../../recipe/models/recipe';
+import { RecipeService } from '../../services/recipe.service';
+import { IRecipe } from '../../models/dtos/recipe';
 import { Subject, catchError, takeUntil } from 'rxjs';
 import { IXPagination } from '../../../shared/pagination/xpagination';
 

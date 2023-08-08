@@ -1,9 +1,9 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IIngredient } from './models/ingredient';
-import { IIngredientNoDesc } from './models/ingredient-no-desc';
-import { IIngredientRequest } from './models/ingredient-request';
+import { IIngredient } from '../models/dtos/ingredient';
+import { IIngredientNoDesc } from '../models/dtos/ingredient-no-desc';
+import { IIngredientRequest } from '../models/requests/ingredient-request';
 
 @Injectable({ providedIn: 'root' })
 export class IngredientService {

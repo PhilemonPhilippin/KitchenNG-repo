@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IRecipe } from './models/recipe';
-import { IRecipeRequest } from './models/recipe-request';
+import { IRecipe } from '../models/dtos/recipe';
+import { IRecipeRequest } from '../models/requests/recipe-request';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {

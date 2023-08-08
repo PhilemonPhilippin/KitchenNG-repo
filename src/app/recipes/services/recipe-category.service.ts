@@ -1,8 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IRecipeCategory } from './models/recipe-category';
+import { IRecipeCategory } from '../models/dtos/recipe-category';
 import { Injectable } from '@angular/core';
-import { IRecipeCategoryRequest } from './models/recipe-category-request';
+import { IRecipeCategoryRequest } from '../models/requests/recipe-category-request';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeCategoryService {
