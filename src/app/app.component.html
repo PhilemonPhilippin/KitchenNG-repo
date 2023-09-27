@@ -71,6 +71,9 @@
               Log out</a
             >
           </li>
+          <li class="nav-item">
+            <app-auth-button></app-auth-button>
+          </li>
         </ul>
       </div>
     </div>
@@ -80,6 +83,8 @@
     <div class="container">
       <main>
         <article class="content px-4">
+          <app-user-profile></app-user-profile>
+          <app-metadata></app-metadata>
           <router-outlet></router-outlet>
         </article>
       </main>
