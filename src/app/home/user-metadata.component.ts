@@ -42,6 +42,10 @@ export class UserMetadataComponent {
     this.http
       .get<Object>(encodeURI(`https://localhost:7049/api/Messages/private`), {
         observe: 'response',
+        headers: {
+          authorization:
+            'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Il9VNEducXNTUXpFdjNSTmlDd0NqNSJ9.eyJpc3MiOiJodHRwczovL3BoaWxlbW9ucGhpbGlwcGluLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NTExMWJmZmU3NWE5NjQxM2NlYTM5YzIiLCJhdWQiOlsiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA0OS9hcGkiLCJodHRwczovL3BoaWxlbW9ucGhpbGlwcGluLmV1LmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2OTU4MjYwODAsImV4cCI6MTY5NTkxMjQ4MCwiYXpwIjoiNTdSNE5SRlROclJQcjJ0QzBqeXhZTGcwNjVxcTZ4R20iLCJzY29wZSI6Im9wZW5pZCByZWFkOm1lc3NhZ2VzIiwicGVybWlzc2lvbnMiOlsicmVhZDptZXNzYWdlcyJdfQ.cbDldHhMnUZ8pbhD4kunuakTPZg-EBpZfBoDhSv6wepTwmfTt693uwNoIhsbcebpimJr2akntOUYtjZTcsOSVYJnuoCsEPSxGcCK5u0bL_VopG-1l6Ar0-N6ILyw4zV_m5TjwGkZ7oQMy74bkpk0g45t7N3_MzmCSE55mAQNde9ir0K_NkDUFzEFtK_oal2C50nT1S97gqjd-V3GjLraes6rSb9tiKRxKrxHvW0vIKg-8dZ8B561MCG5co4ftX20Sx-Q3xXmmJXPg6BOSQRCUvhNWTtu1N_T0Fm9mvUqkImiYHzIkw9KlrttD8aBaq-Nhv-0MrG7v_cQ8w8pRz6q5g',
+        },
       })
       .subscribe({
         next: (response) => {
