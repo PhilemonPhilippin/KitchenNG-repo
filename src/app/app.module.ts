@@ -32,11 +32,11 @@ import { UserMetadataComponent } from './home/user-metadata.component';
     RecipeModule,
     BrowserAnimationsModule,
     AuthModule.forRoot({
-      domain: 'philemonphilippin.eu.auth0.com',
-      clientId: '57R4NRFTNrRPr2tC0jyxYLg065qq6xGm',
+      domain: 'dev-41p64qnh24oyo2su.us.auth0.com',
+      clientId: 'Jdyh4yDbzoBPZpJnBWhZnzm43Un7XwLr',
       authorizationParams: {
         redirect_uri: 'http://localhost:4200',
-        audience: 'https://localhost:7049/api',
+        audience: 'https://localhost:7049/api/',
         scope: 'read:messages',
       },
       httpInterceptor: {
@@ -47,7 +47,7 @@ import { UserMetadataComponent } from './home/user-metadata.component';
             tokenOptions: {
               authorizationParams: {
                 // The attached token should target this audience
-                audience: 'https://localhost:7049/api',
+                audience: 'https://localhost:7049/api/',
 
                 // The attached token should have these scopes
                 scope: 'read:messages',
