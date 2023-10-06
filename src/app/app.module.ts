@@ -36,8 +36,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       httpInterceptor: {
         allowedList: [
           {
-            uri: 'https://localhost:7049/api/ingredients/*',
-            httpMethod: HttpMethod.Get,
+            uri: 'https://localhost:7049/api/*',
+            //httpMethod: HttpMethod.Get,
             tokenOptions: {
               authorizationParams: {
                 audience: 'https://localhost:7049/api',
