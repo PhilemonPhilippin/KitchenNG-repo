@@ -1,34 +1,34 @@
 KitchenNG
 ============
 
-## Table of contents
+## 1. Table of contents
 
 | Section | Title |
 |--- | ---|
-| 2 | [The aim of this project](./README.md#the-aim-of-this-project) |
-| 3 | [The design](./README.md#the-design) |
-| 4 | [Link to the API part of the project](./README.md#link-to-the-api-part-of-the-project) |
+| 2 | [The aim of this project](./README.md#2-the-aim-of-this-project) |
+| 3 | [The design](./README.md#3-the-design) |
+| 4 | [Link to the API part of the project](./README.md#4-link-to-the-api-part-of-the-project) |
 
-## The aim of this project
+## 2. The aim of this project
 
 Kitchen is a web application designed to manage recipes. I wrote this program myself in my spare time.
 I mainly worked on it for about 3 months when I was also looking for a job in April 2023.
 
-## The design
+## 3. The design
 
 I've created a user interface using the bootstrap framework, which gives a clear, efficient and responsive, if slightly generic, look.
 
-### "The design" table
+### 3.1 "The design" table
 
 | Section | Title |
 |--- | ---|
-| 2 | [Recipe list](./README.md#recipe-list) |
-| 3 | [Recipe details](./README.md#recipe-details) |
-| 4 | [Category, ingredient and preparation step details](./README.md#category-ingredient-and-preparation-step-details) |
-| 5 | [Category list](./README.md#category-list) |
-| 6 | [Ingredient list](./README.md#ingredient-list) |
+| 3.2 | [Recipe list](./README.md#32-recipe-list) |
+| 3.3 | [Recipe details](./README.md#33-recipe-details) |
+| 3.4 | [Category, ingredient and preparation step details](./README.md#34-category-ingredient-and-preparation-step-details) |
+| 3.5 | [Category list](./README.md#35-category-list) |
+| 3.6 | [Ingredient list](./README.md#36-ingredient-list) |
 
-### Recipe list
+### 3.2 Recipe list
 
 The central page is the recipe list. It includes several components such as the search bar used to filter searches, a button to add a recipe, pagination and finally the recipe list.
 
@@ -48,7 +48,7 @@ The "Add" button displays a component enabling us to add a recipe to the list.
 
 ![Add recipe](./images/add_recipe.png "Add recipe")
 
-### Recipe details
+### 3.3 Recipe details
 
 When you select a recipe from the list, you are taken to a page containing details of that recipe. Here are two screenshots showing this page.
 
@@ -78,7 +78,7 @@ At the very bottom of the page, the "Add" button lets you add preparation steps 
 
 ![Edit recipe ingredient](./images/edit_recipe_ingredient.png "Edit recipe ingredient")
 
-### Category, ingredient and preparation step details
+### 3.4 Category, ingredient and preparation step details
 
 Selecting the recipe category takes us to the category details page. The design of this page is reused for the ingredient details and preparation step details pages.  
 These three pages allow us to consult detailed information on the entity in question, and also to modify or delete it completely.
@@ -95,18 +95,18 @@ These three pages allow us to consult detailed information on the entity in ques
 
 ![Preparation step details](./images/preparation_step_details.png "Preparation step details")
 
-### Category list
+### 3.5 Category list
 
 The navigation bar takes us to the page displaying the list of categories.
 
 ![Category list](./images/category_list.png "Category list")
 
-### Ingredient list
+### 3.6 Ingredient list
 
 The navigation bar also takes us to the page displaying the list of ingredients. Here, too, we find the pagination component, allowing us to select the number of ingredients to be displayed and the number of the desired page.
 
 ![Ingredient list](./images/ingredient_list.png "Ingredient list")
 
-## Link to the API part of the project
+## 4. Link to the API part of the project
 
 To see more details about the purpose of this project, the circumstances in which it was built and the technology used to make the server part, you can consult the API to which this project is linked at : [Kitchen-repo](https://github.com/PhilemonPhilippin/Kitchen-repo)
