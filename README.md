@@ -5,9 +5,9 @@ KitchenNG
 
 | Section | Title |
 |--- | ---|
-| 2 | [The aim of this project](./Readme.md#the-aim-of-this-project) |
-| 3 | [The design](./Readme.md#the-design) |
-| 4 | [Link to the API part of the project](./Readme.md#link-to-the-api-part-of-the-project) |
+| 2 | [The aim of this project](./README.md#the-aim-of-this-project) |
+| 3 | [The design](./README.md#the-design) |
+| 4 | [Link to the API part of the project](./README.md#link-to-the-api-part-of-the-project) |
 
 ## The aim of this project
 
@@ -22,9 +22,9 @@ I've created a user interface using the bootstrap framework, which gives a clear
 
 | Section | Title |
 |--- | ---|
-| 2 | [Recipe list](./Readme.md#recipe-list) |
-| 3 | [Recipe details](./Readme.md#recipe-details) |
-| 4 | [Category, ingredient and preparation step details](./Readme.md#category-ingredient-and-preparation-step-details) |
+| 2 | [Recipe list](./README.md#recipe-list) |
+| 3 | [Recipe details](./README.md#recipe-details) |
+| 4 | [Category, ingredient and preparation step details](./README.md#category-ingredient-and-preparation-step-details) |
 | 5 | [Category list](./README.md#category-list) |
 | 6 | [Ingredient list](./README.md#ingredient-list) |
 
